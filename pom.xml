@@ -8,6 +8,7 @@
     <packaging>pom</packaging>
 
     <name>Bricks</name>
+    <description>Framework which allows to generate an overview about an application and it's components</description>
     <url>https://github.com/ingogriebsch/bricks</url>
     <inceptionYear>2018</inceptionYear>
     <organization />
