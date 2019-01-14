@@ -31,17 +31,7 @@
     </developers>
 
     <modules>
-        <!-- 
         <module>bricks-model</module>
-        <module>bricks-validator</module>
-        <module>bricks-reader</module>
-        <module>bricks-reader-github</module>
-        <module>bricks-converter</module>
-        <module>bricks-converter-json</module>
-        <module>bricks-assembler</module>
-        <module>bricks-renderer</module>
-        <module>bricks-maven-plugin</module> 
-        -->
     </modules>
 
     <scm>
