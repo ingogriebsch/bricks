@@ -1,13 +1,15 @@
 package com.github.ingogriebsch.bricks.assemble.utils.validate;
 
 import static java.lang.String.format;
-import static javax.validation.Validation.buildDefaultValidatorFactory;
+import static javax.validation.Validation.byDefaultProvider;
 
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
+
+import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
 
 import lombok.NonNull;
 
@@ -17,7 +19,8 @@ public class Validator {
     private final javax.validation.Validator validator;
 
     public Validator() {
-        validator = buildDefaultValidatorFactory().getValidator();
+        validator = byDefaultProvider().configure().messageInterpolator(new ParameterMessageInterpolator())
+            .buildValidatorFactory().getValidator();
     }
 
     public void validate(@NonNull Object object) throws ValidationException {
