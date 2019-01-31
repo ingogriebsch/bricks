@@ -67,7 +67,6 @@ public class StorageTest {
     }
 
     private static Validator initializeValidator() {
-        // Validation.buildDefaultValidatorFactory().getValidator();
         return byDefaultProvider().configure().messageInterpolator(new ParameterMessageInterpolator()).buildValidatorFactory()
             .getValidator();
     }
