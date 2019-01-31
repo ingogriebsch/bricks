@@ -23,6 +23,10 @@ public class GitHubComponentIdCollector implements ComponentIdCollector {
     private final RepositoryService repositoryService;
     private final BiPredicate<String, String> repositoryNameFilter;
 
+    public GitHubComponentIdCollector(@NonNull GitHubConfiguration configuration) {
+        this(configuration, (r, a) -> true);
+    }
+
     public GitHubComponentIdCollector(@NonNull GitHubConfiguration configuration,
         @NonNull BiPredicate<String, String> repositoryNameFilter) {
         validator.validate(configuration);
