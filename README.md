@@ -1,5 +1,6 @@
 # Bricks
 [![Build Status](https://travis-ci.org/ingogriebsch/bricks.svg?branch=master)](https://travis-ci.org/ingogriebsch/bricks)
+[![Codecov Status](https://codecov.io/gh/ingogriebsch/bricks/branch/master/graph/badge.svg)](https://codecov.io/gh/ingogriebsch/bricks)
 [![Coveralls Status](https://coveralls.io/repos/github/ingogriebsch/bricks/badge.svg?branch=master)](https://coveralls.io/github/ingogriebsch/bricks?branch=master)
 [![Codacy Status](https://api.codacy.com/project/badge/Grade/1829fc812c23499aaa0525c31e054e8d)](https://www.codacy.com/app/ingo.griebsch/bricks?utm_source=github.com&utm_medium=referral&utm_content=ingogriebsch/bricks&utm_campaign=Badge_Grade)
 [![DepShield Status](https://depshield.sonatype.org/badges/ingogriebsch/bricks/depshield.svg)](https://depshield.github.io)
