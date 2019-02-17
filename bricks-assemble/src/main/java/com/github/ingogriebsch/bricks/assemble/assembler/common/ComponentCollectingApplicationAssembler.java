@@ -34,6 +34,9 @@ public class ComponentCollectingApplicationAssembler implements ApplicationAssem
     @Override
     public Application assemble(@NonNull String id) throws Exception {
         Application application = applicationReader.read(id);
+        if (application == null) {
+            return null;
+        }
 
         Set<Component> components = componentCollector.collect(id);
         components = merge(components, application.getComponents());
