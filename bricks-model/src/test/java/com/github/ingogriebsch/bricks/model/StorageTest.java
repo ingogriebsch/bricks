@@ -22,6 +22,8 @@ import org.junit.Test;
 
 public class StorageTest {
 
+    private static final Validator validator = initializeValidator();
+
     @Test
     public void validation_should_fail_if_id_is_not_set() {
         Storage storage = new Storage();
@@ -29,9 +31,7 @@ public class StorageTest {
         storage.setVendor("Postgresql");
         storage.setPersistent(true);
 
-        Validator validator = initializeValidator();
         Set<ConstraintViolation<Storage>> violations = validator.validate(storage);
-
         assertThat(violations).isNotNull().hasSize(1);
     }
 
@@ -42,9 +42,7 @@ public class StorageTest {
         storage.setVendor("Postgresql");
         storage.setPersistent(true);
 
-        Validator validator = initializeValidator();
         Set<ConstraintViolation<Storage>> violations = validator.validate(storage);
-
         assertThat(violations).isNotNull().hasSize(1);
     }
 
@@ -55,9 +53,7 @@ public class StorageTest {
         storage.setType("database");
         storage.setPersistent(true);
 
-        Validator validator = initializeValidator();
         Set<ConstraintViolation<Storage>> violations = validator.validate(storage);
-
         assertThat(violations).isNotNull().hasSize(1);
     }
 
@@ -69,9 +65,7 @@ public class StorageTest {
         storage.setVendor("Postgresql");
         storage.setPersistent(true);
 
-        Validator validator = initializeValidator();
         Set<ConstraintViolation<Storage>> violations = validator.validate(storage);
-
         assertThat(violations).isNotNull().isEmpty();
     }
 
