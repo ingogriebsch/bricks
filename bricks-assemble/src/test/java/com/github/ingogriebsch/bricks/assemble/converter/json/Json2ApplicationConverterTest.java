@@ -49,7 +49,7 @@ public class Json2ApplicationConverterTest {
 
     @Test
     public void convert_should_convert_filled_application_to_matching_output() throws Exception {
-        Application input = new Application("id", "name", "description", "version", newHashSet(), newHashSet());
+        Application input = new Application("id", "name", "description", "version", newHashSet());
 
         Application output;
         try (InputStream is = new ByteArrayInputStream(new ObjectMapper().writeValueAsBytes(input))) {
