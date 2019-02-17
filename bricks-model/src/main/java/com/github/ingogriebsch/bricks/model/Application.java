@@ -59,7 +59,6 @@ public class Application {
     /**
      * A collection of components that make up the application.
      */
-    @NotEmpty
     @Valid
     private Set<Component> components;
 
