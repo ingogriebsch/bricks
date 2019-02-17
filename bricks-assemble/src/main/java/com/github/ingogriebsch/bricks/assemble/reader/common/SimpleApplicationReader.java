@@ -12,7 +12,7 @@ package com.github.ingogriebsch.bricks.assemble.reader.common;
 import java.io.InputStream;
 
 import com.github.ingogriebsch.bricks.assemble.converter.ApplicationConverter;
-import com.github.ingogriebsch.bricks.assemble.loader.ApplicationResourceLoader;
+import com.github.ingogriebsch.bricks.assemble.loader.ResourceLoader;
 import com.github.ingogriebsch.bricks.assemble.reader.ApplicationReader;
 import com.github.ingogriebsch.bricks.assemble.utils.validate.Validator;
 import com.github.ingogriebsch.bricks.model.Application;
@@ -26,14 +26,14 @@ public class SimpleApplicationReader implements ApplicationReader {
     private static final Validator validator = new Validator();
 
     @NonNull
-    private final ApplicationResourceLoader applicationResourceLoader;
+    private final ResourceLoader resourceLoader;
     @NonNull
     private final ApplicationConverter applicationConverter;
 
     @Override
     public Application read(@NonNull String id) throws Exception {
         Application application = null;
-        try (InputStream resource = applicationResourceLoader.load(id)) {
+        try (InputStream resource = resourceLoader.load(id)) {
             if (resource != null) {
                 application = applicationConverter.convert(resource);
             }

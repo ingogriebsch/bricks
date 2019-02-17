@@ -9,26 +9,32 @@
  */
 package com.github.ingogriebsch.bricks.assemble.loader.spring;
 
+import static lombok.AccessLevel.PROTECTED;
+
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 
-import com.github.ingogriebsch.bricks.assemble.loader.ApplicationResourceLoader;
-
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
-public class SpringResourceBasedComponentResourceLoader extends AbstractSpringResourceBasedResourceLoader
-    implements ApplicationResourceLoader {
+@RequiredArgsConstructor(access = PROTECTED)
+public class SpringResourceBasedResourceLoader implements com.github.ingogriebsch.bricks.assemble.loader.ResourceLoader {
 
-    public SpringResourceBasedComponentResourceLoader(ResourceLoader resourceLoader,
-        ResourceLocationProvider resourceLocationProvider) {
-        super(resourceLoader, resourceLocationProvider);
-    }
+    @NonNull
+    private final ResourceLoader resourceLoader;
+    @NonNull
+    private final ResourceLocationProvider resourceLocationProvider;
 
     @Override
     public InputStream load(@NonNull String id) throws IOException {
-        return loadResource(id);
+        Resource resource = resourceLoader.getResource(resourceLocationProvider.getLocation(id));
+        if (!resource.exists() || !resource.isReadable()) {
+            return null;
+        }
+        return resource.getInputStream();
     }
 
 }

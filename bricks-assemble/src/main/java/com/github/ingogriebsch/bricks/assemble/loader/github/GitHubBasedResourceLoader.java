@@ -22,29 +22,29 @@ import org.eclipse.egit.github.core.RepositoryContents;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.ContentsService;
 
-import com.github.ingogriebsch.bricks.assemble.loader.ComponentResourceLoader;
+import com.github.ingogriebsch.bricks.assemble.loader.ResourceLoader;
 import com.github.ingogriebsch.bricks.assemble.utils.github.GitHubConfiguration;
 import com.github.ingogriebsch.bricks.assemble.utils.github.GitHubConfiguration.Credentials;
 import com.github.ingogriebsch.bricks.assemble.utils.validate.Validator;
 
 import lombok.NonNull;
 
-public class GitHubBasedComponentResourceLoader implements ComponentResourceLoader {
+public class GitHubBasedResourceLoader implements ResourceLoader {
 
-    private final GitHubBasedComponentResourceProperties properties;
+    private final GitHubBasedResourceProperties properties;
     private final RepositoryIdProvider repositoryIdProvider;
     private final ContentsService contentsService;
 
-    public GitHubBasedComponentResourceLoader(@NonNull GitHubConfiguration configuration, @NonNull GitHubBasedComponentResourceProperties properties) {
+    public GitHubBasedResourceLoader(@NonNull GitHubConfiguration configuration, @NonNull GitHubBasedResourceProperties properties) {
         this(configuration, properties, new OneOnOneRepositoryIdProvider());
     }
 
-    public GitHubBasedComponentResourceLoader(@NonNull GitHubConfiguration configuration, @NonNull GitHubBasedComponentResourceProperties properties,
+    public GitHubBasedResourceLoader(@NonNull GitHubConfiguration configuration, @NonNull GitHubBasedResourceProperties properties,
         @NonNull RepositoryIdProvider repositoryIdProvider) {
         this(configuration, properties, repositoryIdProvider, new ContentsService(createClient(configuration)));
     }
 
-    GitHubBasedComponentResourceLoader(@NonNull GitHubConfiguration configuration, @NonNull GitHubBasedComponentResourceProperties properties,
+    GitHubBasedResourceLoader(@NonNull GitHubConfiguration configuration, @NonNull GitHubBasedResourceProperties properties,
         @NonNull RepositoryIdProvider repositoryIdProvider, @NonNull ContentsService contentsService) {
         validate(configuration);
         this.properties = validate(properties);
