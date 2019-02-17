@@ -9,8 +9,6 @@
  */
 package com.github.ingogriebsch.bricks.assemble.loader.spring;
 
-import static lombok.AccessLevel.PROTECTED;
-
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -20,7 +18,7 @@ import org.springframework.core.io.ResourceLoader;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor(access = PROTECTED)
+@RequiredArgsConstructor
 public class SpringResourceBasedResourceLoader implements com.github.ingogriebsch.bricks.assemble.loader.ResourceLoader {
 
     @NonNull
