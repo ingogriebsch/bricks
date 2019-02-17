@@ -35,12 +35,13 @@ public class GitHubBasedResourceLoader implements ResourceLoader {
     private final RepositoryIdProvider repositoryIdProvider;
     private final ContentsService contentsService;
 
-    public GitHubBasedResourceLoader(@NonNull GitHubConfiguration configuration, @NonNull GitHubBasedResourceProperties properties) {
+    public GitHubBasedResourceLoader(@NonNull GitHubConfiguration configuration,
+        @NonNull GitHubBasedResourceProperties properties) {
         this(configuration, properties, new OneOnOneRepositoryIdProvider());
     }
 
-    public GitHubBasedResourceLoader(@NonNull GitHubConfiguration configuration, @NonNull GitHubBasedResourceProperties properties,
-        @NonNull RepositoryIdProvider repositoryIdProvider) {
+    public GitHubBasedResourceLoader(@NonNull GitHubConfiguration configuration,
+        @NonNull GitHubBasedResourceProperties properties, @NonNull RepositoryIdProvider repositoryIdProvider) {
         this(configuration, properties, repositoryIdProvider, new ContentsService(createClient(configuration)));
     }
 
