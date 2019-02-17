@@ -12,7 +12,7 @@ package com.github.ingogriebsch.bricks.assemble.assembler;
 import java.io.InputStream;
 
 import com.github.ingogriebsch.bricks.assemble.converter.ComponentConverter;
-import com.github.ingogriebsch.bricks.assemble.reader.ComponentReader;
+import com.github.ingogriebsch.bricks.assemble.loader.ComponentResourceLoader;
 import com.github.ingogriebsch.bricks.assemble.utils.validate.Validator;
 import com.github.ingogriebsch.bricks.model.Component;
 
@@ -25,13 +25,13 @@ public class ComponentAssembler {
     private final Validator validator = new Validator();
 
     @NonNull
-    private final ComponentReader componentReader;
+    private final ComponentResourceLoader componentResourceLoader;
     @NonNull
     private final ComponentConverter componentConverter;
 
     public Component assemble(@NonNull String id) throws Exception {
         Component component = null;
-        try (InputStream source = componentReader.read(id)) {
+        try (InputStream source = componentResourceLoader.read(id)) {
             if (source != null) {
                 component = componentConverter.convert(source);
             }

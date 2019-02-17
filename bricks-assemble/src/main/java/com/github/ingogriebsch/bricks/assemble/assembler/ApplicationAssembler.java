@@ -13,7 +13,7 @@ import java.io.InputStream;
 
 import com.github.ingogriebsch.bricks.assemble.collector.ComponentCollector;
 import com.github.ingogriebsch.bricks.assemble.converter.ApplicationConverter;
-import com.github.ingogriebsch.bricks.assemble.reader.ApplicationReader;
+import com.github.ingogriebsch.bricks.assemble.loader.ApplicationResourceLoader;
 import com.github.ingogriebsch.bricks.assemble.utils.validate.Validator;
 import com.github.ingogriebsch.bricks.model.Application;
 
@@ -26,7 +26,7 @@ public class ApplicationAssembler {
     private final Validator validator = new Validator();
 
     @NonNull
-    private final ApplicationReader applicationReader;
+    private final ApplicationResourceLoader applicationResourceLoader;
     @NonNull
     private final ApplicationConverter applicationConverter;
     @NonNull
@@ -34,7 +34,7 @@ public class ApplicationAssembler {
 
     public Application assemble(@NonNull String id) throws Exception {
         Application application;
-        try (InputStream source = applicationReader.read(id)) {
+        try (InputStream source = applicationResourceLoader.read(id)) {
             application = applicationConverter.convert(source);
         }
 

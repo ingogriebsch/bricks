@@ -7,7 +7,7 @@
  * BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-package com.github.ingogriebsch.bricks.assemble.reader.github;
+package com.github.ingogriebsch.bricks.assemble.loader.github;
 
 import static java.lang.String.format;
 import static org.apache.commons.io.IOUtils.toInputStream;
@@ -22,29 +22,29 @@ import org.eclipse.egit.github.core.RepositoryContents;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.ContentsService;
 
-import com.github.ingogriebsch.bricks.assemble.reader.ComponentReader;
+import com.github.ingogriebsch.bricks.assemble.loader.ComponentResourceLoader;
 import com.github.ingogriebsch.bricks.assemble.utils.github.GitHubConfiguration;
 import com.github.ingogriebsch.bricks.assemble.utils.github.GitHubConfiguration.Credentials;
 import com.github.ingogriebsch.bricks.assemble.utils.validate.Validator;
 
 import lombok.NonNull;
 
-public class GitHubComponentReader implements ComponentReader {
+public class GitHubBasedComponentResourceLoader implements ComponentResourceLoader {
 
-    private final GitHubComponentProperties properties;
+    private final GitHubBasedComponentResourceProperties properties;
     private final RepositoryIdProvider repositoryIdProvider;
     private final ContentsService contentsService;
 
-    public GitHubComponentReader(@NonNull GitHubConfiguration configuration, @NonNull GitHubComponentProperties properties) {
+    public GitHubBasedComponentResourceLoader(@NonNull GitHubConfiguration configuration, @NonNull GitHubBasedComponentResourceProperties properties) {
         this(configuration, properties, new OneOnOneRepositoryIdProvider());
     }
 
-    public GitHubComponentReader(@NonNull GitHubConfiguration configuration, @NonNull GitHubComponentProperties properties,
+    public GitHubBasedComponentResourceLoader(@NonNull GitHubConfiguration configuration, @NonNull GitHubBasedComponentResourceProperties properties,
         @NonNull RepositoryIdProvider repositoryIdProvider) {
         this(configuration, properties, repositoryIdProvider, new ContentsService(createClient(configuration)));
     }
 
-    GitHubComponentReader(@NonNull GitHubConfiguration configuration, @NonNull GitHubComponentProperties properties,
+    GitHubBasedComponentResourceLoader(@NonNull GitHubConfiguration configuration, @NonNull GitHubBasedComponentResourceProperties properties,
         @NonNull RepositoryIdProvider repositoryIdProvider, @NonNull ContentsService contentsService) {
         validate(configuration);
         this.properties = validate(properties);
@@ -53,7 +53,7 @@ public class GitHubComponentReader implements ComponentReader {
     }
 
     @Override
-    public InputStream read(@NonNull String id) throws IOException {
+    public InputStream load(@NonNull String id) throws IOException {
         List<RepositoryContents> contents =
             contentsService.getContents(repositoryId(id), properties.getContentFilename(), properties.getRef());
 

@@ -7,21 +7,13 @@
  * BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-package com.github.ingogriebsch.bricks.assemble.reader.github;
+package com.github.ingogriebsch.bricks.assemble.loader;
 
-import org.hibernate.validator.constraints.NotBlank;
+import java.io.IOException;
+import java.io.InputStream;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+public interface ApplicationResourceLoader {
 
-@AllArgsConstructor
-@Data
-@NoArgsConstructor
-public final class GitHubComponentProperties {
-
-    @NotBlank
-    private String contentFilename = "bricks.json";
-    private String ref;
+    InputStream load(String id) throws IOException;
 
 }

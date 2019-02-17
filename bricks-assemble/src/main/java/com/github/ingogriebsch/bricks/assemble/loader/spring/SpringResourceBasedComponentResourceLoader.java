@@ -7,26 +7,28 @@
  * BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-package com.github.ingogriebsch.bricks.assemble.reader.resource;
+package com.github.ingogriebsch.bricks.assemble.loader.spring;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 import org.springframework.core.io.ResourceLoader;
 
-import com.github.ingogriebsch.bricks.assemble.reader.ApplicationReader;
+import com.github.ingogriebsch.bricks.assemble.loader.ApplicationResourceLoader;
 
 import lombok.NonNull;
 
-public class ResourceApplicationReader extends AbstractResourceBasedReader implements ApplicationReader {
+public class SpringResourceBasedComponentResourceLoader extends AbstractSpringResourceBasedResourceLoader
+    implements ApplicationResourceLoader {
 
-    public ResourceApplicationReader(ResourceLoader resourceLoader, ResourceLocationProvider resourceLocationProvider) {
+    public SpringResourceBasedComponentResourceLoader(ResourceLoader resourceLoader,
+        ResourceLocationProvider resourceLocationProvider) {
         super(resourceLoader, resourceLocationProvider);
     }
 
     @Override
-    public InputStream read(@NonNull String id) throws IOException {
-        return readResource(id);
+    public InputStream load(@NonNull String id) throws IOException {
+        return loadResource(id);
     }
 
 }

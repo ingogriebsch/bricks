@@ -7,9 +7,13 @@
  * BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-package com.github.ingogriebsch.bricks.assemble.reader.github;
+package com.github.ingogriebsch.bricks.assemble.loader;
 
-public interface RepositoryIdProvider {
+import java.io.IOException;
+import java.io.InputStream;
 
-    String getId(String id);
+public interface ComponentResourceLoader {
+
+    InputStream load(String id) throws IOException;
+
 }
