@@ -50,6 +50,13 @@ public class Application {
     private String version;
 
     /**
+     * A collection of persons or teams which are responsible for the component.
+     */
+    @NotEmpty
+    @Valid
+    private Set<Responsible> responsibles;
+
+    /**
      * A collection of components that make up the application.
      */
     @NotEmpty
