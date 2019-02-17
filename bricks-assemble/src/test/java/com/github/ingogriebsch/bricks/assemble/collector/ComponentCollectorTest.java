@@ -26,7 +26,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 
-import com.github.ingogriebsch.bricks.assemble.assembler.ComponentAssembler;
+import com.github.ingogriebsch.bricks.assemble.reader.ComponentReader;
 import com.github.ingogriebsch.bricks.model.Component;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -36,7 +36,7 @@ public class ComponentCollectorTest {
     private ComponentIdCollector collector;
 
     @Mock
-    private ComponentAssembler assembler;
+    private ComponentReader reader;
 
     @Test(expected = NullPointerException.class)
     public void creation_should_throw_exception_if_input_is_null() {
@@ -45,7 +45,7 @@ public class ComponentCollectorTest {
 
     @Test(expected = NullPointerException.class)
     public void creation_should_throw_exception_if_collector_is_null() {
-        new ComponentCollector(null, assembler);
+        new ComponentCollector(null, reader);
     }
 
     @Test(expected = NullPointerException.class)
@@ -55,7 +55,7 @@ public class ComponentCollectorTest {
 
     @Test(expected = NullPointerException.class)
     public void collect_should_throw_exception_if_input_is_null() throws Exception {
-        new ComponentCollector(collector, assembler).collect(null);
+        new ComponentCollector(collector, reader).collect(null);
     }
 
     @Test(expected = RuntimeException.class)
@@ -64,7 +64,7 @@ public class ComponentCollectorTest {
 
         given(collector.collect(applicationId)).willThrow(new RuntimeException());
 
-        new ComponentCollector(collector, assembler).collect(applicationId);
+        new ComponentCollector(collector, reader).collect(applicationId);
     }
 
     @Test(expected = RuntimeException.class)
@@ -72,9 +72,9 @@ public class ComponentCollectorTest {
         String applicationId = "applicationId";
 
         given(collector.collect(applicationId)).willReturn(newHashSet(randomAlphabetic(6)));
-        given(assembler.assemble(anyString())).willThrow(new RuntimeException());
+        given(reader.read(anyString())).willThrow(new RuntimeException());
 
-        new ComponentCollector(collector, assembler).collect(applicationId);
+        new ComponentCollector(collector, reader).collect(applicationId);
     }
 
     @Test
@@ -82,9 +82,9 @@ public class ComponentCollectorTest {
         String applicationId = "applicationId";
 
         given(collector.collect(applicationId)).willReturn(newHashSet(randomAlphabetic(6)));
-        given(assembler.assemble(anyString())).willReturn(null);
+        given(reader.read(anyString())).willReturn(null);
 
-        new ComponentCollector(collector, assembler).collect(applicationId);
+        new ComponentCollector(collector, reader).collect(applicationId);
 
         verify(collector).collect(applicationId);
     }
@@ -96,7 +96,7 @@ public class ComponentCollectorTest {
         Set<String> componentIds = newHashSet(componentId, randomAlphabetic(6), randomAlphabetic(6));
 
         given(collector.collect(applicationId)).willReturn(componentIds);
-        given(assembler.assemble(componentId)).willAnswer(new Answer<Component>() {
+        given(reader.read(componentId)).willAnswer(new Answer<Component>() {
 
             @Override
             public Component answer(InvocationOnMock invocation) throws Throwable {
@@ -104,10 +104,10 @@ public class ComponentCollectorTest {
             }
         });
 
-        new ComponentCollector(collector, assembler).collect(applicationId);
+        new ComponentCollector(collector, reader).collect(applicationId);
 
         verify(collector).collect(applicationId);
-        verify(assembler, times(componentIds.size())).assemble(anyString());
+        verify(reader, times(componentIds.size())).read(anyString());
     }
 
     @Test
@@ -117,7 +117,7 @@ public class ComponentCollectorTest {
         Set<String> componentIds = newHashSet(componentId, randomAlphabetic(6), randomAlphabetic(6));
 
         given(collector.collect(applicationId)).willReturn(componentIds);
-        given(assembler.assemble(componentId)).willAnswer(new Answer<Component>() {
+        given(reader.read(componentId)).willAnswer(new Answer<Component>() {
 
             @Override
             public Component answer(InvocationOnMock invocation) throws Throwable {
@@ -125,9 +125,9 @@ public class ComponentCollectorTest {
             }
         });
 
-        Set<Component> components = new ComponentCollector(collector, assembler).collect(applicationId);
+        Set<Component> components = new ComponentCollector(collector, reader).collect(applicationId);
         assertThat(components).isNotNull().hasSize(1);
 
-        verify(assembler, times(componentIds.size())).assemble(anyString());
+        verify(reader, times(componentIds.size())).read(anyString());
     }
 }

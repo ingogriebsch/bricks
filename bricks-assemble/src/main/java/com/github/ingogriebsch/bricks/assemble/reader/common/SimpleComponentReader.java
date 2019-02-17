@@ -7,12 +7,13 @@
  * BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-package com.github.ingogriebsch.bricks.assemble.assembler;
+package com.github.ingogriebsch.bricks.assemble.reader.common;
 
 import java.io.InputStream;
 
 import com.github.ingogriebsch.bricks.assemble.converter.ComponentConverter;
 import com.github.ingogriebsch.bricks.assemble.loader.ComponentResourceLoader;
+import com.github.ingogriebsch.bricks.assemble.reader.ComponentReader;
 import com.github.ingogriebsch.bricks.assemble.utils.validate.Validator;
 import com.github.ingogriebsch.bricks.model.Component;
 
@@ -20,20 +21,21 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class ComponentAssembler {
+public class SimpleComponentReader implements ComponentReader {
 
-    private final Validator validator = new Validator();
+    private final static Validator validator = new Validator();
 
     @NonNull
     private final ComponentResourceLoader componentResourceLoader;
     @NonNull
     private final ComponentConverter componentConverter;
 
-    public Component assemble(@NonNull String id) throws Exception {
+    @Override
+    public Component read(@NonNull String id) throws Exception {
         Component component = null;
-        try (InputStream source = componentResourceLoader.read(id)) {
-            if (source != null) {
-                component = componentConverter.convert(source);
+        try (InputStream resource = componentResourceLoader.load(id)) {
+            if (resource != null) {
+                component = componentConverter.convert(resource);
             }
         }
 
@@ -42,5 +44,4 @@ public class ComponentAssembler {
         }
         return component;
     }
-
 }

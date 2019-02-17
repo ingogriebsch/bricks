@@ -7,12 +7,12 @@
  * BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-package com.github.ingogriebsch.bricks.assemble.assembler;
+package com.github.ingogriebsch.bricks.assemble.reader;
 
-import com.github.ingogriebsch.bricks.model.Application;
+import com.github.ingogriebsch.bricks.model.Component;
 
-public interface ApplicationAssembler {
+public interface ComponentReader {
 
-    Application assemble(String id) throws Exception;
+    public Component read(String id) throws Exception;
 
 }
