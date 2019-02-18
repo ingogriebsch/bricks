@@ -39,7 +39,8 @@ public class ServiceProperties {
     public Map<String, Set<String>> getComponentIds() {
         Map<String, Set<String>> result = newHashMap();
         for (Application application : applications) {
-            result.put(application.getId(), newHashSet(application.getComponents()));
+            result.put(application.getId(),
+                newHashSet(application.getComponents().stream().map(c -> c.getId()).collect(toSet())));
         }
         return result;
     }
@@ -48,6 +49,13 @@ public class ServiceProperties {
     public static final class Application {
 
         private String id;
-        private List<String> components;
+        private List<Component> components;
     }
+
+    @Data
+    public static final class Component {
+
+        private String id;
+    }
+
 }
