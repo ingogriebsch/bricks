@@ -1,0 +1,19 @@
+{
+    "id": "component2",
+    "name": "Another Component",
+    "version": "2.3.0",
+    "description": "...",
+    "layer": "edge",
+    "frameworks": ["hapi"],
+    "buildTools": ["npm"],
+    "ecosystems": [{
+        "platform": "node",
+        "flavor": "javascript"
+    }],
+    "memoryFootprint": {
+    },
+    "responsibles": [{
+        "name": "The Avengers",
+        "email": "avengers@gmail.com"
+    }]
+}
