@@ -7,5 +7,5 @@ install: true
 jdk:
   - openjdk8
 language: java
-script: ./mvnw verify -B
+script: ./mvnw install -B
 sudo: false
