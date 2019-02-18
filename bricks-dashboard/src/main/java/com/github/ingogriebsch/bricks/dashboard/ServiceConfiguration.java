@@ -20,8 +20,6 @@ import com.github.ingogriebsch.bricks.assemble.collector.ComponentCollector;
 import com.github.ingogriebsch.bricks.assemble.collector.ComponentIdCollector;
 import com.github.ingogriebsch.bricks.assemble.collector.common.StaticApplicationIdCollector;
 import com.github.ingogriebsch.bricks.assemble.collector.common.StaticComponentIdCollector;
-import com.github.ingogriebsch.bricks.assemble.converter.ApplicationConverter;
-import com.github.ingogriebsch.bricks.assemble.converter.ComponentConverter;
 import com.github.ingogriebsch.bricks.assemble.converter.json.Json2ApplicationConverter;
 import com.github.ingogriebsch.bricks.assemble.converter.json.Json2ComponentConverter;
 import com.github.ingogriebsch.bricks.assemble.loader.ResourceLoader;
@@ -60,11 +58,7 @@ public class ServiceConfiguration {
     }
 
     private ComponentReader componentReader() {
-        return new SimpleComponentReader(resourceLoader(), componentConverter());
-    }
-
-    private ComponentConverter componentConverter() {
-        return new Json2ComponentConverter();
+        return new SimpleComponentReader(resourceLoader(), new Json2ComponentConverter());
     }
 
     private ComponentIdCollector componentIdCollector() {
@@ -72,11 +66,7 @@ public class ServiceConfiguration {
     }
 
     private ApplicationReader applicationReader() {
-        return new SimpleApplicationReader(resourceLoader(), applicationConverter());
-    }
-
-    private ApplicationConverter applicationConverter() {
-        return new Json2ApplicationConverter();
+        return new SimpleApplicationReader(resourceLoader(), new Json2ApplicationConverter());
     }
 
     private ResourceLoader resourceLoader() {
