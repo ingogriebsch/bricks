@@ -23,12 +23,12 @@ public class PlaceholderBasedResourceLocationProviderTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void creation_should_throw_exception_if_locationBase_is_null() {
+    public void creation_should_throw_exception_if_first_parameter_is_null() {
         new PlaceholderBasedResourceLocationProvider(null, "id");
     }
 
     @Test(expected = NullPointerException.class)
-    public void creation_should_throw_exception_if_idPlaceholderName_is_null() {
+    public void creation_should_throw_exception_if_second_parameter_is_null() {
         new PlaceholderBasedResourceLocationProvider("classpath:${id}", null);
     }
 
@@ -40,6 +40,11 @@ public class PlaceholderBasedResourceLocationProviderTest {
     @Test(expected = IllegalArgumentException.class)
     public void creation_should_throw_exception_if_default_placeholderName_is_not_matching_against_locationBase() {
         new PlaceholderBasedResourceLocationProvider("classpath:${" + randomAlphanumeric(10) + "}");
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void getLocation_should_throw_exception_if_input_is_null() {
+        new PlaceholderBasedResourceLocationProvider("classpath:${id}").getLocation(null);
     }
 
     @Test
