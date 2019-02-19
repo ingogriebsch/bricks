@@ -29,6 +29,11 @@ public class SimpleComponentReader implements ComponentReader {
     private final ResourceLoader resourceLoader;
     @NonNull
     private final ComponentConverter componentConverter;
+    private final boolean validate;
+
+    public SimpleComponentReader(ResourceLoader resourceLoader, ComponentConverter componentConverter) {
+        this(resourceLoader, componentConverter, true);
+    }
 
     @Override
     public Component read(@NonNull String id) throws Exception {
@@ -39,7 +44,7 @@ public class SimpleComponentReader implements ComponentReader {
             }
         }
 
-        if (component != null) {
+        if (component != null && validate) {
             validator.validate(component);
         }
         return component;

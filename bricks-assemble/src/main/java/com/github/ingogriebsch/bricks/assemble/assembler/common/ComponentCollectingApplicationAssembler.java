@@ -30,6 +30,11 @@ public class ComponentCollectingApplicationAssembler implements ApplicationAssem
     private final ApplicationReader applicationReader;
     @NonNull
     private final ComponentCollector componentCollector;
+    private final boolean validate;
+
+    public ComponentCollectingApplicationAssembler(ApplicationReader applicationReader, ComponentCollector componentCollector) {
+        this(applicationReader, componentCollector, true);
+    }
 
     @Override
     public Application assemble(@NonNull String id) throws Exception {
@@ -42,7 +47,9 @@ public class ComponentCollectingApplicationAssembler implements ApplicationAssem
         components = merge(components, application.getComponents());
         application.setComponents(components);
 
-        validator.validate(application);
+        if (validate) {
+            validator.validate(application);
+        }
         return application;
     }
 

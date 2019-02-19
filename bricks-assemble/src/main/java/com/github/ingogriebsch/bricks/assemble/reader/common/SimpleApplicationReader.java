@@ -29,6 +29,11 @@ public class SimpleApplicationReader implements ApplicationReader {
     private final ResourceLoader resourceLoader;
     @NonNull
     private final ApplicationConverter applicationConverter;
+    private final boolean validate;
+
+    public SimpleApplicationReader(ResourceLoader resourceLoader, ApplicationConverter applicationConverter) {
+        this(resourceLoader, applicationConverter, true);
+    }
 
     @Override
     public Application read(@NonNull String id) throws Exception {
@@ -39,7 +44,7 @@ public class SimpleApplicationReader implements ApplicationReader {
             }
         }
 
-        if (application != null) {
+        if (application != null && validate) {
             validator.validate(application);
         }
         return application;
