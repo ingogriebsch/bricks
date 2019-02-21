@@ -43,6 +43,7 @@
         <module>bricks-model</module>
         <module>bricks-assemble</module>
         <module>bricks-dashboard</module>
+        <module>bricks-maven-plugin</module>
     </modules>
 
     <scm>
