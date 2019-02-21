@@ -9,23 +9,18 @@
  */
 package com.github.ingogriebsch.bricks.assemble.collector.common;
 
-import static com.google.common.collect.Sets.newHashSet;
-import static java.util.Collections.unmodifiableSet;
-
 import java.util.Set;
 
 import com.github.ingogriebsch.bricks.assemble.collector.ApplicationIdCollector;
 
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public class StaticApplicationIdCollector implements ApplicationIdCollector {
 
     @NonNull
     private final Set<String> applicationIds;
-
-    public StaticApplicationIdCollector(Set<String> applicationIds) {
-        this.applicationIds = unmodifiableSet(newHashSet(applicationIds));
-    }
 
     @Override
     public Set<String> collect() {
