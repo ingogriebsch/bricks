@@ -11,6 +11,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.project.MavenProject;
 
 @Mojo(name = "generate-component", defaultPhase = LifecyclePhase.PROCESS_RESOURCES)
 public class GenerateComponentMojo extends AbstractMojo {
@@ -20,6 +21,9 @@ public class GenerateComponentMojo extends AbstractMojo {
 
     @Parameter(required = true, defaultValue = "${project.build.directory}")
     private File outputDirectory;
+
+    @Parameter(defaultValue = "${project}", readonly = true, required = true)
+    private MavenProject mavenProject;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
