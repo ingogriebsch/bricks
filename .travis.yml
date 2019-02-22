@@ -7,5 +7,5 @@ install: true
 jdk:
   - openjdk8
 language: java
-script: ./mvnw install -B
+script: ./mvnw install -B -Pintegration-test
 sudo: false

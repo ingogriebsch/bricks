@@ -100,29 +100,39 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin><!-- https://maven.apache.org/plugins/maven-invoker-plugin/ -->
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-invoker-plugin</artifactId>
-                <version>3.2.0</version>
-                <configuration>
-                    <addTestClassPath>true</addTestClassPath>
-                    <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
-                    <debug>false</debug>
-                    <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
-                    <postBuildHookScript>verify</postBuildHookScript>
-                    <settingsFile>src/it/settings.xml</settingsFile>
-                    <streamLogs>false</streamLogs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>integration-test</id>
-                        <goals>
-                            <goal>install</goal>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>integration-test</id>
+            <build>
+                <plugins>
+                    <plugin><!-- https://maven.apache.org/plugins/maven-invoker-plugin/ -->
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-invoker-plugin</artifactId>
+                        <version>3.2.0</version>
+                        <configuration>
+                            <addTestClassPath>true</addTestClassPath>
+                            <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
+                            <debug>false</debug>
+                            <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
+                            <postBuildHookScript>verify</postBuildHookScript>
+                            <settingsFile>src/it/settings.xml</settingsFile>
+                            <streamLogs>false</streamLogs>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>integration-test</id>
+                                <goals>
+                                    <goal>install</goal>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>            
+        </profile>
+    </profiles>
 </project>
