@@ -4,6 +4,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
 import static com.google.common.io.Files.createParentDirs;
 import static java.lang.String.format;
+import static lombok.AccessLevel.PACKAGE;
 import static org.apache.maven.plugins.annotations.LifecyclePhase.PROCESS_RESOURCES;
 
 import java.io.File;
@@ -19,7 +20,10 @@ import org.apache.maven.project.MavenProject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.ingogriebsch.bricks.model.Component;
 
+import lombok.Setter;
+
 @Mojo(name = "generate-component", defaultPhase = PROCESS_RESOURCES)
+@Setter(PACKAGE)
 public class GenerateComponentMojo extends AbstractMojo {
 
     @Parameter(required = true, defaultValue = "bricks.json")
