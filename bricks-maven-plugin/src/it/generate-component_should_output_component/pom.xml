@@ -3,8 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.ingogriebsch.bricks.maven.it</groupId>
-    <artifactId>generate-component_should_create_file</artifactId>
+    <artifactId>generate-component_should_output_component</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+
+    <name>Fancy component</name>
+    <description>Some description to explain why this fancy component should be part of the application</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -26,7 +29,12 @@
                         <configuration>
                             <outputDirectory>${project.build.directory}</outputDirectory>
                             <outputFilename>bricks.json</outputFilename>
-                            <component />
+                            <component>
+                                <id>${project.artifactId}</id>
+                                <name>${project.name}</name>
+                                <description>${project.description}</description>
+                                <version>${project.version}</version>
+                            </component>
                         </configuration>
                     </execution>
                 </executions>

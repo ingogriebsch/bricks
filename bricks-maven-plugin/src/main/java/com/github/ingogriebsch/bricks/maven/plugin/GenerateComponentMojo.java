@@ -1,6 +1,10 @@
 package com.github.ingogriebsch.bricks.maven.plugin;
 
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
+import static com.google.common.io.Files.createParentDirs;
 import static java.lang.String.format;
+import static org.apache.maven.plugins.annotations.LifecyclePhase.PROCESS_RESOURCES;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,46 +12,51 @@ import java.io.IOException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
-@Mojo(name = "generate-component", defaultPhase = LifecyclePhase.PROCESS_RESOURCES)
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.ingogriebsch.bricks.model.Component;
+
+@Mojo(name = "generate-component", defaultPhase = PROCESS_RESOURCES)
 public class GenerateComponentMojo extends AbstractMojo {
 
     @Parameter(required = true, defaultValue = "bricks.json")
     private String outputFilename;
 
-    @Parameter(required = true, defaultValue = "${project.build.directory}")
+    @Parameter(required = true, defaultValue = "${project.basedir}")
     private File outputDirectory;
 
     @Parameter(defaultValue = "${project}", readonly = true, required = true)
     private MavenProject mavenProject;
 
+    @Parameter(required = true)
+    private Component component;
+
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        getLog().info("Executing generate-component...");
-
-        if (!outputDirectory.exists()) {
-            if (!outputDirectory.mkdirs()) {
-                throw new MojoExecutionException("Cannot create output directoy!");
-            }
-            getLog().info(format("Creating folder structure for '%s'...", outputDirectory.getAbsolutePath()));
-        }
-
         File outputFile = new File(outputDirectory, outputFilename);
 
         try {
-            if (!outputFile.createNewFile()) {
-                throw new MojoExecutionException("Cannot create new output file!");
-            }
-            getLog().info(format("Creating file '%s'...", outputFile.getAbsolutePath()));
+            createParentDirs(outputFile);
         } catch (IOException e) {
-            throw new MojoExecutionException("Cannot create new output file!");
+            throw new MojoExecutionException(format("Cannot create output directoy '%s'!", outputFile.getParentFile()));
         }
 
-        getLog().info("Executing generate-component done!");
+        ObjectMapper objectMapper = createAndPrepareObjectMapper();
+        try {
+            objectMapper.writeValue(outputFile, component);
+        } catch (IOException e) {
+            throw new MojoExecutionException(String.format("Cannot write component to '%s'!", outputFile));
+        }
+    }
+
+    private ObjectMapper createAndPrepareObjectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(NON_NULL);
+        objectMapper.enable(INDENT_OUTPUT);
+        return objectMapper;
     }
 
 }
