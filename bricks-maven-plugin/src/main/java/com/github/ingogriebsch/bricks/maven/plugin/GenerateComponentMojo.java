@@ -22,7 +22,7 @@ import com.github.ingogriebsch.bricks.model.Component;
 
 import lombok.Setter;
 
-@Mojo(name = "generate-component", defaultPhase = PROCESS_RESOURCES)
+@Mojo(name = "generate-component", defaultPhase = PROCESS_RESOURCES, threadSafe = false)
 @Setter(PACKAGE)
 public class GenerateComponentMojo extends AbstractMojo {
 
