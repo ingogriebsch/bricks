@@ -20,7 +20,10 @@
     <description>Framework which allows to generate an overview about an application and it's components</description>
     <url>https://github.com/ingogriebsch/bricks</url>
     <inceptionYear>2018</inceptionYear>
-    <organization />
+    <organization>
+        <name>Ingo Griebsch</name>
+        <url>https://ingogriebsch.de/</url>
+    </organization>
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -58,4 +61,43 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <concurrencyFactor>4</concurrencyFactor>
+                    <strictCheck>true</strictCheck>
+                    <header>com/mycila/maven/plugin/license/templates/APACHE-2.txt</header>
+                    <properties>
+                        <owner>${project.organization.name}</owner>
+                        <email>${project.organization.url}</email>
+                        <year>${project.inceptionyear}</year>
+                    </properties>
+                    <includes>
+                        <include> **/src/**/*.java 
+                        </include>
+                        <include> **/src/**/*.kt 
+                        </include>
+                    </includes>
+                    <mapping>
+                        <java>SLASHSTAR_STYLE</java>
+                        <kt>SLASHSTAR_STYLE</kt>
+                    </mapping>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                        <id>update.license.headers</id>
+                        <phase>validate</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
