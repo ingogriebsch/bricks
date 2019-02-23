@@ -15,12 +15,13 @@
  */
 package com.github.ingogriebsch.bricks.maven.plugin;
 
+import static java.lang.String.format;
+
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
 import static com.fasterxml.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_NULL_MAP_VALUES;
 import static com.google.common.io.Files.createParentDirs;
-import static java.lang.String.format;
 import static lombok.AccessLevel.PACKAGE;
 import static org.apache.maven.plugins.annotations.LifecyclePhase.PROCESS_RESOURCES;
 

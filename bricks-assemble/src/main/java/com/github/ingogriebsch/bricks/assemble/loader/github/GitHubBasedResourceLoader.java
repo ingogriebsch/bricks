@@ -16,6 +16,7 @@
 package com.github.ingogriebsch.bricks.assemble.loader.github;
 
 import static java.lang.String.format;
+
 import static org.apache.commons.io.IOUtils.toInputStream;
 
 import java.io.IOException;

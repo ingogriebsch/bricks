@@ -15,9 +15,10 @@
  */
 package com.github.ingogriebsch.bricks.dashboard;
 
+import static java.util.stream.Collectors.toSet;
+
 import static com.google.common.collect.Maps.newHashMap;
 import static com.google.common.collect.Sets.newHashSet;
-import static java.util.stream.Collectors.toSet;
 
 import java.util.List;
 import java.util.Map;

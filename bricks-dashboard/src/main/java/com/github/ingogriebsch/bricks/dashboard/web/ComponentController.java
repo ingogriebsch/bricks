@@ -16,6 +16,7 @@
 package com.github.ingogriebsch.bricks.dashboard.web;
 
 import static java.lang.String.format;
+
 import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
 
 import org.springframework.stereotype.Controller;
