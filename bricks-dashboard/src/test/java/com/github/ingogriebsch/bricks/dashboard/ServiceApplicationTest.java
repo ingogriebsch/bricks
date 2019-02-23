@@ -20,6 +20,9 @@ public class ServiceApplicationTest {
 
     @Test
     public void main_should_load_context() {
+        // prevent conflict on port binding
+        System.setProperty("server.port", Integer.valueOf(0).toString());
+        
         main(new String[] {});
     }
 }
