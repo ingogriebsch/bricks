@@ -89,12 +89,24 @@
                     </mapping>
                 </configuration>
                 <executions>
+                    <!-- 
+                    
+                    While i like this to be included, it might not be everyones choice. 
+                    
                     <execution>
                         <goals>
                             <goal>format</goal>
                         </goals>
                         <id>update.license.headers</id>
                         <phase>validate</phase>
+                    </execution>
+                    -->
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <id>check.license.headers</id>
+                        <phase>test</phase>
                     </execution>
                 </executions>
             </plugin>
