@@ -103,6 +103,10 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>net.revelc.code</groupId>
+                <artifactId>impsort-maven-plugin</artifactId>
+            </plugin>
             <plugin><!-- http://docs.spring.io/spring-boot/docs/1.5.19.RELEASE/maven-plugin/ -->
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

@@ -111,6 +111,10 @@
             </testResource>
         </testResources>
         <plugins>
+            <plugin>
+                <groupId>net.revelc.code</groupId>
+                <artifactId>impsort-maven-plugin</artifactId>
+            </plugin>
             <plugin><!-- https://maven.apache.org/plugin-tools/maven-plugin-plugin/ -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
