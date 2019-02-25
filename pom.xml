@@ -125,7 +125,7 @@
                 <plugin><!-- https://www.mojohaus.org/license-maven-plugin -->
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>license-maven-plugin</artifactId>
-                    <version>${project.plugin.license-maven-plugin.version}</version>
+                    <version>${license-maven-plugin.version}</version>
                     <configuration>
                         <addJavaLicenseAfterPackage>>false</addJavaLicenseAfterPackage>
                         <failOnMissingHeader>true</failOnMissingHeader>
@@ -134,18 +134,16 @@
                     </configuration>
                     <executions>
                         <execution>
-                            <id>default-update-file-header</id>
+                            <id>default-check-file-header</id>
                             <goals>
-                                <goal>update-file-header</goal>
+                                <goal>check-file-header</goal>
                             </goals>
-                            <phase>process-sources</phase>
+                            <phase>validate</phase>
                         </execution>
                     </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
-        <plugins>
-        </plugins>
     </build>
 
     <profiles>
