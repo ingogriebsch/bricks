@@ -54,7 +54,7 @@
         <directory-maven-plugin.version>0.3.1</directory-maven-plugin.version>
         <license-maven-plugin.version>1.17</license-maven-plugin.version>
     </properties>
-    
+
     <build>
         <pluginManagement>
             <plugins>
@@ -63,8 +63,8 @@
                     <artifactId>impsort-maven-plugin</artifactId>
                     <version>1.2.0</version>
                     <configuration>
-                        <groups>java.,javax.,org.,com.</groups>
-                        <staticGroups>java,*</staticGroups>
+                        <staticGroups>java.,javax.,*</staticGroups>
+                        <groups>java.,javax.,com.,org.,*</groups>
                     </configuration>
                     <executions>
                         <execution>
