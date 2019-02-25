@@ -20,7 +20,10 @@
     <description>Framework which allows to generate an overview about an application and it's components</description>
     <url>https://github.com/ingogriebsch/bricks</url>
     <inceptionYear>2018</inceptionYear>
-    <organization />
+    <organization>
+        <name>Ingo Griebsch</name>
+        <url>https://ingogriebsch.de/</url>
+    </organization>
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -58,4 +61,148 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.commonjava.maven.plugins</groupId>
+                <artifactId>directory-maven-plugin</artifactId>
+                <version>0.3.1</version>
+                <executions>
+                    <execution>
+                        <id>directories</id>
+                        <goals>
+                            <goal>highest-basedir</goal>
+                        </goals>
+                        <phase>initialize</phase>
+                        <configuration>
+                            <property>repository.root</property>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+                
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <concurrencyFactor>4</concurrencyFactor>
+                    <strictCheck>true</strictCheck>
+                    <header>com/mycila/maven/plugin/license/templates/APACHE-2.txt</header>
+                    <properties>
+                        <owner>${project.organization.name}</owner>
+                        <email>${project.organization.url}</email>
+                        <year>${project.inceptionyear}</year>
+                    </properties>
+                    <includes>
+                        <include> **/src/**/*.java 
+                        </include>
+                        <include> **/src/**/*.kt 
+                        </include>
+                    </includes>
+                    <mapping>
+                        <java>SLASHSTAR_STYLE</java>
+                        <kt>SLASHSTAR_STYLE</kt>
+                    </mapping>
+                </configuration>
+                <executions>
+                    <!-- 
+                    
+                    While i like this to be included, it might not be everyones choice. 
+                    
+                    <execution>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                        <id>update.license.headers</id>
+                        <phase>validate</phase>
+                    </execution>
+                    -->
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <id>check.license.headers</id>
+                        <phase>test</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <!-- activate when /src/config/eclipse/code_formatter.xml exists -->
+            <!-- 
+            <plugin>
+                <groupId>net.revelc.code.formatter</groupId>
+                <artifactId>formatter-maven-plugin</artifactId>
+                <version>2.7.3</version>
+                <configuration>
+                    <configFile>${repository.root}/src/config/eclipse/code_formatter.xml</configFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>formatting</id>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                        <phase>process-sources</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
+            <plugin>
+                <groupId>net.revelc.code</groupId>
+                <artifactId>impsort-maven-plugin</artifactId>
+                <version>1.2.0</version>
+                <configuration>
+                    <groups>java.,javax.,org.,com.</groups>
+                    <staticGroups>java,*</staticGroups>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>sort-imports</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <phase>test</phase>
+                    </execution>
+                </executions>
+            </plugin>
+                    
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>
+                                            org.commonjava.maven.plugins
+                                        </groupId>
+                                        <artifactId>
+                                            directory-maven-plugin
+                                        </artifactId>
+                                        <versionRange>
+                                            [0.3.1,)
+                                        </versionRange>
+                                        <goals>
+                                            <goal>highest-basedir</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore></ignore>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>
