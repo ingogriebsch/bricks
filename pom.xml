@@ -52,6 +52,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <directory-maven-plugin.version>0.3.1</directory-maven-plugin.version>
+        <license-maven-plugin.version>1.17</license-maven-plugin.version>
     </properties>
     
     <build>
@@ -121,55 +122,29 @@
                         </execution>
                     </executions>
                 </plugin>
+                <plugin><!-- https://www.mojohaus.org/license-maven-plugin -->
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <version>${project.plugin.license-maven-plugin.version}</version>
+                    <configuration>
+                        <addJavaLicenseAfterPackage>>false</addJavaLicenseAfterPackage>
+                        <failOnMissingHeader>true</failOnMissingHeader>
+                        <failOnNotUptodateHeader>true</failOnNotUptodateHeader>
+                        <licenseName>apache_v2</licenseName>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>default-update-file-header</id>
+                            <goals>
+                                <goal>update-file-header</goal>
+                            </goals>
+                            <phase>process-sources</phase>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
-            <plugin>
-                <groupId>com.mycila</groupId>
-                <artifactId>license-maven-plugin</artifactId>
-                <version>3.0</version>
-                <configuration>
-                    <concurrencyFactor>4</concurrencyFactor>
-                    <strictCheck>true</strictCheck>
-                    <header>com/mycila/maven/plugin/license/templates/APACHE-2.txt</header>
-                    <properties>
-                        <owner>${project.organization.name}</owner>
-                        <email>${project.organization.url}</email>
-                        <year>${project.inceptionyear}</year>
-                    </properties>
-                    <includes>
-                        <include> **/src/**/*.java 
-                        </include>
-                        <include> **/src/**/*.kt 
-                        </include>
-                    </includes>
-                    <mapping>
-                        <java>SLASHSTAR_STYLE</java>
-                        <kt>SLASHSTAR_STYLE</kt>
-                    </mapping>
-                </configuration>
-                <executions>
-                    <!-- 
-                    
-                    While i like this to be included, it might not be everyones choice. 
-                    
-                    <execution>
-                        <goals>
-                            <goal>format</goal>
-                        </goals>
-                        <id>update.license.headers</id>
-                        <phase>validate</phase>
-                    </execution>
-                    -->
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                        <id>check.license.headers</id>
-                        <phase>test</phase>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
@@ -198,6 +173,20 @@
                                                 <versionRange>[${directory-maven-plugin.version},)</versionRange>
                                                 <goals>
                                                     <goal>directory-of</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <execute />
+                                            </action>
+                                        </pluginExecution>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>org.codehaus.mojo</groupId>
+                                                <artifactId>license-maven-plugin</artifactId>
+                                                <versionRange>[${license-maven-plugin.version},)</versionRange>
+                                                <goals>
+                                                    <goal>check-file-header</goal>
+                                                    <goal>update-file-header</goal>
                                                 </goals>
                                             </pluginExecutionFilter>
                                             <action>
