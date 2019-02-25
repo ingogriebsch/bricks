@@ -75,27 +75,55 @@
                         </execution>
                     </executions>
                 </plugin>
+                <plugin><!-- https://github.com/jdcasey/directory-maven-plugin -->
+                    <groupId>org.commonjava.maven.plugins</groupId>
+                    <artifactId>directory-maven-plugin</artifactId>
+                    <version>${directory-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>directories</id>
+                            <goals>
+                                <goal>directory-of</goal>
+                            </goals>
+                            <configuration>
+                                <property>repository.root</property>
+                                <project>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>bricks</artifactId>
+                                </project>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin><!-- https://code.revelc.net/formatter-maven-plugin -->
+                    <groupId>net.revelc.code.formatter</groupId>
+                    <artifactId>formatter-maven-plugin</artifactId>
+                    <version>2.7.3</version>
+                    <configuration>
+                        <configFile>${repository.root}/src/config/java-formatter.xml</configFile>
+                        <skipJsonFormatting>true</skipJsonFormatting>
+                        <skipHtmlFormatting>true</skipHtmlFormatting>
+                        <skipXmlFormatting>true</skipXmlFormatting>
+                        <directories>
+                            <directory>src/main/java</directory>
+                            <directory>src/main/resources</directory>
+                            <directory>src/test/java</directory>
+                            <directory>src/test/resources</directory>
+                        </directories>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>default-validate</id>
+                            <goals>
+                                <goal>validate</goal>
+                            </goals>
+                            <phase>test</phase>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
-            <plugin>
-                <groupId>org.commonjava.maven.plugins</groupId>
-                <artifactId>directory-maven-plugin</artifactId>
-                <version>${directory-maven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>directories</id>
-                        <goals>
-                            <goal>highest-basedir</goal>
-                        </goals>
-                        <phase>initialize</phase>
-                        <configuration>
-                            <property>repository.root</property>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-                
             <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>
@@ -142,27 +170,6 @@
                     </execution>
                 </executions>
             </plugin>
-            
-            <!-- activate when /src/config/eclipse/code_formatter.xml exists -->
-            <!-- 
-            <plugin>
-                <groupId>net.revelc.code.formatter</groupId>
-                <artifactId>formatter-maven-plugin</artifactId>
-                <version>2.7.3</version>
-                <configuration>
-                    <configFile>${repository.root}/src/config/eclipse/code_formatter.xml</configFile>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>formatting</id>
-                        <goals>
-                            <goal>format</goal>
-                        </goals>
-                        <phase>process-sources</phase>
-                    </execution>
-                </executions>
-            </plugin>
-            -->                    
         </plugins>
     </build>
 
@@ -190,7 +197,7 @@
                                                 <artifactId>directory-maven-plugin</artifactId>
                                                 <versionRange>[${directory-maven-plugin.version},)</versionRange>
                                                 <goals>
-                                                    <goal>highest-basedir</goal>
+                                                    <goal>directory-of</goal>
                                                 </goals>
                                             </pluginExecutionFilter>
                                             <action>
