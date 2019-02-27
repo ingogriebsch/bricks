@@ -25,8 +25,8 @@ import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
 
 import java.util.Set;
 
+import com.github.ingogriebsch.bricks.dashboard.facility.ApplicationFacility;
 import com.github.ingogriebsch.bricks.dashboard.service.ApplicationService;
-import com.github.ingogriebsch.bricks.dashboard.service.ComponentService;
 import com.github.ingogriebsch.bricks.dashboard.web.Breadcrumb.Entry;
 import com.github.ingogriebsch.bricks.model.Application;
 import com.github.ingogriebsch.bricks.model.Component;
@@ -47,7 +47,7 @@ public class ComponentController {
     private final ApplicationService applicationService;
 
     @NonNull
-    private final ComponentService componentService;
+    private final ApplicationFacility applicationFacility;
 
     @GetMapping(path = "/applications/{applicationId}/components", produces = TEXT_HTML_VALUE)
     public String all(@PathVariable String applicationId, @NonNull Model model) throws Exception {
@@ -55,7 +55,7 @@ public class ComponentController {
             format("Weird things happen! Application with id '%s' is not available!", applicationId)));
         model.addAttribute("application", application);
 
-        Set<Component> components = application.getComponents();
+        Set<Component> components = applicationFacility.getComponents(application);
         model.addAttribute("components", components);
 
         Breadcrumb breadcrumb = Breadcrumb.builder().entry(Entry.builder().name("Applications").href("/applications").build())
@@ -73,7 +73,7 @@ public class ComponentController {
             format("Weird things happen! Application with id '%s' is not available!", applicationId)));
         model.addAttribute("application", application);
 
-        Component component = componentService.findOne(applicationId, componentId)
+        Component component = applicationFacility.getComponent(application, componentId)
             .orElseThrow(() -> new IllegalStateException(
                 format("Weird things happen! Component with id '%s' for application with id '%s' is not available!", componentId,
                     applicationId)));
