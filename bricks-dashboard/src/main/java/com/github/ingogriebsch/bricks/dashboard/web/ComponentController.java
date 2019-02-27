@@ -23,7 +23,12 @@ import static java.lang.String.format;
 
 import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
 
+import java.util.Set;
+
+import com.github.ingogriebsch.bricks.dashboard.service.ApplicationService;
 import com.github.ingogriebsch.bricks.dashboard.service.ComponentService;
+import com.github.ingogriebsch.bricks.dashboard.web.Breadcrumb.Entry;
+import com.github.ingogriebsch.bricks.model.Application;
 import com.github.ingogriebsch.bricks.model.Component;
 
 import org.springframework.stereotype.Controller;
@@ -39,25 +44,48 @@ import lombok.RequiredArgsConstructor;
 public class ComponentController {
 
     @NonNull
+    private final ApplicationService applicationService;
+
+    @NonNull
     private final ComponentService componentService;
 
     @GetMapping(path = "/applications/{applicationId}/components", produces = TEXT_HTML_VALUE)
     public String all(@PathVariable String applicationId, @NonNull Model model) throws Exception {
-        model.addAttribute("applicationId", applicationId);
-        model.addAttribute("components", componentService.findAll(applicationId));
+        Application application = applicationService.findOne(applicationId).orElseThrow(() -> new IllegalStateException(
+            format("Weird things happen! Application with id '%s' is not available!", applicationId)));
+        model.addAttribute("application", application);
+
+        Set<Component> components = application.getComponents();
+        model.addAttribute("components", components);
+
+        Breadcrumb breadcrumb = Breadcrumb.builder().entry(Entry.builder().name("Applications").href("/applications").build())
+            .entry(Entry.builder().name(application.getName()).href("/applications/" + applicationId).build())
+            .entry(Entry.builder().name("Components").href("/applications/" + applicationId + "/components").build()).build();
+        model.addAttribute("breadcrumb", breadcrumb);
+
         return "/component/all";
     }
 
     @GetMapping(path = "/applications/{applicationId}/components/{componentId}", produces = TEXT_HTML_VALUE)
     public String one(@PathVariable String applicationId, @PathVariable String componentId, @NonNull Model model)
         throws Exception {
+        Application application = applicationService.findOne(applicationId).orElseThrow(() -> new IllegalStateException(
+            format("Weird things happen! Application with id '%s' is not available!", applicationId)));
+        model.addAttribute("application", application);
+
         Component component = componentService.findOne(applicationId, componentId)
             .orElseThrow(() -> new IllegalStateException(
                 format("Weird things happen! Component with id '%s' for application with id '%s' is not available!", componentId,
                     applicationId)));
-
-        model.addAttribute("applicationId", applicationId);
         model.addAttribute("component", component);
+
+        Breadcrumb breadcrumb = Breadcrumb.builder().entry(Entry.builder().name("Applications").href("/applications").build())
+            .entry(Entry.builder().name(application.getName()).href("/applications/" + applicationId).build())
+            .entry(Entry.builder().name("Components").href("/applications/" + applicationId + "/components").build()).entry(Entry
+                .builder().name(component.getName()).href("/applications/" + applicationId + "/components" + componentId).build())
+            .build();
+        model.addAttribute("breadcrumb", breadcrumb);
+
         return "/component/one";
     }
 }

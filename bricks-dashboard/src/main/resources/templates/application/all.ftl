@@ -17,17 +17,14 @@
  limitations under the License.
  #L%
 -->
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Applications</title>
-    </head>
-    <body>
-        <h2>Some applications... :)</h2>
-        <ul>
-            <#list applications as application>
-            <li><a href="/applications/${application.id}">${application.name}</a></li>            
-            </#list>
-        </ul>
-    </body>
-</html>
+<#import "../skeleton.ftl" as skeleton>
+<@skeleton.skeleton "Bricks Dashboard - Applications">
+<div class="container">
+    <h2>Some applications... :)</h2>
+    <ul>
+        <#list applications as application>
+        <li><a href="/applications/${application.id}">${application.name}</a></li>            
+        </#list>
+    </ul>
+</div>
+</@skeleton.skeleton>

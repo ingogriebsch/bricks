@@ -23,7 +23,10 @@ import static java.lang.String.format;
 
 import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
 
+import java.util.Set;
+
 import com.github.ingogriebsch.bricks.dashboard.service.ApplicationService;
+import com.github.ingogriebsch.bricks.dashboard.web.Breadcrumb.Entry;
 import com.github.ingogriebsch.bricks.model.Application;
 
 import org.springframework.stereotype.Controller;
@@ -43,7 +46,13 @@ public class ApplicationController {
 
     @GetMapping(path = "/applications", produces = TEXT_HTML_VALUE)
     public String all(@NonNull Model model) throws Exception {
-        model.addAttribute("applications", applicationService.findAll());
+        Set<Application> applications = applicationService.findAll();
+        model.addAttribute("applications", applications);
+
+        Breadcrumb breadcrumb =
+            Breadcrumb.builder().entry(Entry.builder().name("Applications").href("/applications").build()).build();
+        model.addAttribute("breadcrumb", breadcrumb);
+
         return "/application/all";
     }
 
@@ -51,8 +60,12 @@ public class ApplicationController {
     public String one(@PathVariable String applicationId, @NonNull Model model) throws Exception {
         Application application = applicationService.findOne(applicationId).orElseThrow(() -> new IllegalStateException(
             format("Weird things happen! Application with id '%s' is not available!", applicationId)));
-
         model.addAttribute("application", application);
+
+        Breadcrumb breadcrumb = Breadcrumb.builder().entry(Entry.builder().name("Applications").href("/applications").build())
+            .entry(Entry.builder().name(application.getName()).href("/applications/" + applicationId).build()).build();
+        model.addAttribute("breadcrumb", breadcrumb);
+
         return "/application/one";
     }
 }
