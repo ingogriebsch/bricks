@@ -19,9 +19,12 @@
  */
 package com.github.ingogriebsch.bricks.assemble.converter.json;
 
+import static com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_COMMENTS;
+
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.ingogriebsch.bricks.assemble.converter.ApplicationConverter;
 import com.github.ingogriebsch.bricks.model.Application;
@@ -30,11 +33,21 @@ import lombok.NonNull;
 
 public class Json2ApplicationConverter implements ApplicationConverter {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
+
+    public Json2ApplicationConverter() {
+        objectMapper = createAndPrepareObjectMapper();
+    }
 
     @Override
     public Application convert(@NonNull InputStream source) throws IOException {
         return objectMapper.readValue(source, Application.class);
     }
 
+    private static ObjectMapper createAndPrepareObjectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonFactory jsonFactory = objectMapper.getFactory();
+        jsonFactory.enable(ALLOW_COMMENTS);
+        return objectMapper;
+    }
 }
