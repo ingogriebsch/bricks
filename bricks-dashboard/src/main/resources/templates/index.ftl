@@ -17,12 +17,21 @@
  limitations under the License.
  #L%
 -->
-<#import "../skeleton.ftl" as skeleton>
-<@skeleton.skeleton "Bricks Dashboard - Applications - ${application.name}">
+<#import "skeleton.ftl" as skeleton>
+<@skeleton.skeleton "Bricks Dashboard - Applications">
 <div class="container">
-    <h2>Application '${application.id}'! :)</h2>
-    <h3>Name: ${application.name}</h3>
-    <h3>Version: ${application.version}</h3>
-    <h3><a href="/applications/${application.id}/components">Components</a></h3>
+    <#list applications as application>
+    <div class="row">
+        <div class="col s4">
+            <a href="/applications/${application.id}/overview">
+                <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                        <span class="card-title">${application.name}</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    </#list>
 </div>
 </@skeleton.skeleton>

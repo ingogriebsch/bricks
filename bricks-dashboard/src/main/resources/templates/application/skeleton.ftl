@@ -17,14 +17,14 @@
  limitations under the License.
  #L%
 -->
+<#macro app title>
 <#import "../skeleton.ftl" as skeleton>
-<@skeleton.skeleton "Bricks Dashboard - Applications">
-<div class="container">
-    <h2>Some applications... :)</h2>
-    <ul>
-        <#list applications as application>
-        <li><a href="/applications/${application.id}">${application.name}</a></li>            
-        </#list>
+<@skeleton.skeleton "${title}">
+    <ul class="tabs z-depth-1">
+        <li class="tab"><a href="/applications/${application.id}/overview" class="grey-text">Overview</a></li>
+        <li class="tab"><a href="/applications/${application.id}/components" class="grey-text">Components</a></li>
+        <li class="tab"><a href="/applications/${application.id}/dependencies" class="grey-text">Dependencies</a></li>
     </ul>
-</div>
+    <#nested />
 </@skeleton.skeleton>
+</#macro>
