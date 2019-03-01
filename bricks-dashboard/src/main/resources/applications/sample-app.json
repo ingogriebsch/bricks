@@ -25,5 +25,8 @@
     "responsibles": [{
         "name": "Avengers",
         "email": "avengers@gmail.com"
+    },{
+        "name": "Justice League",
+        "email": "justice-league@gmail.com"
     }]
 }

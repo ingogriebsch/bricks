@@ -20,12 +20,33 @@
 <#import "skeleton.ftl" as skeleton>
 <@skeleton.app "Bricks Dashboard - Applications - ${application.name} - Overview">
 <div class="container">
-    Application '${application.id}'! :)
-    <br>
-    Name: ${application.name}
-    <br>
-    Version: ${application.version}
-    <br>
-    <a href="/applications/${application.id}/components">Components</a>
+    <div class="row">
+        <div class="col s12">
+            <h3>${application.name} ${application.version}</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6">
+            <div class="card">
+                <div class="card-image">
+                    <img src="/images/application-template.png">
+                </div>
+            </div>
+        </div>
+        <div class="col s6">
+            <h5><p>${application.description}</p:</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="divider"></div>
+        <h6><em>Responsibles:</em></h6>
+        <div class="col s12">
+            <p>
+            <#list application.responsibles as responsible>
+                <span><a href="mailto:${responsible.email}">${responsible.name}</a></span><#sep>, </#sep>
+            </#list>
+            </p>
+        </div>
+    </div>
 </div>
 </@skeleton.app>
