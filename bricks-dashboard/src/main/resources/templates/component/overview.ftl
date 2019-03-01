@@ -20,10 +20,33 @@
 <#import "skeleton.ftl" as skeleton>
 <@skeleton.compo "Bricks Dashboard - Applications - ${application.name} - Components - ${component.name} - Overview">
 <div class="container">
-    Component '${component.id}'! :)
-    <br>
-    Name: ${component.name}
-    <br>
-    Version: ${component.version}
+    <div class="row">
+        <div class="col s12">
+            <h3>${component.name} ${component.version}</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6">
+            <div class="card">
+                <div class="card-image">
+                    <img src="/images/component-template.png">
+                </div>
+            </div>
+        </div>
+        <div class="col s6">
+            <h5><p>${component.description}</p:</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="divider"></div>
+        <h6><em>Responsibles:</em></h6>
+        <div class="col s12">
+            <p>
+            <#list component.responsibles as responsible>
+                <span><a href="mailto:${responsible.email}">${responsible.name}</a></span><#sep>, </#sep>
+            </#list>
+            </p>
+        </div>
+    </div>
 </div>
 </@skeleton.compo>
