@@ -50,10 +50,15 @@ public class IndexController {
         Set<Application> applications = applicationService.findAll();
         model.addAttribute("applications", applications);
 
-        Breadcrumb breadcrumb =
-            Breadcrumb.builder().entry(Entry.builder().name("Applications").href("/applications").build()).build();
+        Breadcrumb breadcrumb = breadcrumb();
         model.addAttribute("breadcrumb", breadcrumb);
 
         return "/index";
+    }
+
+    private static Breadcrumb breadcrumb() {
+        Entry applicationsEntry = Entry.builder().name("Applications").href("/applications").build();
+        Breadcrumb breadcrumb = Breadcrumb.builder().entry(applicationsEntry).build();
+        return breadcrumb;
     }
 }

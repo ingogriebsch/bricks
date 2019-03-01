@@ -73,12 +73,15 @@ public class ComponentController {
     }
 
     private Breadcrumb breadcrumb(Application application, Component component) {
-        Breadcrumb breadcrumb = Breadcrumb.builder().entry(Entry.builder().name("Applications").href("/applications").build())
-            .entry(Entry.builder().name(application.getName()).href("/applications/" + application.getId()).build())
-            .entry(Entry.builder().name("Components").href("/applications/" + application.getId() + "/components").build())
-            .entry(Entry.builder().name(component.getName())
-                .href("/applications/" + application.getId() + "/components/" + component.getId()).build())
-            .build();
+        Entry applicationsEntry = Entry.builder().name("Applications").href("/applications").build();
+        Entry applicationEntry =
+            Entry.builder().name(application.getName()).href(applicationsEntry.getHref() + "/" + application.getId()).build();
+        Entry componentsEntry = Entry.builder().name("Components").href(applicationEntry.getHref() + "/components").build();
+        Entry componentEntry =
+            Entry.builder().name(component.getName()).href(componentsEntry.getHref() + "/" + component.getId()).build();
+
+        Breadcrumb breadcrumb = Breadcrumb.builder().entry(applicationsEntry).entry(applicationEntry).entry(componentsEntry)
+            .entry(componentEntry).build();
         return breadcrumb;
     }
 }

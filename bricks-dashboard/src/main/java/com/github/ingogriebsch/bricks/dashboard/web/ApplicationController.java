@@ -91,8 +91,11 @@ public class ApplicationController {
     }
 
     private static Breadcrumb breadcrumb(Application application) {
-        Breadcrumb breadcrumb = Breadcrumb.builder().entry(Entry.builder().name("Applications").href("/applications").build())
-            .entry(Entry.builder().name(application.getName()).href("/applications/" + application.getId()).build()).build();
+        Entry applicationsEntry = Entry.builder().name("Applications").href("/applications").build();
+        Entry applicationEntry =
+            Entry.builder().name(application.getName()).href(applicationsEntry.getHref() + "/" + application.getId()).build();
+
+        Breadcrumb breadcrumb = Breadcrumb.builder().entry(applicationsEntry).entry(applicationEntry).build();
         return breadcrumb;
     }
 }
