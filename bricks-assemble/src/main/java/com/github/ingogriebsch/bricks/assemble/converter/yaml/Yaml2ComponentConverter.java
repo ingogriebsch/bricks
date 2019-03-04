@@ -40,7 +40,7 @@ public class Yaml2ComponentConverter implements ComponentConverter {
     }
 
     @Override
-    public Component convert(@NonNull InputStream source) throws IOException {
+    public Component convert(@NonNull InputStream source, @NonNull String id) throws IOException {
         return objectMapper.readValue(source, Component.class);
     }
 

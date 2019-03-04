@@ -47,42 +47,42 @@ public class Json2ApplicationConverterTest {
 
     @Test(expected = NullPointerException.class)
     public void convert_should_throw_exception_if_input_is_null() throws Exception {
-        new Json2ApplicationConverter().convert(null);
+        new Json2ApplicationConverter().convert(null, null);
     }
 
     @Test(expected = IOException.class)
     public void convert_should_throw_exception_if_input_is_not_legal() throws Exception {
         try (InputStream is = toInputStream("test")) {
-            new Json2ApplicationConverter().convert(is);
+            new Json2ApplicationConverter().convert(is, "regardlesse");
         }
     }
 
     @Test
     public void convert_should_convert_empty_application_to_matching_output() throws Exception {
-        Application input = new Application();
+        Application source = new Application();
 
-        Application output;
-        try (InputStream is = toInputStream(input)) {
-            output = new Json2ApplicationConverter().convert(is);
+        Application target;
+        try (InputStream is = toInputStream(source)) {
+            target = new Json2ApplicationConverter().convert(is, "regardless");
         }
 
-        assertThat(output).isNotNull().isEqualTo(input);
+        assertThat(target).isNotNull().isEqualTo(source);
     }
 
     @Test
     public void convert_should_convert_filled_application_to_matching_output() throws Exception {
-        Application input = new Application();
-        input.setId("id");
-        input.setName("name");
-        input.setDescription("description");
-        input.setVersion("version");
+        Application source = new Application();
+        source.setId("id");
+        source.setName("name");
+        source.setDescription("description");
+        source.setVersion("version");
 
-        Application output;
-        try (InputStream is = toInputStream(input)) {
-            output = new Json2ApplicationConverter().convert(is);
+        Application target;
+        try (InputStream is = toInputStream(source)) {
+            target = new Json2ApplicationConverter().convert(is, source.getId());
         }
 
-        assertThat(output).isNotNull().isEqualTo(input);
+        assertThat(target).isNotNull().isEqualTo(source);
     }
 
     private static InputStream toInputStream(Application application) throws JsonProcessingException {

@@ -44,42 +44,42 @@ public class Json2ComponentConverterTest {
 
     @Test(expected = NullPointerException.class)
     public void convert_should_throw_exception_if_input_is_null() throws Exception {
-        new Json2ComponentConverter().convert(null);
+        new Json2ComponentConverter().convert(null, null);
     }
 
     @Test(expected = IOException.class)
     public void convert_should_throw_exception_if_input_is_not_legal() throws Exception {
         try (InputStream is = new ByteArrayInputStream("test".getBytes())) {
-            new Json2ComponentConverter().convert(is);
+            new Json2ComponentConverter().convert(is, "regardless");
         }
     }
 
     @Test
     public void convert_should_convert_empty_component_to_matching_output() throws Exception {
-        Component input = new Component();
+        Component source = new Component();
 
-        Component output;
-        try (InputStream is = new ByteArrayInputStream(objectMapper.writeValueAsBytes(input))) {
-            output = new Json2ComponentConverter().convert(is);
+        Component target;
+        try (InputStream is = new ByteArrayInputStream(objectMapper.writeValueAsBytes(source))) {
+            target = new Json2ComponentConverter().convert(is, "regardless");
         }
 
-        assertThat(output).isNotNull().isEqualTo(input);
+        assertThat(target).isNotNull().isEqualTo(source);
     }
 
     @Test
     public void convert_should_convert_filled_component_to_matching_output() throws Exception {
-        Component input = new Component();
-        input.setId("id");
-        input.setName("name");
-        input.setDescription("description");
-        input.setVersion("version");
-        input.setLayer("layer");
+        Component source = new Component();
+        source.setId("id");
+        source.setName("name");
+        source.setDescription("description");
+        source.setVersion("version");
+        source.setLayer("layer");
 
-        Component output;
-        try (InputStream is = new ByteArrayInputStream(objectMapper.writeValueAsBytes(input))) {
-            output = new Json2ComponentConverter().convert(is);
+        Component target;
+        try (InputStream is = new ByteArrayInputStream(objectMapper.writeValueAsBytes(source))) {
+            target = new Json2ComponentConverter().convert(is, source.getId());
         }
 
-        assertThat(output).isNotNull().isEqualTo(input);
+        assertThat(target).isNotNull().isEqualTo(source);
     }
 }

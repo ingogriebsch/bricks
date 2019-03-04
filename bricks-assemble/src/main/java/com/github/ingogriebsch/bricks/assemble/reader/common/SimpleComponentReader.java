@@ -50,7 +50,7 @@ public class SimpleComponentReader implements ComponentReader {
         Component component = null;
         try (InputStream resource = resourceLoader.load(id)) {
             if (resource != null) {
-                component = componentConverter.convert(resource);
+                component = componentConverter.convert(resource, id);
             }
         }
 

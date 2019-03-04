@@ -26,6 +26,6 @@ import com.github.ingogriebsch.bricks.model.Application;
 
 public interface ApplicationConverter {
 
-    Application convert(InputStream source) throws IOException;
+    Application convert(InputStream source, String id) throws IOException;
 
 }

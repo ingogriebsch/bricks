@@ -40,7 +40,7 @@ public class Yaml2ApplicationConverter implements ApplicationConverter {
     }
 
     @Override
-    public Application convert(@NonNull InputStream source) throws IOException {
+    public Application convert(@NonNull InputStream source, @NonNull String id) throws IOException {
         return objectMapper.readValue(source, Application.class);
     }
 

@@ -23,6 +23,7 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -82,7 +83,7 @@ public class SimpleComponentReaderTest {
         SimpleComponentReader simpleComponentReader = new SimpleComponentReader(resourceLoader, componentConverter);
         assertThat(simpleComponentReader.read(id)).isNull();
 
-        verify(componentConverter, times(0)).convert(any());
+        verify(componentConverter, times(0)).convert(any(), anyString());
     }
 
     @Test
@@ -91,7 +92,7 @@ public class SimpleComponentReaderTest {
         InputStream stream = new ByteArrayInputStream("{}".getBytes());
 
         given(resourceLoader.load(id)).willReturn(stream);
-        given(componentConverter.convert(stream)).willReturn(new Component());
+        given(componentConverter.convert(stream, id)).willReturn(new Component());
 
         SimpleComponentReader simpleComponentReader = new SimpleComponentReader(resourceLoader, componentConverter, false);
         assertThat(simpleComponentReader.read(id)).isNotNull();
@@ -103,7 +104,7 @@ public class SimpleComponentReaderTest {
         InputStream stream = new ByteArrayInputStream("{}".getBytes());
 
         given(resourceLoader.load(id)).willReturn(stream);
-        given(componentConverter.convert(stream)).willReturn(new Component());
+        given(componentConverter.convert(stream, id)).willReturn(new Component());
 
         new SimpleComponentReader(resourceLoader, componentConverter, true).read(id);
     }

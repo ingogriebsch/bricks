@@ -50,7 +50,7 @@ public class SimpleApplicationReader implements ApplicationReader {
         Application application = null;
         try (InputStream resource = resourceLoader.load(id)) {
             if (resource != null) {
-                application = applicationConverter.convert(resource);
+                application = applicationConverter.convert(resource, id);
             }
         }
 

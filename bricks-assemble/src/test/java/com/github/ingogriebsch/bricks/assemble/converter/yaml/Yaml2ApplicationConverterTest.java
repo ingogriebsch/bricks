@@ -48,41 +48,41 @@ public class Yaml2ApplicationConverterTest {
 
     @Test(expected = NullPointerException.class)
     public void convert_should_throw_exception_if_input_is_null() throws Exception {
-        new Yaml2ApplicationConverter().convert(null);
+        new Yaml2ApplicationConverter().convert(null, null);
     }
 
     @Test(expected = IOException.class)
     public void convert_should_throw_exception_if_input_is_not_legal() throws Exception {
         try (InputStream is = new ByteArrayInputStream("test".getBytes())) {
-            new Yaml2ApplicationConverter().convert(is);
+            new Yaml2ApplicationConverter().convert(is, "regardless");
         }
     }
 
     @Test
     public void convert_should_convert_empty_application_to_matching_output() throws Exception {
-        Application input = new Application();
+        Application source = new Application();
 
-        Application output;
-        try (InputStream is = new ByteArrayInputStream(objectMapper.writeValueAsBytes(input))) {
-            output = new Yaml2ApplicationConverter().convert(is);
+        Application target;
+        try (InputStream is = new ByteArrayInputStream(objectMapper.writeValueAsBytes(source))) {
+            target = new Yaml2ApplicationConverter().convert(is, "regardless");
         }
 
-        assertThat(output).isNotNull().isEqualTo(input);
+        assertThat(target).isNotNull().isEqualTo(source);
     }
 
     @Test
     public void convert_should_convert_application_to_matching_output() throws Exception {
-        Application input = new Application();
-        input.setId("id");
-        input.setName("name");
-        input.setDescription("description");
-        input.setVersion("version");
+        Application source = new Application();
+        source.setId("id");
+        source.setName("name");
+        source.setDescription("description");
+        source.setVersion("version");
 
-        Application output;
-        try (InputStream is = toInputStream(objectMapper.writeValueAsString(input), forName("UTF-8"))) {
-            output = new Yaml2ApplicationConverter().convert(is);
+        Application target;
+        try (InputStream is = toInputStream(objectMapper.writeValueAsString(source), forName("UTF-8"))) {
+            target = new Yaml2ApplicationConverter().convert(is, source.getId());
         }
-        assertThat(output).isNotNull().isEqualTo(input);
+        assertThat(target).isNotNull().isEqualTo(source);
     }
 
 }

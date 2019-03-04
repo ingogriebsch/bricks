@@ -23,6 +23,7 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -82,7 +83,7 @@ public class SimpleApplicationReaderTest {
         SimpleApplicationReader simpleApplicationReader = new SimpleApplicationReader(resourceLoader, applicationConverter);
         assertThat(simpleApplicationReader.read(id)).isNull();
 
-        verify(applicationConverter, times(0)).convert(any());
+        verify(applicationConverter, times(0)).convert(any(), anyString());
     }
 
     @Test
@@ -91,7 +92,7 @@ public class SimpleApplicationReaderTest {
         InputStream stream = new ByteArrayInputStream("{}".getBytes());
 
         given(resourceLoader.load(id)).willReturn(stream);
-        given(applicationConverter.convert(stream)).willReturn(new Application());
+        given(applicationConverter.convert(stream, id)).willReturn(new Application());
 
         SimpleApplicationReader simpleApplicationReader =
             new SimpleApplicationReader(resourceLoader, applicationConverter, false);
@@ -104,7 +105,7 @@ public class SimpleApplicationReaderTest {
         InputStream stream = new ByteArrayInputStream("{}".getBytes());
 
         given(resourceLoader.load(id)).willReturn(stream);
-        given(applicationConverter.convert(stream)).willReturn(new Application());
+        given(applicationConverter.convert(stream, id)).willReturn(new Application());
 
         new SimpleApplicationReader(resourceLoader, applicationConverter, true).read(id);
     }
