@@ -60,6 +60,12 @@ public class Application {
     private String version;
 
     /**
+     * The license under which the application is published.
+     */
+    @Valid
+    private License license;
+
+    /**
      * A collection of persons or teams which are responsible for the component.
      */
     @NotEmpty
@@ -67,8 +73,16 @@ public class Application {
     private Set<Responsible> responsibles;
 
     /**
+     * A collection of management systems which are used to manage the application.
+     */
+    @Valid
+    private Set<ManagementSystem> managementSystems;
+
+    /**
      * A collection of components that make up the application.
      */
+    // FIXME Should this really be part of the application? If we couple the components in a loose way, we would not have the need
+    // to use an assembler and can be more flexible in implementing different loaders/converters/readers.
     @Valid
     private Set<Component> components;
 

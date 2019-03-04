@@ -19,7 +19,7 @@
  */
 package com.github.ingogriebsch.bricks.model;
 
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.Valid;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,27 +28,33 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-public class Ecosystem {
+public class Runtime {
 
     /**
-     * The platform of the ecosystem. Legal values could be 'jvm', 'node', etc.
+     * Specifies if the component is failover capable.
      */
-    @NotBlank
-    private String platform;
+    private boolean failoverCapable;
 
     /**
-     * The flavor (or language) which is executed on the platform. Legal values could be 'java', 'kotlin', 'javascript', etc.
+     * Specifies if the component is horizontal scalable.
      */
-    @NotBlank
-    private String flavor;
+    private boolean horizontalScalable;
 
     /**
-     * The version of the used ecosystem (if available).
+     * Describes the administration possibilities of the component.
      */
-    private String version;
+    @Valid
+    private Administration administration;
 
     /**
-     * An (optional) url to access more information about the framework.
+     * Describes the memory footprint of the component.
      */
-    private String url;
+    @Valid
+    private MemoryFootprint memoryFootprint;
+
+    /**
+     * Describes the monitoring capabilities of the component.
+     */
+    @Valid
+    private Monitoring monitoring;
 }

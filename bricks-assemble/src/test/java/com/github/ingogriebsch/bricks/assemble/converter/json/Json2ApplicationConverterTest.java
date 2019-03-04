@@ -19,19 +19,31 @@
  */
 package com.github.ingogriebsch.bricks.assemble.converter.json;
 
-import static com.google.common.collect.Sets.newHashSet;
+import static java.nio.charset.Charset.forName;
+
+import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.ingogriebsch.bricks.model.Application;
 
+import org.apache.commons.io.IOUtils;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class Json2ApplicationConverterTest {
+
+    private static ObjectMapper objectMapper;
+
+    @BeforeClass
+    public static void beforeClass() {
+        objectMapper = new ObjectMapper();
+        objectMapper.configure(FAIL_ON_EMPTY_BEANS, false);
+    }
 
     @Test(expected = NullPointerException.class)
     public void convert_should_throw_exception_if_input_is_null() throws Exception {
@@ -40,7 +52,7 @@ public class Json2ApplicationConverterTest {
 
     @Test(expected = IOException.class)
     public void convert_should_throw_exception_if_input_is_not_legal() throws Exception {
-        try (InputStream is = new ByteArrayInputStream("test".getBytes())) {
+        try (InputStream is = toInputStream("test")) {
             new Json2ApplicationConverter().convert(is);
         }
     }
@@ -50,7 +62,7 @@ public class Json2ApplicationConverterTest {
         Application input = new Application();
 
         Application output;
-        try (InputStream is = new ByteArrayInputStream(new ObjectMapper().writeValueAsBytes(input))) {
+        try (InputStream is = toInputStream(input)) {
             output = new Json2ApplicationConverter().convert(is);
         }
 
@@ -59,13 +71,25 @@ public class Json2ApplicationConverterTest {
 
     @Test
     public void convert_should_convert_filled_application_to_matching_output() throws Exception {
-        Application input = new Application("id", "name", "description", "version", newHashSet(), newHashSet());
+        Application input = new Application();
+        input.setId("id");
+        input.setName("name");
+        input.setDescription("description");
+        input.setVersion("version");
 
         Application output;
-        try (InputStream is = new ByteArrayInputStream(new ObjectMapper().writeValueAsBytes(input))) {
+        try (InputStream is = toInputStream(input)) {
             output = new Json2ApplicationConverter().convert(is);
         }
 
         assertThat(output).isNotNull().isEqualTo(input);
+    }
+
+    private static InputStream toInputStream(Application application) throws JsonProcessingException {
+        return toInputStream(objectMapper.writeValueAsString(application));
+    }
+
+    private static InputStream toInputStream(String content) throws JsonProcessingException {
+        return IOUtils.toInputStream(content, forName("UTF-8"));
     }
 }

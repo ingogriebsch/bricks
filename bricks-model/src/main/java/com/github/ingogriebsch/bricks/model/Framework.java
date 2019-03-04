@@ -28,22 +28,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-public class Ecosystem {
+public class Framework {
 
     /**
-     * The platform of the ecosystem. Legal values could be 'jvm', 'node', etc.
+     * The name of the framework. Possible values could be 'Spring', 'Hibernate', 'JBPM', etc.
      */
     @NotBlank
-    private String platform;
+    private String name;
 
     /**
-     * The flavor (or language) which is executed on the platform. Legal values could be 'java', 'kotlin', 'javascript', etc.
-     */
-    @NotBlank
-    private String flavor;
-
-    /**
-     * The version of the used ecosystem (if available).
+     * The (optional) version of the framework.
      */
     private String version;
 

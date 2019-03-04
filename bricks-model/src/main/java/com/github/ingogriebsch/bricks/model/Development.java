@@ -19,7 +19,11 @@
  */
 package com.github.ingogriebsch.bricks.model;
 
-import org.hibernate.validator.constraints.NotBlank;
+import java.util.Set;
+
+import javax.validation.Valid;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,27 +32,26 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-public class Ecosystem {
+public class Development {
 
     /**
-     * The platform of the ecosystem. Legal values could be 'jvm', 'node', etc.
+     * A collection of management systems which are used to manage the development of the application.
      */
-    @NotBlank
-    private String platform;
+    @Valid
+    private Set<ManagementSystem> managementSystems;
 
     /**
-     * The flavor (or language) which is executed on the platform. Legal values could be 'java', 'kotlin', 'javascript', etc.
+     * A collection of the main frameworks which are used to implement the component.
      */
-    @NotBlank
-    private String flavor;
+    @NotEmpty
+    @Valid
+    private Set<Framework> frameworks;
 
     /**
-     * The version of the used ecosystem (if available).
+     * A collection of the main build tools which are used to build the component.
      */
-    private String version;
+    @NotEmpty
+    @Valid
+    private Set<BuildTool> buildTools;
 
-    /**
-     * An (optional) url to access more information about the framework.
-     */
-    private String url;
 }

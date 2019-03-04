@@ -22,7 +22,6 @@ package com.github.ingogriebsch.bricks.assemble.converter.yaml;
 import static java.nio.charset.Charset.forName;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS;
-import static com.google.common.collect.Sets.newHashSet;
 import static org.apache.commons.io.IOUtils.toInputStream;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,7 +32,6 @@ import java.io.InputStream;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.github.ingogriebsch.bricks.model.Application;
-import com.github.ingogriebsch.bricks.model.Responsible;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -74,12 +72,14 @@ public class Yaml2ApplicationConverterTest {
 
     @Test
     public void convert_should_convert_application_to_matching_output() throws Exception {
-        Application input = new Application("id", "name", "description", "version",
-            newHashSet(new Responsible("Avengers", "avengers@gmail.com")), newHashSet());
-        String applicationAsYamlString = objectMapper.writeValueAsString(input);
+        Application input = new Application();
+        input.setId("id");
+        input.setName("name");
+        input.setDescription("description");
+        input.setVersion("version");
 
         Application output;
-        try (InputStream is = toInputStream(applicationAsYamlString, forName("UTF-8"))) {
+        try (InputStream is = toInputStream(objectMapper.writeValueAsString(input), forName("UTF-8"))) {
             output = new Yaml2ApplicationConverter().convert(is);
         }
         assertThat(output).isNotNull().isEqualTo(input);

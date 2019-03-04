@@ -28,27 +28,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-public class Ecosystem {
+public class ManagementSystem {
 
     /**
-     * The platform of the ecosystem. Legal values could be 'jvm', 'node', etc.
+     * The type of the management system. Legal values could be 'continuous integration', 'issue tracker', 'continuous
+     * inspection', 'source control', etc.
      */
     @NotBlank
-    private String platform;
+    private String type;
 
     /**
-     * The flavor (or language) which is executed on the platform. Legal values could be 'java', 'kotlin', 'javascript', etc.
+     * The name of the mangement system. Possible values could be 'GitHub', 'Jenkins', 'Jira', 'Sonarcube', etc.
      */
     @NotBlank
-    private String flavor;
+    private String name;
 
     /**
-     * The version of the used ecosystem (if available).
-     */
-    private String version;
-
-    /**
-     * An (optional) url to access more information about the framework.
+     * An (optional) url to access the management system.
      */
     private String url;
 }
