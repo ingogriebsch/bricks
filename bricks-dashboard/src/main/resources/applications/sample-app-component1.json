@@ -23,17 +23,13 @@
     "version": "1.1.0",
     "description": "...",
     "layer": "core",
-    "frameworks": ["Spring-Boot"],
-    "buildTools": ["Maven"],
+    "responsibles": [{
+        "name": "The Avengers",
+        "email": "avengers@gmail.com"
+    }],
     "ecosystems": [{
         "platform": "jvm",
         "flavor": "java",
         "version": "1.8"
-    }],
-    "memoryFootprint": {
-    },
-    "responsibles": [{
-        "name": "The Avengers",
-        "email": "avengers@gmail.com"
     }]
 }

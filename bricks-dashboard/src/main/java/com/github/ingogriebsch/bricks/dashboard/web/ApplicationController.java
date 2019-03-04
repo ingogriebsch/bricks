@@ -25,8 +25,8 @@ import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
 
 import java.util.Set;
 
-import com.github.ingogriebsch.bricks.dashboard.facility.ApplicationFacility;
 import com.github.ingogriebsch.bricks.dashboard.service.ApplicationService;
+import com.github.ingogriebsch.bricks.dashboard.service.ComponentService;
 import com.github.ingogriebsch.bricks.dashboard.web.Breadcrumb.Entry;
 import com.github.ingogriebsch.bricks.model.Application;
 import com.github.ingogriebsch.bricks.model.Component;
@@ -46,7 +46,7 @@ public class ApplicationController {
     @NonNull
     private final ApplicationService applicationService;
     @NonNull
-    private final ApplicationFacility applicationFacility;
+    private final ComponentService componentService;
 
     @GetMapping(path = { "/applications/{applicationId}", "/applications/{applicationId}/overview" }, produces = TEXT_HTML_VALUE)
     public String overview(@PathVariable String applicationId, @NonNull Model model) throws Exception {
@@ -64,7 +64,7 @@ public class ApplicationController {
         Application application = application(applicationId);
         model.addAttribute("application", application);
 
-        Set<Component> components = applicationFacility.getComponents(application);
+        Set<Component> components = componentService.findAll(applicationId);
         model.addAttribute("components", components);
 
         Breadcrumb breadcrumb = breadcrumb(application);

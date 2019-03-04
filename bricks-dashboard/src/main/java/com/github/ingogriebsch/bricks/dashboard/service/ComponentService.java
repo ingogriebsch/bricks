@@ -17,15 +17,14 @@
  * limitations under the License.
  * #L%
  */
-package com.github.ingogriebsch.bricks.dashboard.facility;
+package com.github.ingogriebsch.bricks.dashboard.service;
 
 import static com.google.common.collect.MoreCollectors.toOptional;
-import static com.google.common.collect.Sets.newHashSet;
 
 import java.util.Optional;
 import java.util.Set;
 
-import com.github.ingogriebsch.bricks.model.Application;
+import com.github.ingogriebsch.bricks.assemble.collector.ComponentCollector;
 import com.github.ingogriebsch.bricks.model.Component;
 
 import lombok.NonNull;
@@ -33,14 +32,15 @@ import lombok.RequiredArgsConstructor;
 
 @org.springframework.stereotype.Component
 @RequiredArgsConstructor
-public class ApplicationFacility {
+public class ComponentService {
 
-    public Set<Component> getComponents(@NonNull Application application) {
-        return application.getComponents() != null ? application.getComponents() : newHashSet();
+    private final ComponentCollector componentCollector;
+
+    public Set<Component> findAll(@NonNull String applicationId) throws Exception {
+        return componentCollector.collect(applicationId);
     }
 
-    public Optional<Component> getComponent(@NonNull Application application, @NonNull String componentId) {
-        return getComponents(application).stream().filter(a -> componentId.equals(a.getId())).collect(toOptional());
+    public Optional<Component> findOne(@NonNull String applicationId, @NonNull String componentId) throws Exception {
+        return findAll(applicationId).stream().filter(a -> componentId.equals(a.getId())).collect(toOptional());
     }
-
 }

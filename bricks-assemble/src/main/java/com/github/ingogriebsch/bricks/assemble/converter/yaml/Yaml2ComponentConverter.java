@@ -20,6 +20,7 @@
 package com.github.ingogriebsch.bricks.assemble.converter.yaml;
 
 import static com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_COMMENTS;
+import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,6 +50,7 @@ public class Yaml2ComponentConverter implements ComponentConverter {
         yamlFactory.enable(ALLOW_COMMENTS);
 
         ObjectMapper objectMapper = new ObjectMapper(yamlFactory);
+        objectMapper.configure(FAIL_ON_EMPTY_BEANS, false);
         return objectMapper;
     }
 }

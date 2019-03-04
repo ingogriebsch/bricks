@@ -19,8 +19,8 @@
  */
 package com.github.ingogriebsch.bricks.dashboard.web;
 
-import com.github.ingogriebsch.bricks.dashboard.facility.ApplicationFacility;
 import com.github.ingogriebsch.bricks.dashboard.service.ApplicationService;
+import com.github.ingogriebsch.bricks.dashboard.service.ComponentService;
 import com.github.ingogriebsch.bricks.dashboard.web.Breadcrumb.Entry;
 import com.github.ingogriebsch.bricks.model.Application;
 import com.github.ingogriebsch.bricks.model.Component;
@@ -41,15 +41,15 @@ public class ComponentController {
     @NonNull
     private final ApplicationService applicationService;
     @NonNull
-    private final ApplicationFacility applicationFacility;
+    private final ComponentService componentService;
 
     @GetMapping(path = "/applications/{applicationId}/components/{componentId}/overview", produces = MediaType.TEXT_HTML_VALUE)
     public String overview(@PathVariable String applicationId, @PathVariable String componentId, @NonNull Model model)
         throws Exception {
-        Application application = application(applicationId);
+        Application application = getApplication(applicationId);
         model.addAttribute("application", application);
 
-        Component component = component(application, componentId);
+        Component component = getComponent(applicationId, componentId);
         model.addAttribute("component", component);
 
         Breadcrumb breadcrumb = breadcrumb(application, component);
@@ -58,17 +58,17 @@ public class ComponentController {
         return "/component/overview";
     }
 
-    private Application application(String applicationId) throws Exception {
+    private Application getApplication(String applicationId) throws Exception {
         Application application = applicationService.findOne(applicationId).orElseThrow(() -> new IllegalStateException(
             String.format("Weird things happen! Application with id '%s' is not available!", applicationId)));
         return application;
     }
 
-    private Component component(Application application, String componentId) {
-        Component component = applicationFacility.getComponent(application, componentId)
+    private Component getComponent(String applicationId, String componentId) throws Exception {
+        Component component = componentService.findOne(applicationId, componentId)
             .orElseThrow(() -> new IllegalStateException(
                 String.format("Weird things happen! Component with id '%s' for application with id '%s' is not available!",
-                    componentId, application.getId())));
+                    componentId, applicationId)));
         return component;
     }
 

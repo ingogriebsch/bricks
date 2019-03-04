@@ -20,6 +20,7 @@
 package com.github.ingogriebsch.bricks.assemble.converter.json;
 
 import static com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_COMMENTS;
+import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,6 +47,8 @@ public class Json2ApplicationConverter implements ApplicationConverter {
 
     private static ObjectMapper createAndPrepareObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(FAIL_ON_EMPTY_BEANS, false);
+
         JsonFactory jsonFactory = objectMapper.getFactory();
         jsonFactory.enable(ALLOW_COMMENTS);
         return objectMapper;

@@ -22,7 +22,7 @@ package com.github.ingogriebsch.bricks.assemble.collector;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.github.ingogriebsch.bricks.assemble.assembler.ApplicationAssembler;
+import com.github.ingogriebsch.bricks.assemble.reader.ApplicationReader;
 import com.github.ingogriebsch.bricks.model.Application;
 
 import lombok.NonNull;
@@ -34,14 +34,14 @@ public class ApplicationCollector {
     @NonNull
     private final ApplicationIdCollector applicationIdCollector;
     @NonNull
-    private final ApplicationAssembler applicationAssembler;
+    private final ApplicationReader applicationReader;
 
     public Set<Application> collect() throws Exception {
         Set<String> applicationIds = applicationIdCollector.collect();
 
         Set<Application> result = new HashSet<>(applicationIds.size());
         for (String id : applicationIds) {
-            Application application = applicationAssembler.assemble(id);
+            Application application = applicationReader.read(id);
             if (application != null) {
                 result.add(application);
             }

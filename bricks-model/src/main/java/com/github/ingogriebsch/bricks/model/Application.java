@@ -78,12 +78,4 @@ public class Application {
     @Valid
     private Set<ManagementSystem> managementSystems;
 
-    /**
-     * A collection of components that make up the application.
-     */
-    // FIXME Should this really be part of the application? If we couple the components in a loose way, we would not have the need
-    // to use an assembler and can be more flexible in implementing different loaders/converters/readers.
-    @Valid
-    private Set<Component> components;
-
 }

@@ -29,7 +29,7 @@ import static org.mockito.Mockito.verify;
 
 import java.util.Set;
 
-import com.github.ingogriebsch.bricks.assemble.assembler.ApplicationAssembler;
+import com.github.ingogriebsch.bricks.assemble.reader.ApplicationReader;
 import com.github.ingogriebsch.bricks.model.Application;
 
 import org.junit.Test;
@@ -46,7 +46,7 @@ public class ApplicationCollectorTest {
     private ApplicationIdCollector collector;
 
     @Mock
-    private ApplicationAssembler assembler;
+    private ApplicationReader reader;
 
     @Test(expected = NullPointerException.class)
     public void creation_should_throw_exception_if_input_is_null() {
@@ -55,7 +55,7 @@ public class ApplicationCollectorTest {
 
     @Test(expected = NullPointerException.class)
     public void creation_should_throw_exception_if_collector_is_null() {
-        new ApplicationCollector(null, assembler);
+        new ApplicationCollector(null, reader);
     }
 
     @Test(expected = NullPointerException.class)
@@ -67,23 +67,23 @@ public class ApplicationCollectorTest {
     public void collect_throws_exception_if_collector_throws_exception() throws Exception {
         given(collector.collect()).willThrow(new RuntimeException());
 
-        new ApplicationCollector(collector, assembler).collect();
+        new ApplicationCollector(collector, reader).collect();
     }
 
     @Test(expected = RuntimeException.class)
     public void collect_throws_exception_if_assembler_throws_exception() throws Exception {
         given(collector.collect()).willReturn(newHashSet(randomAlphabetic(6)));
-        given(assembler.assemble(anyString())).willThrow(new RuntimeException());
+        given(reader.read(anyString())).willThrow(new RuntimeException());
 
-        new ApplicationCollector(collector, assembler).collect();
+        new ApplicationCollector(collector, reader).collect();
     }
 
     @Test
     public void collect_should_call_collector() throws Exception {
         given(collector.collect()).willReturn(newHashSet(randomAlphabetic(6)));
-        given(assembler.assemble(anyString())).willReturn(null);
+        given(reader.read(anyString())).willReturn(null);
 
-        new ApplicationCollector(collector, assembler).collect();
+        new ApplicationCollector(collector, reader).collect();
 
         verify(collector).collect();
     }
@@ -94,7 +94,7 @@ public class ApplicationCollectorTest {
         Set<String> applicationIds = newHashSet(applicationId, randomAlphabetic(6), randomAlphabetic(6));
 
         given(collector.collect()).willReturn(applicationIds);
-        given(assembler.assemble(anyString())).willAnswer(new Answer<Application>() {
+        given(reader.read(anyString())).willAnswer(new Answer<Application>() {
 
             @Override
             public Application answer(InvocationOnMock invocation) throws Throwable {
@@ -102,10 +102,10 @@ public class ApplicationCollectorTest {
             }
         });
 
-        new ApplicationCollector(collector, assembler).collect();
+        new ApplicationCollector(collector, reader).collect();
 
         verify(collector).collect();
-        verify(assembler, times(applicationIds.size())).assemble(anyString());
+        verify(reader, times(applicationIds.size())).read(anyString());
     }
 
     @Test
@@ -114,7 +114,7 @@ public class ApplicationCollectorTest {
         Set<String> applicationIds = newHashSet(applicationId, randomAlphabetic(6), randomAlphabetic(6));
 
         given(collector.collect()).willReturn(applicationIds);
-        given(assembler.assemble(applicationId)).willAnswer(new Answer<Application>() {
+        given(reader.read(applicationId)).willAnswer(new Answer<Application>() {
 
             @Override
             public Application answer(InvocationOnMock invocation) throws Throwable {
@@ -122,9 +122,9 @@ public class ApplicationCollectorTest {
             }
         });
 
-        Set<Application> components = new ApplicationCollector(collector, assembler).collect();
+        Set<Application> components = new ApplicationCollector(collector, reader).collect();
         assertThat(components).isNotNull().hasSize(1);
 
-        verify(assembler, times(applicationIds.size())).assemble(anyString());
+        verify(reader, times(applicationIds.size())).read(anyString());
     }
 }

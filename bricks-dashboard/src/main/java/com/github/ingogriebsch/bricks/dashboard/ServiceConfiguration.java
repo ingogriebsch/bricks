@@ -19,8 +19,6 @@
  */
 package com.github.ingogriebsch.bricks.dashboard;
 
-import com.github.ingogriebsch.bricks.assemble.assembler.ApplicationAssembler;
-import com.github.ingogriebsch.bricks.assemble.assembler.common.ComponentCollectingApplicationAssembler;
 import com.github.ingogriebsch.bricks.assemble.collector.ApplicationCollector;
 import com.github.ingogriebsch.bricks.assemble.collector.ApplicationIdCollector;
 import com.github.ingogriebsch.bricks.assemble.collector.ComponentCollector;
@@ -31,7 +29,6 @@ import com.github.ingogriebsch.bricks.assemble.converter.json.Json2ApplicationCo
 import com.github.ingogriebsch.bricks.assemble.converter.json.Json2ComponentConverter;
 import com.github.ingogriebsch.bricks.assemble.loader.ResourceLoader;
 import com.github.ingogriebsch.bricks.assemble.loader.spring.PlaceholderBasedResourceLocationProvider;
-import com.github.ingogriebsch.bricks.assemble.loader.spring.ResourceLocationProvider;
 import com.github.ingogriebsch.bricks.assemble.loader.spring.SpringResourceBasedResourceLoader;
 import com.github.ingogriebsch.bricks.assemble.reader.ApplicationReader;
 import com.github.ingogriebsch.bricks.assemble.reader.ComponentReader;
@@ -56,19 +53,16 @@ public class ServiceConfiguration {
 
     @Bean
     public ApplicationCollector applicationCollector() {
-        return new ApplicationCollector(applicationIdCollector(), applicationAssembler());
+        return new ApplicationCollector(applicationIdCollector(), applicationReader());
     }
 
-    private ApplicationAssembler applicationAssembler() {
-        return new ComponentCollectingApplicationAssembler(applicationReader(), componentCollector());
-    }
-
-    private ComponentCollector componentCollector() {
+    @Bean
+    public ComponentCollector componentCollector() {
         return new ComponentCollector(componentIdCollector(), componentReader());
     }
 
-    private ComponentReader componentReader() {
-        return new SimpleComponentReader(resourceLoader(), new Json2ComponentConverter());
+    private ApplicationIdCollector applicationIdCollector() {
+        return new StaticApplicationIdCollector(serviceProperties.getApplicationIds());
     }
 
     private ComponentIdCollector componentIdCollector() {
@@ -79,16 +73,13 @@ public class ServiceConfiguration {
         return new SimpleApplicationReader(resourceLoader(), new Json2ApplicationConverter());
     }
 
+    private ComponentReader componentReader() {
+        return new SimpleComponentReader(resourceLoader(), new Json2ComponentConverter());
+    }
+
     private ResourceLoader resourceLoader() {
-        return new SpringResourceBasedResourceLoader(resourceLoader, resourceLocationProvider());
-    }
-
-    private ResourceLocationProvider resourceLocationProvider() {
-        return new PlaceholderBasedResourceLocationProvider("classpath:/applications/${id}.json");
-    }
-
-    private ApplicationIdCollector applicationIdCollector() {
-        return new StaticApplicationIdCollector(serviceProperties.getApplicationIds());
+        return new SpringResourceBasedResourceLoader(resourceLoader,
+            new PlaceholderBasedResourceLocationProvider("classpath:/applications/${id}.json"));
     }
 
 }

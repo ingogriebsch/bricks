@@ -23,8 +23,6 @@ import java.util.Set;
 
 import javax.validation.Valid;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,14 +41,12 @@ public class Development {
     /**
      * A collection of the main frameworks which are used to implement the component.
      */
-    @NotEmpty
     @Valid
     private Set<Framework> frameworks;
 
     /**
      * A collection of the main build tools which are used to build the component.
      */
-    @NotEmpty
     @Valid
     private Set<BuildTool> buildTools;
 
