@@ -42,32 +42,25 @@ import lombok.NonNull;
 
 public class GitHubBasedResourceLoader implements ResourceLoader {
 
-    private final GitHubBasedResourceProperties properties;
-    private final RepositoryIdProvider repositoryIdProvider;
+    private final ResourceOriginProvider resourceOriginProvider;
     private final ContentsService contentsService;
 
     public GitHubBasedResourceLoader(@NonNull GitHubConfiguration configuration,
-        @NonNull GitHubBasedResourceProperties properties) {
-        this(configuration, properties, new OneOnOneRepositoryIdProvider());
+        @NonNull ResourceOriginProvider resourceOriginProvider) {
+        this(configuration, resourceOriginProvider, new ContentsService(createClient(validate(configuration))));
     }
 
-    public GitHubBasedResourceLoader(@NonNull GitHubConfiguration configuration,
-        @NonNull GitHubBasedResourceProperties properties, @NonNull RepositoryIdProvider repositoryIdProvider) {
-        this(configuration, properties, repositoryIdProvider, new ContentsService(createClient(configuration)));
-    }
-
-    GitHubBasedResourceLoader(@NonNull GitHubConfiguration configuration, @NonNull GitHubBasedResourceProperties properties,
-        @NonNull RepositoryIdProvider repositoryIdProvider, @NonNull ContentsService contentsService) {
-        validate(configuration);
-        this.properties = validate(properties);
-        this.repositoryIdProvider = repositoryIdProvider;
+    GitHubBasedResourceLoader(@NonNull GitHubConfiguration configuration, @NonNull ResourceOriginProvider resourceOriginProvider,
+        @NonNull ContentsService contentsService) {
+        this.resourceOriginProvider = resourceOriginProvider;
         this.contentsService = contentsService;
     }
 
     @Override
     public InputStream load(@NonNull String id) throws IOException {
-        List<RepositoryContents> contents =
-            contentsService.getContents(repositoryId(id), properties.getContentFilename(), properties.getRef());
+        ResourceOrigin resourceOrigin = resourceOriginProvider.get(id);
+        List<RepositoryContents> contents = contentsService.getContents(repositoryId(resourceOrigin.getRepositoryId()),
+            resourceOrigin.getPath(), resourceOrigin.getRef());
 
         if (contents == null || contents.isEmpty()) {
             return null;
@@ -82,19 +75,19 @@ public class GitHubBasedResourceLoader implements ResourceLoader {
         return toInputStream(content.getContent(), content.getEncoding());
     }
 
-    private IRepositoryIdProvider repositoryId(String id) {
+    private static <T> T validate(T object) {
+        new Validator().validate(object);
+        return object;
+    }
+
+    private static IRepositoryIdProvider repositoryId(String id) {
         return new IRepositoryIdProvider() {
 
             @Override
             public String generateId() {
-                return repositoryIdProvider.getId(id);
+                return id;
             }
         };
-    }
-
-    private static <T> T validate(T object) {
-        new Validator().validate(object);
-        return object;
     }
 
     private static GitHubClient createClient(GitHubConfiguration configuration) {
