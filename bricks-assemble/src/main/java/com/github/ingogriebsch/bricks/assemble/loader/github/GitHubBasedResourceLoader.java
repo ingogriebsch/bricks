@@ -47,11 +47,10 @@ public class GitHubBasedResourceLoader implements ResourceLoader {
 
     public GitHubBasedResourceLoader(@NonNull GitHubConfiguration configuration,
         @NonNull ResourceOriginProvider resourceOriginProvider) {
-        this(configuration, resourceOriginProvider, new ContentsService(createClient(validate(configuration))));
+        this(resourceOriginProvider, createContentsService(validate(configuration)));
     }
 
-    GitHubBasedResourceLoader(@NonNull GitHubConfiguration configuration, @NonNull ResourceOriginProvider resourceOriginProvider,
-        @NonNull ContentsService contentsService) {
+    GitHubBasedResourceLoader(@NonNull ResourceOriginProvider resourceOriginProvider, @NonNull ContentsService contentsService) {
         this.resourceOriginProvider = resourceOriginProvider;
         this.contentsService = contentsService;
     }
@@ -88,6 +87,10 @@ public class GitHubBasedResourceLoader implements ResourceLoader {
                 return id;
             }
         };
+    }
+
+    private static ContentsService createContentsService(GitHubConfiguration configuration) {
+        return new ContentsService(createClient(configuration));
     }
 
     private static GitHubClient createClient(GitHubConfiguration configuration) {
