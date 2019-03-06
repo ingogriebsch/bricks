@@ -54,7 +54,7 @@ public class PlaceholderBasedResourceLocationProviderTest {
 
     @Test(expected = NullPointerException.class)
     public void getLocation_should_throw_exception_if_input_is_null() {
-        new PlaceholderBasedResourceLocationProvider("classpath:${id}").getLocation(null);
+        new PlaceholderBasedResourceLocationProvider("classpath:${id}").get(null);
     }
 
     @Test
@@ -65,7 +65,7 @@ public class PlaceholderBasedResourceLocationProviderTest {
         ResourceLocationProvider provider =
             new PlaceholderBasedResourceLocationProvider(locationBasePrefix + "${placeholderName}", "placeholderName");
 
-        assertThat(provider.getLocation(id)).isNotNull().isEqualTo(locationBasePrefix + id);
+        assertThat(provider.get(id)).isNotNull().isEqualTo(locationBasePrefix + id);
     }
 
 }
