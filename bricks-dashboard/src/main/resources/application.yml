@@ -2,6 +2,36 @@ bricks:
   dashboard:
     applications:
       - id: sample-app
+        name: Sample Application
+        description: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+        version: 1.0.0
+        responsibles:
+          - name: The Avengers
+            email: avengers@gmail.com
+          - name: Justice League
+            email: justice-league@gmail.com
         components:
-          - id: sample-app-component1
-          - id: sample-app-component2
+          - id: component1
+            name: Core Component
+            description: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+            version: 1.2.3
+            layer: core,
+            responsibles:
+              - name: The Avengers
+                email: avengers@gmail.com
+            ecosystems:
+              - platform: jvm,
+                flavor: java,
+                version: 1.8
+          - id: component2
+            name: Edge Component
+            description: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+            version: 4.0.1
+            layer: edge,
+            responsibles:
+              - name: Justice League
+                email: justice-league@gmail.com
+            ecosystems:
+              - platform: node,
+                flavor: javascript
+          
