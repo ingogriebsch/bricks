@@ -29,6 +29,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * An interface is a shared boundary across which two or more separate components of an application exchange information.
+ */
 @AllArgsConstructor
 @Data
 @NoArgsConstructor

@@ -27,6 +27,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Communication is the act of conveying meanings from one entity or group to another through the use of mutually understood
+ * signs, symbols, and semiotic rules.
+ */
 @AllArgsConstructor
 @Data
 @NoArgsConstructor

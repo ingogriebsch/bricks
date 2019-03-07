@@ -25,6 +25,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * A management system is a set of policies, processes and procedures used by an organization to ensure that it can fulfill the
+ * tasks required to achieve its objectives.
+ */
 @AllArgsConstructor
 @Data
 @NoArgsConstructor

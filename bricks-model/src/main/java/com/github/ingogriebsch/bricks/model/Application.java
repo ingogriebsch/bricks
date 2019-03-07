@@ -30,6 +30,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * An application is a product or program that can be used by the end user.
+ */
 @AllArgsConstructor
 @Data
 @NoArgsConstructor

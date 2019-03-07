@@ -25,6 +25,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * A responsible is a person or team who has control over something.
+ */
 @AllArgsConstructor
 @Data
 @NoArgsConstructor

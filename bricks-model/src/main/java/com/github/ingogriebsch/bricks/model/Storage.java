@@ -25,6 +25,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Storage is a technology consisting of computer components and recording media that are used to retain digital data.
+ */
 @AllArgsConstructor
 @Data
 @NoArgsConstructor

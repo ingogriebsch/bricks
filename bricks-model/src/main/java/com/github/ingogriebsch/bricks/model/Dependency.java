@@ -29,6 +29,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * A dependency is a relationship that shows that an element requires other elements for their specification or implementation.
+ */
 @AllArgsConstructor
 @Data
 @NoArgsConstructor

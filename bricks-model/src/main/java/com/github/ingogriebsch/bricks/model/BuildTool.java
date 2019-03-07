@@ -25,6 +25,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * A build tool is a programs that automates the creation of executable applications from source code. Building incorporates
+ * compiling, linking and packaging the code into a usable or executable form.
+ */
 @AllArgsConstructor
 @Data
 @NoArgsConstructor

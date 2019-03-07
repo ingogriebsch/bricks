@@ -30,6 +30,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * A component represents a modular part of a system, that encapsulates its content and whose manifestation is replaceable within
+ * its environment and which defines its behavior in terms of provided and required interfaces.
+ */
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
