@@ -47,15 +47,15 @@ public class ZipExtractingResourceLoader implements ResourceLoader {
 
     @Override
     public InputStream load(@NonNull String id) throws IOException {
-        InputStream zipInputStream = delegate.load(id);
-        if (zipInputStream == null) {
+        InputStream resource = delegate.load(id);
+        if (resource == null) {
             return null;
         }
 
         File tempFile = createTempFile(randomAlphabetic(10), null);
         try {
             try (OutputStream fos = new FileOutputStream(tempFile)) {
-                copy(zipInputStream, fos);
+                copy(resource, fos);
             }
 
             try (ZipFile zipFile = new ZipFile(tempFile)) {
