@@ -1,0 +1,7 @@
+bricks:
+  dashboard:
+    applications:
+      - id: sample-app
+        components:
+          - id: sample-app-component1
+          - id: sample-app-component2
