@@ -53,18 +53,6 @@ public class GitHubComponentIdCollector implements ComponentIdCollector {
         this.repositoryNameFilter = repositoryNameFilter;
     }
 
-    private static GitHubClient createClient(GitHubConfiguration configuration) {
-        GitHubClient client = new GitHubClient(configuration.getHost(), configuration.getPort(), configuration.getScheme());
-
-        if (!StringUtils.isBlank(configuration.getOAuth2Token())) {
-            client.setOAuth2Token(configuration.getOAuth2Token());
-        } else {
-            Credentials credentials = configuration.getCredentials();
-            client.setCredentials(credentials.getUsername(), credentials.getPassword());
-        }
-        return client;
-    }
-
     @Override
     public Set<String> collect(@NonNull String applicationId) {
         Set<String> result = new HashSet<>();
@@ -75,6 +63,18 @@ public class GitHubComponentIdCollector implements ComponentIdCollector {
     private void collect(String applicationId, Collection<Repository> repositories, Set<String> result) {
         repositories.stream().filter(r -> repositoryNameFilter.test(r.getName(), applicationId))
             .forEach(r -> result.add(r.getName()));
+    }
+
+    private static GitHubClient createClient(GitHubConfiguration configuration) {
+        GitHubClient client = new GitHubClient(configuration.getHost(), configuration.getPort(), configuration.getScheme());
+
+        if (!StringUtils.isBlank(configuration.getOAuth2Token())) {
+            client.setOAuth2Token(configuration.getOAuth2Token());
+        } else {
+            Credentials credentials = configuration.getCredentials();
+            client.setCredentials(credentials.getUsername(), credentials.getPassword());
+        }
+        return client;
     }
 
 }

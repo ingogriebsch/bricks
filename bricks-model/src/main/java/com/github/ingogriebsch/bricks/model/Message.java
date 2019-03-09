@@ -21,6 +21,10 @@ package com.github.ingogriebsch.bricks.model;
 
 import lombok.EqualsAndHashCode;
 
+/**
+ * A message is a discrete unit of communication intended by the source for consumption by some recipient or group of recipients.
+ * A message can be the content of a broadcast. An interactive exchange of messages forms a conversation.
+ */
 @EqualsAndHashCode
 public class Message {
 

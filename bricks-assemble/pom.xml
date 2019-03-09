@@ -7,7 +7,7 @@
         <artifactId>bricks</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
-     </parent>
+    </parent>
 
     <artifactId>bricks-assemble</artifactId>
 
@@ -21,6 +21,12 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
@@ -47,6 +53,12 @@
             <version>21.0</version>
         </dependency>
         <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
@@ -63,11 +75,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.8.1</version>
-        </dependency>
-        <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>2.6.0</version>
@@ -77,6 +84,11 @@
             <groupId>org.eclipse.mylyn.github</groupId>
             <artifactId>org.eclipse.egit.github.core</artifactId>
             <version>2.1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jfrog.artifactory.client</groupId>
+            <artifactId>artifactory-java-client-services</artifactId>
+            <version>2.8.1</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
@@ -91,11 +103,27 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.7.26</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
             <version>4.3.14.RELEASE</version>
         </dependency>
     </dependencies>
+
+    <!-- FIXME Is it really a good idea to define this repository inside the pom? How about if we would like or need to overwrite it 
+        some day? Can we do it? Or is the repository area inside the pom the most binding place one can configure? -->
+    <repositories>
+        <repository>
+            <id>bintray</id>
+            <name>bintray</name>
+            <url>http://jcenter.bintray.com</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>
@@ -149,7 +177,7 @@
                         </executions>
                     </plugin>
                 </plugins>
-            </build>    
+            </build>
         </profile>
     </profiles>
 </project>

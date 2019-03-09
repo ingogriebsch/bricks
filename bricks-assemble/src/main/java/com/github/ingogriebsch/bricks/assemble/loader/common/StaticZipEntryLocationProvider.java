@@ -1,6 +1,6 @@
 /*-
  * #%L
- * Bricks Dashboard
+ * Bricks Assemble
  * %%
  * Copyright (C) 2018 - 2019 Ingo Griebsch
  * %%
@@ -17,19 +17,20 @@
  * limitations under the License.
  * #L%
  */
-{
-    "id": "component1",
-    "name": "Sample Component",
-    "version": "1.1.0",
-    "description": "...",
-    "layer": "core",
-    "responsibles": [{
-        "name": "The Avengers",
-        "email": "avengers@gmail.com"
-    }],
-    "ecosystems": [{
-        "platform": "jvm",
-        "flavor": "java",
-        "version": "1.8"
-    }]
+package com.github.ingogriebsch.bricks.assemble.loader.common;
+
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public class StaticZipEntryLocationProvider implements ZipEntryLocationProvider {
+
+    @NonNull
+    private final String location;
+
+    @Override
+    public String get(String componentId) {
+        return location;
+    }
+
 }

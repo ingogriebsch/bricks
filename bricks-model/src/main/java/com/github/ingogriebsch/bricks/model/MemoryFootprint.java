@@ -21,6 +21,9 @@ package com.github.ingogriebsch.bricks.model;
 
 import lombok.EqualsAndHashCode;
 
+/**
+ * A memory footprint refers to the amount of main memory that a componet or application uses or references while running.
+ */
 @EqualsAndHashCode
 public class MemoryFootprint {
 

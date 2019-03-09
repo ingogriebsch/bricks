@@ -25,6 +25,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Runtime describes the time during which a application or component is running (in contrast to other application or component
+ * lifecycle phases such as compile time).
+ */
 @AllArgsConstructor
 @Data
 @NoArgsConstructor

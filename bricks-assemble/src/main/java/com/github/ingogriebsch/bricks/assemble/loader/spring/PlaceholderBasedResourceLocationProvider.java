@@ -49,7 +49,7 @@ public class PlaceholderBasedResourceLocationProvider implements ResourceLocatio
     }
 
     @Override
-    public String getLocation(@NonNull String id) {
+    public String get(@NonNull String id) {
         return propertyPlaceholderHelper.replacePlaceholders(locationBase, replacements(id));
     }
 

@@ -19,25 +19,23 @@
  */
 package com.github.ingogriebsch.bricks.assemble.loader.github;
 
-import static com.google.common.collect.Sets.newHashSet;
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
-import static org.assertj.core.api.Assertions.assertThat;
+import lombok.Builder;
+import lombok.NonNull;
 
-import org.junit.Test;
+@Builder
+public class SimpleResourceOriginProvider implements ResourceOriginProvider {
 
-public class OneOnOneRepositoryIdProviderTest {
+    static final String DEFAULT_REF = "master";
+    static final String DEFAULT_PATH = "bricks.json";
 
-    @Test(expected = NullPointerException.class)
-    public void getId_should_throw_exception_if_input_is_null() {
-        new OneOnOneRepositoryIdProvider().getId(null);
+    @Builder.Default
+    private String ref = DEFAULT_REF;
+    @Builder.Default
+    private String path = DEFAULT_PATH;
+
+    @Override
+    public ResourceOrigin get(@NonNull String componentId) {
+        return new ResourceOrigin(componentId, ref, path);
     }
 
-    @Test
-    public void getId_should_return_given_input() {
-        RepositoryIdProvider provider = new OneOnOneRepositoryIdProvider();
-
-        newHashSet(randomAlphabetic(6)).stream().forEach(id -> {
-            assertThat(provider.getId(id)).isNotNull().isEqualTo(id);
-        });
-    }
 }

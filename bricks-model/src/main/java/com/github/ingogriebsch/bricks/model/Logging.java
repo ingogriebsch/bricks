@@ -21,6 +21,10 @@ package com.github.ingogriebsch.bricks.model;
 
 import lombok.EqualsAndHashCode;
 
+/**
+ * Logging is the act of keeping a log. A log records either events that occur in a software, or messages between different users
+ * of a communication software.
+ */
 @EqualsAndHashCode
 public class Logging {
 

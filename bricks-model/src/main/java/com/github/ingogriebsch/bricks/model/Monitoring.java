@@ -25,6 +25,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Monitoring is used to monitor system resources and performance in an component or application.
+ */
 @AllArgsConstructor
 @Data
 @NoArgsConstructor

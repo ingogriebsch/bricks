@@ -25,6 +25,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * A license is an official permission or permit to do, use, or own something.
+ */
 @AllArgsConstructor
 @Data
 @NoArgsConstructor

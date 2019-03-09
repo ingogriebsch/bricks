@@ -1,6 +1,6 @@
 /*-
  * #%L
- * Bricks Dashboard
+ * Bricks Assemble
  * %%
  * Copyright (C) 2018 - 2019 Ingo Griebsch
  * %%
@@ -17,18 +17,20 @@
  * limitations under the License.
  * #L%
  */
-{
-    "id": "component2",
-    "name": "Another Component",
-    "version": "2.3.0",
-    "description": "...",
-    "layer": "edge",
-    "responsibles": [{
-        "name": "The Avengers",
-        "email": "avengers@gmail.com"
-    }],
-    "ecosystems": [{
-        "platform": "node",
-        "flavor": "javascript"
-    }]
+package com.github.ingogriebsch.bricks.assemble.loader.spring;
+
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+public class StaticResourceLocationProvider implements ResourceLocationProvider {
+
+    @NonNull
+    private final String location;
+
+    @Override
+    public String get(String id) {
+        return location;
+    }
+
 }

@@ -20,14 +20,18 @@
 package com.github.ingogriebsch.bricks.assemble.converter.yaml;
 
 import static java.nio.charset.Charset.forName;
+import static java.util.stream.Collectors.toMap;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS;
+import static org.apache.commons.beanutils.BeanUtils.describe;
 import static org.apache.commons.io.IOUtils.toInputStream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
@@ -85,4 +89,25 @@ public class Yaml2ApplicationConverterTest {
         assertThat(target).isNotNull().isEqualTo(source);
     }
 
+    @Test
+    public void convert_should_convert_application_even_if_underlying_resource_contains_content_not_related_to_the_model()
+        throws Exception {
+        Map<String, String> source = new HashMap<>();
+        source.put("id", "id");
+        source.put("name", "name");
+        source.put("description", "description");
+        source.put("version", "version");
+        source.put("components", "components");
+        source.put("prop", "prop");
+
+        Application target;
+        try (InputStream is = toInputStream(objectMapper.writeValueAsString(source), forName("UTF-8"))) {
+            target = new Yaml2ApplicationConverter().convert(is, source.get("id"));
+        }
+
+        assertThat(target).isNotNull();
+        Map<String, String> description = describe(target).entrySet().stream()
+            .filter(e -> !e.getKey().equals("class") && e.getValue() != null).collect(toMap(e -> e.getKey(), e -> e.getValue()));
+        assertThat(source).containsAllEntriesOf(description);
+    }
 }

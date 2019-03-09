@@ -29,6 +29,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Messaging is the exchange of messages (specially-formatted data describing events, requests, and replies). Messaging makes it
+ * easier for programs to communicate across different programming environments.
+ */
 @AllArgsConstructor
 @Data
 @NoArgsConstructor

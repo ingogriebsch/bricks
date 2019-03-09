@@ -25,6 +25,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * A framework is an abstraction in which software providing generic functionality can be selectively changed by additional
+ * user-written code, thus providing application-specific software.
+ */
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
