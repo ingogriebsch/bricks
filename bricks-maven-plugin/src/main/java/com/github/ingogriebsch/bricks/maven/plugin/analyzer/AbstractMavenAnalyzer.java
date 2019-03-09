@@ -19,11 +19,11 @@
  */
 package com.github.ingogriebsch.bricks.maven.plugin.analyzer;
 
+import com.github.ingogriebsch.bricks.model.Component;
+
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 import org.reflections.Reflections;
-
-import com.github.ingogriebsch.bricks.model.Component;
 
 import lombok.NonNull;
 

@@ -23,11 +23,11 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.io.File;
 
+import com.github.ingogriebsch.bricks.model.Component;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-
-import com.github.ingogriebsch.bricks.model.Component;
 
 public class GenerateComponentMojoTest {
 

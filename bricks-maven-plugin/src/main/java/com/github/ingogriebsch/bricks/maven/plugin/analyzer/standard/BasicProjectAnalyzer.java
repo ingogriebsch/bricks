@@ -19,11 +19,11 @@
  */
 package com.github.ingogriebsch.bricks.maven.plugin.analyzer.standard;
 
-import org.apache.maven.project.MavenProject;
-
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AbstractMavenAnalyzer;
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalysisResult;
 import com.github.ingogriebsch.bricks.model.Component;
+
+import org.apache.maven.project.MavenProject;
 
 public class BasicProjectAnalyzer extends AbstractMavenAnalyzer {
 

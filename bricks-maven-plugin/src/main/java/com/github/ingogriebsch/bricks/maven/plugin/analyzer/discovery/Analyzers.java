@@ -22,15 +22,15 @@ package com.github.ingogriebsch.bricks.maven.plugin.analyzer.discovery;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.maven.plugin.AbstractMojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
-
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalysisResult;
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalyzerContext;
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.MavenAnalyzer;
 import com.github.ingogriebsch.bricks.model.Component;
 import com.google.common.base.Stopwatch;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.maven.plugin.AbstractMojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

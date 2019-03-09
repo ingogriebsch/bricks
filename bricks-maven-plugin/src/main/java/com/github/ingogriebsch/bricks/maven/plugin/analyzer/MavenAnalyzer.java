@@ -21,10 +21,10 @@ package com.github.ingogriebsch.bricks.maven.plugin.analyzer;
 
 import java.util.Comparator;
 
+import com.github.ingogriebsch.bricks.model.Component;
+
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-
-import com.github.ingogriebsch.bricks.model.Component;
 
 import lombok.NonNull;
 

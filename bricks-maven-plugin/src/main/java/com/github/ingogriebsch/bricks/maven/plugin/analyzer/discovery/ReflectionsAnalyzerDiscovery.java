@@ -23,11 +23,11 @@ import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import org.reflections.Reflections;
-
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalyzerContext;
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.MavenAnalyzer;
 import com.google.common.base.Predicates;
+
+import org.reflections.Reflections;
 
 import lombok.NonNull;
 import lombok.SneakyThrows;
