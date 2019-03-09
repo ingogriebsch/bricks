@@ -23,6 +23,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.11</version>
+        </dependency>
+        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
             <version>${project.dependency.jackson.version}</version>
@@ -87,6 +92,13 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <!-- jesus, that is old -->
+            <version>1.10.19</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -94,7 +106,8 @@
             <testResource>
                 <directory>src/test/resources</directory>
             </testResource>
-            <testResource><!-- Only to get it added as a resource folder in the IDE. -->
+            <testResource><!-- Only to get it added as a resource folder 
+                    in the IDE. -->
                 <directory>src/it</directory>
                 <targetPath></targetPath>
                 <excludes>
@@ -173,7 +186,7 @@
                         </executions>
                     </plugin>
                 </plugins>
-            </build>            
+            </build>
         </profile>
         <profile>
             <id>travis</id>
@@ -205,7 +218,7 @@
                         </executions>
                     </plugin>
                 </plugins>
-            </build>    
+            </build>
         </profile>
     </profiles>
 </project>

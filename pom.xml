@@ -38,6 +38,8 @@
         <module>bricks-assemble</module>
         <module>bricks-dashboard</module>
         <module>bricks-maven-plugin</module>
+        <module>example/bricks-example-component</module>
+        <module>example/bricks-example-custom-analyzers</module>
     </modules>
 
     <scm>
@@ -132,6 +134,11 @@
                         <failOnMissingHeader>true</failOnMissingHeader>
                         <failOnNotUptodateHeader>true</failOnNotUptodateHeader>
                         <licenseName>apache_v2</licenseName>
+                        <!-- added to prevent license plugin from complaining 
+                            about missing headers in generated sources -->
+                        <includes>
+                            <include>main/java/**/*</include>
+                        </includes>
                     </configuration>
                     <executions>
                         <execution>
@@ -228,6 +235,6 @@
                     </plugins>
                 </pluginManagement>
             </build>
-        </profile>    
+        </profile>
     </profiles>
 </project>
