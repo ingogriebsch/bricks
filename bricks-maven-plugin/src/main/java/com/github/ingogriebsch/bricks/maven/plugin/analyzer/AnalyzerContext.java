@@ -122,7 +122,7 @@ class ChildAnalyzerContext implements AnalyzerContext {
 
 }
 
-// Log decorator adding a prefix
+// PrefixLog is a Log decorator, that adds a prefix to loglines
 @RequiredArgsConstructor
 class PrefixLog implements Log {
 
