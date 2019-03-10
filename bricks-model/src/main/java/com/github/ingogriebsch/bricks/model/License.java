@@ -21,26 +21,22 @@ package com.github.ingogriebsch.bricks.model;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * A license is an official permission or permit to do, use, or own something.
  */
-@AllArgsConstructor
 @Data
-@NoArgsConstructor
 public class License {
 
     /**
      * The name of the license.
      */
     @NotBlank
-    private String name;
+    String name;
 
     /**
      * An (optional) url to access additional information about the license.
      */
-    private String url;
+    String url;
 }

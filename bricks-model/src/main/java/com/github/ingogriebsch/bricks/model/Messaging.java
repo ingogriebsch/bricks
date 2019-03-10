@@ -25,34 +25,30 @@ import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * Messaging is the exchange of messages (specially-formatted data describing events, requests, and replies). Messaging makes it
  * easier for programs to communicate across different programming environments.
  */
-@AllArgsConstructor
 @Data
-@NoArgsConstructor
 public class Messaging {
 
     /**
      * The underlying system which transports the messages. Legal values are 'kafka', 'rabbitmq', etc.
      */
     @NotBlank
-    private String carrier;
+    String carrier;
 
     /**
      * The communication protocol which is used to abstract the messages. Legal values are 'amqp', 'protobuf', etc.
      */
     @NotBlank
-    private String protocol;
+    String protocol;
 
     /**
      * A collection of messages the component provides.
      */
     @Valid
-    private Set<Message> messages;
+    Set<Message> messages;
 }

@@ -21,39 +21,35 @@ package com.github.ingogriebsch.bricks.model;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * Storage is a technology consisting of computer components and recording media that are used to retain digital data.
  */
-@AllArgsConstructor
 @Data
-@NoArgsConstructor
 public class Storage {
 
     /**
      * The (unique) id of the storage.
      */
     @NotBlank
-    private String id;
+    String id;
 
     /**
      * The type of the storage. Legal values could be 'database', 'file-system', etc.
      */
     @NotBlank
-    private String type;
+    String type;
 
     /**
      * The vendor of the storage.
      */
     @NotBlank
-    private String vendor;
+    String vendor;
 
     /**
      * Specifies if the storage is persistent.
      */
-    private boolean persistent;
+    boolean persistent;
 
 }

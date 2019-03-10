@@ -21,17 +21,13 @@ package com.github.ingogriebsch.bricks.model;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * A management system is a set of policies, processes and procedures used by an organization to ensure that it can fulfill the
  * tasks required to achieve its objectives.
  */
-@AllArgsConstructor
 @Data
-@NoArgsConstructor
 public class ManagementSystem {
 
     /**
@@ -39,16 +35,16 @@ public class ManagementSystem {
      * inspection', 'source control', etc.
      */
     @NotBlank
-    private String type;
+    String type;
 
     /**
      * The name of the mangement system. Possible values could be 'GitHub', 'Jenkins', 'Jira', 'Sonarcube', etc.
      */
     @NotBlank
-    private String name;
+    String name;
 
     /**
      * An (optional) url to access the management system.
      */
-    private String url;
+    String url;
 }

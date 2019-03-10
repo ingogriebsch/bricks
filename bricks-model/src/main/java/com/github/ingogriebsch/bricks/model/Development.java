@@ -23,35 +23,31 @@ import java.util.Set;
 
 import javax.validation.Valid;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * Development is the process of conceiving, specifying, designing, programming, documenting, testing, and bug fixing involved in
  * creating and maintaining applications, frameworks, or other software components.
  */
-@AllArgsConstructor
 @Data
-@NoArgsConstructor
 public class Development {
 
     /**
      * A collection of management systems which are used to manage the development of the application.
      */
     @Valid
-    private Set<ManagementSystem> managementSystems;
+    Set<ManagementSystem> managementSystems;
 
     /**
      * A collection of the main frameworks which are used to implement the component.
      */
     @Valid
-    private Set<Framework> frameworks;
+    Set<Framework> frameworks;
 
     /**
      * A collection of the main build tools which are used to build the component.
      */
     @Valid
-    private Set<BuildTool> buildTools;
+    Set<BuildTool> buildTools;
 
 }

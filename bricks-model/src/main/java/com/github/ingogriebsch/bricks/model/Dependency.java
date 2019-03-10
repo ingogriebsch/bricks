@@ -25,33 +25,29 @@ import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * A dependency is a relationship that shows that an element requires other elements for their specification or implementation.
  */
-@AllArgsConstructor
 @Data
-@NoArgsConstructor
 public class Dependency {
 
     /**
      * The id of the component this component depends on.
      */
     @NotBlank
-    private String target;
+    String target;
 
     /**
      * A collection of interfaces the component depends on.
      */
     @Valid
-    private Set<Interface> interfaces;
+    Set<Interface> interfaces;
 
     /**
      * Describes if the component is a target for messages.
      */
     @Valid
-    private Messaging messaging;
+    Messaging messaging;
 }

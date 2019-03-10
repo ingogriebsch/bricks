@@ -21,44 +21,40 @@ package com.github.ingogriebsch.bricks.model;
 
 import javax.validation.Valid;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * Runtime describes the time during which a application or component is running (in contrast to other application or component
  * lifecycle phases such as compile time).
  */
-@AllArgsConstructor
 @Data
-@NoArgsConstructor
 public class Runtime {
 
     /**
      * Specifies if the component is failover capable.
      */
-    private boolean failoverCapable;
+    boolean failoverCapable;
 
     /**
      * Specifies if the component is horizontal scalable.
      */
-    private boolean horizontalScalable;
+    boolean horizontalScalable;
 
     /**
      * Describes the administration possibilities of the component.
      */
     @Valid
-    private Administration administration;
+    Administration administration;
 
     /**
      * Describes the memory footprint of the component.
      */
     @Valid
-    private MemoryFootprint memoryFootprint;
+    MemoryFootprint memoryFootprint;
 
     /**
      * Describes the monitoring capabilities of the component.
      */
     @Valid
-    private Monitoring monitoring;
+    Monitoring monitoring;
 }
