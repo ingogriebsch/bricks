@@ -60,7 +60,7 @@ public class AnalyzeMojo extends AbstractMojo {
     @Override
     @SneakyThrows
     public void execute() throws MojoExecutionException, MojoFailureException {
-        try (AnalyzerContext ctx = AnalyzerContext.of(mavenSession, getLog());) {
+        try (AnalyzerContext ctx = AnalyzerContext.of(mavenSession, getLog())) {
 
             Component c = new Component();
             new Analyzers(ctx).augment(c);
