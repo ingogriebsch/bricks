@@ -22,10 +22,10 @@ package com.github.ingogriebsch.bricks.maven.plugin.analyzer;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import com.github.ingogriebsch.bricks.model.Component;
+
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-
-import com.github.ingogriebsch.bricks.model.Component;
 
 public class AbstractMavenAnalyzerTest {
 

@@ -23,15 +23,15 @@ import static org.junit.Assert.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
-import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugin.logging.Log;
-import org.junit.Test;
-
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AbstractMavenAnalyzer;
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalysisResult;
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalyzerContext;
 import com.github.ingogriebsch.bricks.model.Component;
 import com.google.common.collect.Lists;
+
+import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugin.logging.Log;
+import org.junit.Test;
 
 import lombok.RequiredArgsConstructor;
 

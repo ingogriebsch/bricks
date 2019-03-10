@@ -34,8 +34,10 @@ public class MavenCoordinates {
 
     @NotEmpty
     String groupId;
+
     @NotEmpty
     String artifactId;
+
     @NotEmpty
     String version;
 }
