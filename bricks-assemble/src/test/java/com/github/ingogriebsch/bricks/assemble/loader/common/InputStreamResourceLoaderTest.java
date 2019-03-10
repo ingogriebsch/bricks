@@ -19,21 +19,24 @@
  */
 package com.github.ingogriebsch.bricks.assemble.loader.common;
 
-import static java.nio.charset.Charset.forName;
+import static java.nio.charset.Charset.*;
 
-import static org.apache.commons.io.IOUtils.toInputStream;
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.apache.commons.io.IOUtils.*;
+import static org.apache.commons.lang3.RandomStringUtils.*;
+import static org.assertj.core.api.Assertions.*;
 
 import java.io.InputStream;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class InputStreamResourceLoaderTest {
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void creation_should_throw_exception_if_input_is_null() {
-        new InputStreamResourceLoader(null);
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            new InputStreamResourceLoader(null);
+        });
     }
 
     @Test

@@ -19,6 +19,8 @@
  */
 package com.github.ingogriebsch.bricks.maven.plugin.analyzer.example;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalysisResult;
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalyzerContext;
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.MavenAnalyzer;
@@ -28,7 +30,6 @@ public class FailingAnalyzer implements MavenAnalyzer {
 
     @Override
     public AnalysisResult augment(AnalyzerContext ctx, Component c) {
-
         ctx.log().info("failing alright");
         return AnalysisResult.FAIL;
     }

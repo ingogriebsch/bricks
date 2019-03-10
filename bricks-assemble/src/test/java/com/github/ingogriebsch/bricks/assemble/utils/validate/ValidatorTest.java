@@ -22,22 +22,27 @@ package com.github.ingogriebsch.bricks.assemble.utils.validate;
 import javax.validation.ConstraintViolationException;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import lombok.Value;
 
 public class ValidatorTest {
 
-    private final static Validator validator = new Validator();
+    private static final Validator validator = new Validator();
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void validate_should_throw_exception_if_validatee_is_null() {
-        validator.validate(null);
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            validator.validate(null);
+        });
     }
 
-    @Test(expected = ConstraintViolationException.class)
+    @Test
     public void validate_should_throw_exception_if_validatee_is_not_valid() {
-        validator.validate(new Validatee(null));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> {
+            validator.validate(new Validatee(null));
+        });
     }
 
     @Test
@@ -50,6 +55,5 @@ public class ValidatorTest {
 
         @NotBlank
         private String name;
-
     }
 }

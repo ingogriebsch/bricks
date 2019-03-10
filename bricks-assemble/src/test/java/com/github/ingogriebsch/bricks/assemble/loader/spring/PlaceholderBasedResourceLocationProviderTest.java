@@ -19,53 +19,62 @@
  */
 package com.github.ingogriebsch.bricks.assemble.loader.spring;
 
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.apache.commons.lang3.RandomStringUtils.*;
+import static org.assertj.core.api.Assertions.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class PlaceholderBasedResourceLocationProviderTest {
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void creation_should_throw_exception_if_input_is_null() {
-        new PlaceholderBasedResourceLocationProvider(null, null);
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            new PlaceholderBasedResourceLocationProvider(null, null);
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void creation_should_throw_exception_if_first_parameter_is_null() {
-        new PlaceholderBasedResourceLocationProvider(null, "id");
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            new PlaceholderBasedResourceLocationProvider(null, "id");
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void creation_should_throw_exception_if_second_parameter_is_null() {
-        new PlaceholderBasedResourceLocationProvider("classpath:${id}", null);
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            new PlaceholderBasedResourceLocationProvider("classpath:${id}", null);
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void creation_should_throw_exception_if_given_placeholderName_is_not_matching_against_locationBase() {
-        new PlaceholderBasedResourceLocationProvider("classpath:${one}", "two");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            new PlaceholderBasedResourceLocationProvider("classpath:${one}", "two");
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void creation_should_throw_exception_if_default_placeholderName_is_not_matching_against_locationBase() {
-        new PlaceholderBasedResourceLocationProvider("classpath:${" + randomAlphanumeric(10) + "}");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            new PlaceholderBasedResourceLocationProvider("classpath:${" + randomAlphanumeric(10) + "}");
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void getLocation_should_throw_exception_if_input_is_null() {
-        new PlaceholderBasedResourceLocationProvider("classpath:${id}").get(null);
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            new PlaceholderBasedResourceLocationProvider("classpath:${id}").get(null);
+        });
     }
 
     @Test
     public void getLocation_should_replace_placeholder_with_given_value() {
         String locationBasePrefix = "classpath:";
         String id = randomAlphabetic(6);
-
         ResourceLocationProvider provider =
             new PlaceholderBasedResourceLocationProvider(locationBasePrefix + "${placeholderName}", "placeholderName");
-
         assertThat(provider.get(id)).isNotNull().isEqualTo(locationBasePrefix + id);
     }
-
 }

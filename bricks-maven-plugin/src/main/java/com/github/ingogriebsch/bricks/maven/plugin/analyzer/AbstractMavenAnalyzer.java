@@ -58,5 +58,5 @@ public abstract class AbstractMavenAnalyzer implements MavenAnalyzer {
         return augment(c);
     }
 
-    protected abstract @NonNull AnalysisResult augment(@NonNull Component c);
+    protected abstract @NonNull AnalysisResult augment(@NonNull Component c) throws Exception;
 }

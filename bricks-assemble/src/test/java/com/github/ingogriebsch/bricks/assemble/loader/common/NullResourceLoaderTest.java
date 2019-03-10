@@ -19,10 +19,10 @@
  */
 package com.github.ingogriebsch.bricks.assemble.loader.common;
 
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.apache.commons.lang3.RandomStringUtils.*;
+import static org.assertj.core.api.Assertions.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class NullResourceLoaderTest {
 

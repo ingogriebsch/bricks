@@ -19,9 +19,9 @@
  */
 package com.github.ingogriebsch.bricks.model;
 
-import static javax.validation.Validation.byDefaultProvider;
+import static javax.validation.Validation.*;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.Set;
 
@@ -29,7 +29,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class StorageTest {
 
@@ -41,7 +41,6 @@ public class StorageTest {
         storage.setType("database");
         storage.setVendor("Postgresql");
         storage.setPersistent(true);
-
         Set<ConstraintViolation<Storage>> violations = validator.validate(storage);
         assertThat(violations).isNotNull().hasSize(1);
     }
@@ -52,7 +51,6 @@ public class StorageTest {
         storage.setId("id");
         storage.setVendor("Postgresql");
         storage.setPersistent(true);
-
         Set<ConstraintViolation<Storage>> violations = validator.validate(storage);
         assertThat(violations).isNotNull().hasSize(1);
     }
@@ -63,7 +61,6 @@ public class StorageTest {
         storage.setId("id");
         storage.setType("database");
         storage.setPersistent(true);
-
         Set<ConstraintViolation<Storage>> violations = validator.validate(storage);
         assertThat(violations).isNotNull().hasSize(1);
     }
@@ -75,7 +72,6 @@ public class StorageTest {
         storage.setType("database");
         storage.setVendor("Postgresql");
         storage.setPersistent(true);
-
         Set<ConstraintViolation<Storage>> violations = validator.validate(storage);
         assertThat(violations).isNotNull().isEmpty();
     }

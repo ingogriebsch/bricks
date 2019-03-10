@@ -19,8 +19,8 @@
  */
 package com.github.ingogriebsch.bricks.maven.plugin.analyzer.discovery;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AbstractMavenAnalyzer;
@@ -31,7 +31,7 @@ import com.google.common.collect.Lists;
 
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.logging.Log;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import lombok.RequiredArgsConstructor;
 
@@ -43,13 +43,10 @@ public class AnalyzersTest {
         AnalyzerDiscovery testDiscovery = x -> Lists.newArrayList(DummyAnalyzer.of(AnalysisResult.OK));
         AnalyzerContext context = mock(AnalyzerContext.class, RETURNS_MOCKS);
         Log log = mock(Log.class);
-
         when(context.log()).thenReturn(log);
         Analyzers uut = new Analyzers(context, testDiscovery);
-
         Component c = new Component();
         uut.augment(c);
-
         verify(log).info(startsWith(AnalysisResult.OK + " " + DummyAnalyzer.class.getSimpleName() + " done"));
     }
 
@@ -60,10 +57,8 @@ public class AnalyzersTest {
         Log log = mock(Log.class);
         when(context.log()).thenReturn(log);
         Analyzers uut = new Analyzers(context, testDiscovery);
-
         Component c = new Component();
         uut.augment(c);
-
         verify(log).info(startsWith(AnalysisResult.SKIPPED + " " + DummyAnalyzer.class.getSimpleName() + " done"));
     }
 
@@ -74,7 +69,6 @@ public class AnalyzersTest {
         Log log = mock(Log.class);
         when(context.log()).thenReturn(log);
         Analyzers uut = new Analyzers(context, testDiscovery);
-
         Component c = new Component();
         try {
             uut.augment(c);
@@ -86,16 +80,13 @@ public class AnalyzersTest {
 
     @Test
     public void testFatalOnMojoException() throws Exception {
-
         DummyAnalyzer analyzer = mock(DummyAnalyzer.class);
         when(analyzer.augment(any())).thenThrow(MojoFailureException.class);
-
         AnalyzerDiscovery testDiscovery = x -> Lists.newArrayList(analyzer);
         AnalyzerContext context = mock(AnalyzerContext.class, RETURNS_MOCKS);
         Log log = mock(Log.class);
         when(context.log()).thenReturn(log);
         Analyzers uut = new Analyzers(context, testDiscovery);
-
         Component c = new Component();
         try {
             uut.augment(c);
@@ -107,16 +98,13 @@ public class AnalyzersTest {
 
     @Test
     public void testFailOnArbitraryException() throws Exception {
-
         DummyAnalyzer analyzer = mock(DummyAnalyzer.class);
         when(analyzer.augment(any())).thenThrow(IllegalStateException.class);
-
         AnalyzerDiscovery testDiscovery = x -> Lists.newArrayList(analyzer);
         AnalyzerContext context = mock(AnalyzerContext.class, RETURNS_MOCKS);
         Log log = mock(Log.class);
         when(context.log()).thenReturn(log);
         Analyzers uut = new Analyzers(context, testDiscovery);
-
         Component c = new Component();
         uut.augment(c);
         verify(log).info(startsWith(AnalysisResult.FAIL.toString()));
@@ -128,10 +116,8 @@ public class AnalyzersTest {
         private final AnalysisResult result;
 
         @Override
-        protected AnalysisResult augment(Component c) {
+        protected AnalysisResult augment(Component c) throws Exception {
             return result;
         }
-
     }
-
 }

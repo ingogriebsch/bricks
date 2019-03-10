@@ -19,8 +19,8 @@
  */
 package com.github.ingogriebsch.bricks.assemble.converter.json;
 
-import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS;
-import static org.assertj.core.api.Assertions.assertThat;
+import static com.fasterxml.jackson.databind.SerializationFeature.*;
+import static org.assertj.core.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -29,40 +29,43 @@ import java.io.InputStream;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.ingogriebsch.bricks.model.Component;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class Json2ComponentConverterTest {
 
     private static ObjectMapper objectMapper;
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
         objectMapper = new ObjectMapper();
         objectMapper.configure(FAIL_ON_EMPTY_BEANS, false);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void convert_should_throw_exception_if_input_is_null() throws Exception {
-        new Json2ComponentConverter().convert(null, null);
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            new Json2ComponentConverter().convert(null, null);
+        });
     }
 
-    @Test(expected = IOException.class)
+    @Test
     public void convert_should_throw_exception_if_input_is_not_legal() throws Exception {
-        try (InputStream is = new ByteArrayInputStream("test".getBytes())) {
-            new Json2ComponentConverter().convert(is, "regardless");
-        }
+        Assertions.assertThrows(IOException.class, () -> {
+            try (InputStream is = new ByteArrayInputStream("test".getBytes())) {
+                new Json2ComponentConverter().convert(is, "regardless");
+            }
+        });
     }
 
     @Test
     public void convert_should_convert_empty_component_to_matching_output() throws Exception {
         Component source = new Component();
-
         Component target;
         try (InputStream is = new ByteArrayInputStream(objectMapper.writeValueAsBytes(source))) {
             target = new Json2ComponentConverter().convert(is, "regardless");
         }
-
         assertThat(target).isNotNull().isEqualTo(source);
     }
 
@@ -74,12 +77,10 @@ public class Json2ComponentConverterTest {
         source.setDescription("description");
         source.setVersion("version");
         source.setLayer("layer");
-
         Component target;
         try (InputStream is = new ByteArrayInputStream(objectMapper.writeValueAsBytes(source))) {
             target = new Json2ComponentConverter().convert(is, source.getId());
         }
-
         assertThat(target).isNotNull().isEqualTo(source);
     }
 }
