@@ -4,15 +4,15 @@
 
     <parent>
         <groupId>com.github.ingogriebsch.bricks</groupId>
-        <artifactId>bricks</artifactId>
+        <artifactId>bricks-example</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>bricks-example-component</artifactId>
 
-    <name>Some example Project</name>
-    <description>Module to demonstrate the use of Bricks maven plugin within an arbitrary Project</description>
+    <name>Bricks Example Component</name>
+    <description>Example to demonstrate the use of Bricks maven plugin within an arbitrary Project</description>
     <inceptionYear>1999</inceptionYear>
     <organization>
         <name>Acme Inc.</name>

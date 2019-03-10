@@ -4,14 +4,14 @@
 
     <parent>
         <groupId>com.github.ingogriebsch.bricks</groupId>
-        <artifactId>bricks</artifactId>
+        <artifactId>bricks-example</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>bricks-example-custom-analyzers</artifactId>
 
-    <name>Example for company specific analyzers</name>
+    <name>Bricks Example Custom Analyzers</name>
     <description>If you have company-specific conventions, it might make sense to build analyzers to gather extra info from them. This is an example project that shows how easy it is to extend the Bricks analysis with own custom analyzers.</description>
 
     <properties>
