@@ -134,8 +134,7 @@
                         <failOnMissingHeader>true</failOnMissingHeader>
                         <failOnNotUptodateHeader>true</failOnNotUptodateHeader>
                         <licenseName>apache_v2</licenseName>
-                        <!-- added to prevent license plugin from complaining 
-                            about missing headers in generated sources -->
+                        <!-- added to prevent license plugin from complaining about missing headers in generated sources -->
                         <excludes>
                             <exclude>target/**</exclude>
                             <exclude>**/target/**</exclude>
