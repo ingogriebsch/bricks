@@ -17,8 +17,19 @@
  * limitations under the License.
  * #L%
  */
-import static org.junit.Assert.assertTrue
+package com.github.ingogriebsch.bricks.maven.plugin.analyzer.example;
 
-def outputFile = new File(basedir, "target/bricks.json");
+import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalysisResult;
+import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalyzerContext;
+import com.github.ingogriebsch.bricks.maven.plugin.analyzer.MavenAnalyzer;
+import com.github.ingogriebsch.bricks.model.Component;
 
-assertTrue "File '" + outputFile.getAbsoluteFile() + "' is not a file!", outputFile.isFile()
+public class SkippingAnalyzer implements MavenAnalyzer {
+
+    @Override
+    public AnalysisResult augment(AnalyzerContext ctx, Component c) {
+
+        ctx.log().info("nothing to do here");
+        return AnalysisResult.SKIPPED;
+    }
+}

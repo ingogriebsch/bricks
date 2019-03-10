@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.github.ingogriebsch.bricks</groupId>
+        <artifactId>bricks</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>bricks-example-component</artifactId>
+
+    <name>Some example Project</name>
+    <description>Module to demonstrate the use of Bricks maven plugin within an arbitrary Project</description>
+    <inceptionYear>1999</inceptionYear>
+    <organization>
+        <name>Acme Inc.</name>
+        <url>https://en.wikipedia.org/wiki/Acme_Corporation#/media/File:Box_of_%22ACME_EXPLOSIVE_TENNIS_BALLS%22_(screencap).jpg</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>ASL2</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+        <license>
+            <name>LGPL</name>
+            <url>https://www.gnu.org/licenses/lgpl-3.0.en.html</url>
+        </license>
+    </licenses>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.22</version>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.github.ingogriebsch.bricks</groupId>
+                <artifactId>bricks-maven-plugin</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.github.ingogriebsch.bricks</groupId>
+                        <artifactId>bricks-example-custom-analyzers</artifactId>
+                        <version>1.0.0-SNAPSHOT</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>analyze</id>
+                        <goals>
+                            <goal>analyze</goal>
+                        </goals>
+                        <phase>prepare-package</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
