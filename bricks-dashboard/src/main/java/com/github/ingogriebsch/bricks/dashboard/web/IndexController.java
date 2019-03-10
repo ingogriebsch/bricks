@@ -19,10 +19,12 @@
  */
 package com.github.ingogriebsch.bricks.dashboard.web;
 
+import static org.apache.commons.lang3.StringUtils.join;
 import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
 
 import java.util.Set;
 
+import com.github.ingogriebsch.bricks.dashboard.DashboardProperties;
 import com.github.ingogriebsch.bricks.dashboard.service.ApplicationService;
 import com.github.ingogriebsch.bricks.dashboard.web.Breadcrumb.Entry;
 import com.github.ingogriebsch.bricks.model.Application;
@@ -38,14 +40,30 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class IndexController {
 
-    private final ApplicationService applicationService;
+    private static final String PAGE_INDEX = "/index";
 
-    @GetMapping(path = "/", produces = TEXT_HTML_VALUE)
+    static final String PATH_ROOT = "/";
+    static final String PATH_APPLICATIONS = "/applications";
+
+    @NonNull
+    private final ApplicationService applicationService;
+    @NonNull
+    private final DashboardProperties dashboardProperties;
+
+    @GetMapping(path = PATH_ROOT, produces = TEXT_HTML_VALUE)
     public String index(@NonNull Model model) throws Exception {
-        return "redirect:/applications";
+        String result = "redirect:" + PATH_APPLICATIONS;
+
+        if (dashboardProperties.isRedirectToApplicationViewIfOnlyOneAvailable()) {
+            Set<Application> applications = applicationService.findAll();
+            if (applications.size() == 1) {
+                result = buildPath(result, applications.iterator().next().getId());
+            }
+        }
+        return result;
     }
 
-    @GetMapping(path = "/applications", produces = TEXT_HTML_VALUE)
+    @GetMapping(path = PATH_APPLICATIONS, produces = TEXT_HTML_VALUE)
     public String applications(@NonNull Model model) throws Exception {
         Set<Application> applications = applicationService.findAll();
         model.addAttribute("applications", applications);
@@ -53,11 +71,15 @@ public class IndexController {
         Breadcrumb breadcrumb = breadcrumb();
         model.addAttribute("breadcrumb", breadcrumb);
 
-        return "/index";
+        return PAGE_INDEX;
+    }
+
+    static String buildPath(String... parts) {
+        return join(parts, "/");
     }
 
     private static Breadcrumb breadcrumb() {
-        Entry applicationsEntry = Entry.builder().name("Applications").href("/applications").build();
+        Entry applicationsEntry = Entry.builder().name("Applications").href(PATH_APPLICATIONS).build();
         Breadcrumb breadcrumb = Breadcrumb.builder().entry(applicationsEntry).build();
         return breadcrumb;
     }
