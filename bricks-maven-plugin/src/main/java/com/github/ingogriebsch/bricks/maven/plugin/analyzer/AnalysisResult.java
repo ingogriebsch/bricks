@@ -20,16 +20,23 @@
 package com.github.ingogriebsch.bricks.maven.plugin.analyzer;
 
 public enum AnalysisResult {
-        OK('\u2713'), // successful
-        SKIPPED('.'), // not successful due to missing information
-        FAIL('\u2718'), // not successful due to faulty/incomplete information,
-                        // should be fixed, but we can continue
-                        //
-                        // same as throwing an Exception from augment(Component)
-        FATAL('\u271d');// something is very broken here. we need to abort analysis.
-                        //
-                        // same as throwing an MavenExecutionException or
-                        // MojoExecutionException from augment(Component)
+        // successful
+        OK('\u2713'),
+
+        // not successful due to missing information
+        SKIPPED('.'),
+
+        // not successful due to faulty/incomplete information,
+        // should be fixed, but we can continue
+        //
+        // same as throwing an Exception from augment(Component)
+        FAIL('\u2718'),
+
+        // something is very broken here. we need to abort analysis.
+        //
+        // same as throwing an MavenExecutionException or
+        // MojoExecutionException from augment(Component)
+        FATAL('\u271d');
 
     private char c;
 
