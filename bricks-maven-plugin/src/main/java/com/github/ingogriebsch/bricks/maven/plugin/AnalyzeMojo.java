@@ -61,11 +61,9 @@ public class AnalyzeMojo extends AbstractMojo {
     @SneakyThrows
     public void execute() throws MojoExecutionException, MojoFailureException {
         try (AnalyzerContext ctx = AnalyzerContext.of(mavenSession, getLog())) {
-
             Component c = new Component();
             new Analyzers(ctx).augment(c);
             write(renderComponent(c));
-
         }
     }
 
