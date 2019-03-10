@@ -87,7 +87,6 @@ class AnalyzerContextImpl implements AnalyzerContext {
 
     @Override
     public void close() {
-        log.info("");
         log.info("Overall Runtime: " + stopWatch.stop().elapsed(TimeUnit.MILLISECONDS) + "ms");
     }
 
