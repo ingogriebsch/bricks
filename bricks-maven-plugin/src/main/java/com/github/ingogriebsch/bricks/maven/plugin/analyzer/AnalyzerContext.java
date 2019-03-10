@@ -21,12 +21,12 @@ package com.github.ingogriebsch.bricks.maven.plugin.analyzer;
 
 import java.util.concurrent.TimeUnit;
 
-import com.google.common.base.Stopwatch;
-
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 import org.reflections.Reflections;
+
+import com.google.common.base.Stopwatch;
 
 import lombok.Getter;
 import lombok.NonNull;
@@ -36,7 +36,7 @@ import lombok.experimental.Delegate;
 
 public interface AnalyzerContext extends AutoCloseable {
 
-    void close(); // promises to not throw an Exception!
+    // void close(); // promises to not throw an Exception!
 
     Log log();
 
@@ -48,7 +48,7 @@ public interface AnalyzerContext extends AutoCloseable {
 
     AnalyzerContext childContext(String prefix);
 
-    public static AnalyzerContextImpl of(@NonNull MavenSession session, @NonNull Log log) {
+    public static AnalyzerContext of(@NonNull MavenSession session, @NonNull Log log) {
         return new AnalyzerContextImpl(session, log);
     }
 }
