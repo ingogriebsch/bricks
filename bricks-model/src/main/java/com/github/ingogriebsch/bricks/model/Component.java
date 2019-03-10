@@ -121,6 +121,6 @@ public class Component {
      * Optional Maven Coordinates, if the Component is buildt by maven.
      */
     @Valid
-    private MavenCoordinates mavenCoordinates;
+    MavenCoordinates mavenCoordinates;
 
 }
