@@ -89,7 +89,7 @@ public final class Analyzers {
 
     }
 
-    private String displayName(@NonNull MavenAnalyzer analyzer) {
+    private static String displayName(@NonNull MavenAnalyzer analyzer) {
         return analyzer.getClass().getSimpleName();
     }
 
