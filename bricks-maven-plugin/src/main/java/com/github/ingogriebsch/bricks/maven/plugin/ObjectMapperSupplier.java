@@ -35,11 +35,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 // TODO ingo
 // should imho be moved to Model or API Package, so that sharing the
 // code makes sure there is only one place where Jackson is configured ?
-public class ObjectMapperFactory implements Supplier<ObjectMapper> {
+public class ObjectMapperSupplier implements Supplier<ObjectMapper> {
 
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
-    public ObjectMapperFactory() {
+    public ObjectMapperSupplier() {
         objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(NON_NULL);
         objectMapper.disable(WRITE_NULL_MAP_VALUES);

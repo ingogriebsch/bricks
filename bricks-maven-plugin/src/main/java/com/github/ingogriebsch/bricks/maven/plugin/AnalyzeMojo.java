@@ -52,7 +52,7 @@ public class AnalyzeMojo extends AbstractMojo {
     @Parameter(property = "stdout")
     private boolean stdout = false;
 
-    private final ObjectMapperFactory omf = new ObjectMapperFactory();
+    private final ObjectMapperSupplier omf = new ObjectMapperSupplier();
 
     @Parameter(defaultValue = "${session}", readonly = true)
     private MavenSession mavenSession;
