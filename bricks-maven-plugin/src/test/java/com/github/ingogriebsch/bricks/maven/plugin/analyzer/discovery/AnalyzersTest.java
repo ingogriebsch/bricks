@@ -23,16 +23,15 @@ import static org.junit.Assert.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
+import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugin.logging.Log;
+import org.junit.Test;
+
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AbstractMavenAnalyzer;
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalysisResult;
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalyzerContext;
 import com.github.ingogriebsch.bricks.model.Component;
 import com.google.common.collect.Lists;
-
-import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugin.logging.Log;
-import org.junit.Test;
-import org.mockito.Matchers;
 
 import lombok.RequiredArgsConstructor;
 
@@ -51,7 +50,7 @@ public class AnalyzersTest {
         Component c = new Component();
         uut.augment(c);
 
-        verify(log).info(Matchers.startsWith(AnalysisResult.OK + " " + DummyAnalyzer.class.getSimpleName() + " done"));
+        verify(log).info(startsWith(AnalysisResult.OK + " " + DummyAnalyzer.class.getSimpleName() + " done"));
     }
 
     @Test
@@ -65,7 +64,7 @@ public class AnalyzersTest {
         Component c = new Component();
         uut.augment(c);
 
-        verify(log).info(Matchers.startsWith(AnalysisResult.SKIPPED + " " + DummyAnalyzer.class.getSimpleName() + " done"));
+        verify(log).info(startsWith(AnalysisResult.SKIPPED + " " + DummyAnalyzer.class.getSimpleName() + " done"));
     }
 
     @Test
@@ -81,7 +80,7 @@ public class AnalyzersTest {
             uut.augment(c);
             fail("should have thrown a MojoFailureException");
         } catch (MojoFailureException e) {
-            verify(log).info(Matchers.startsWith(AnalysisResult.FATAL.toString()));
+            verify(log).info(startsWith(AnalysisResult.FATAL.toString()));
         }
     }
 
@@ -102,7 +101,7 @@ public class AnalyzersTest {
             uut.augment(c);
             fail("should have thrown a MojoFailureException");
         } catch (MojoFailureException e) {
-            verify(log).info(Matchers.startsWith(AnalysisResult.FATAL.toString()));
+            verify(log).info(startsWith(AnalysisResult.FATAL.toString()));
         }
     }
 
@@ -120,13 +119,13 @@ public class AnalyzersTest {
 
         Component c = new Component();
         uut.augment(c);
-        verify(log).info(Matchers.startsWith(AnalysisResult.FAIL.toString()));
+        verify(log).info(startsWith(AnalysisResult.FAIL.toString()));
     }
 
     @RequiredArgsConstructor(staticName = "of")
-    static class DummyAnalyzer extends AbstractMavenAnalyzer {
+    private static class DummyAnalyzer extends AbstractMavenAnalyzer {
 
-        final AnalysisResult result;
+        private final AnalysisResult result;
 
         @Override
         protected AnalysisResult augment(Component c) {

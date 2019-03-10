@@ -21,12 +21,12 @@ package com.github.ingogriebsch.bricks.maven.plugin.analyzer;
 
 import java.util.concurrent.TimeUnit;
 
-import com.google.common.base.Stopwatch;
-
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 import org.reflections.Reflections;
+
+import com.google.common.base.Stopwatch;
 
 import lombok.Getter;
 import lombok.NonNull;
@@ -100,17 +100,17 @@ class AnalyzerContextImpl implements AnalyzerContext {
 @RequiredArgsConstructor
 class ChildAnalyzerContext implements AnalyzerContext {
 
+    @Delegate(excludes = MethodExclusions.class)
+    private final AnalyzerContext parent;
+
+    private final String prefix;
+
     private interface MethodExclusions {
 
         Log log();
 
         AnalyzerContext childContext(String prefix);
     }
-
-    @Delegate(excludes = MethodExclusions.class)
-    final AnalyzerContext parent;
-
-    final String prefix;
 
     public Log log() {
         return new PrefixLog("  " + prefix + "> ", parent.log());

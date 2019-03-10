@@ -22,24 +22,23 @@ package com.github.ingogriebsch.bricks.maven.plugin.analyzer;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-import com.github.ingogriebsch.bricks.model.Component;
-
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
+
+import com.github.ingogriebsch.bricks.model.Component;
 
 public class AbstractMavenAnalyzerTest {
 
     @Test(expected = NullPointerException.class)
     public void testNullContext() throws Exception {
         NullAnalyzer uut = new NullAnalyzer();
-        uut.augment(null, Mockito.mock(Component.class));
+        uut.augment(null, mock(Component.class));
     }
 
     @Test(expected = NullPointerException.class)
     public void testNullComponent() throws Exception {
         NullAnalyzer uut = new NullAnalyzer();
-        uut.augment(Mockito.mock(AnalyzerContext.class), null);
+        uut.augment(mock(AnalyzerContext.class), null);
     }
 
     public void testParameterPassesUnchanged() throws Exception {
@@ -48,7 +47,7 @@ public class AbstractMavenAnalyzerTest {
         when(uut.augment(cap.capture())).thenReturn(AnalysisResult.OK);
         Component probe = new Component();
 
-        uut.augment(Mockito.mock(AnalyzerContext.class, RETURNS_MOCKS), probe);
+        uut.augment(mock(AnalyzerContext.class, RETURNS_MOCKS), probe);
 
         assertSame(cap.getValue(), probe);
     }
