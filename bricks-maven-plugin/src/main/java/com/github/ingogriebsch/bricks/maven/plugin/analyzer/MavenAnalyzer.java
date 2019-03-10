@@ -21,20 +21,21 @@ package com.github.ingogriebsch.bricks.maven.plugin.analyzer;
 
 import java.util.Comparator;
 
-import com.github.ingogriebsch.bricks.model.Component;
-
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+
+import com.github.ingogriebsch.bricks.model.Component;
 
 import lombok.NonNull;
 
 /**
  * Main entrypoint for an analyzer to do its magic and contribute generated
  * insight to the Component given.
- * 
+ * <p>
  * To do it "right" rather than using ordinals, we could build a dependency
  * graph of analyzers and even run them in parallel. Imho not worth it right
- * now, because plugin is only supposed to run on package phase.
+ * now, because plugin is only supposed to run on prepare-package phase.
+ * </p>
  * 
  * @author doc
  *
