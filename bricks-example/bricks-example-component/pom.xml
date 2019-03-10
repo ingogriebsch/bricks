@@ -58,7 +58,7 @@
                 <version>1.0.0-SNAPSHOT</version>
                 <dependencies>
                     <dependency>
-                        <groupId>com.github.ingogriebsch.bricks.example</groupId>
+                        <groupId>com.github.ingogriebsch.bricks</groupId>
                         <artifactId>bricks-example-custom-analyzers</artifactId>
                         <version>1.0.0-SNAPSHOT</version>
                     </dependency>
