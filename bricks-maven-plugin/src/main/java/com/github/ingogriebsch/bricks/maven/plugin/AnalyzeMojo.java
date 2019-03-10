@@ -26,10 +26,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalyzerContext;
-import com.github.ingogriebsch.bricks.maven.plugin.analyzer.discovery.Analyzers;
-import com.github.ingogriebsch.bricks.model.Component;
-
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -37,11 +33,14 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
+import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalyzerContext;
+import com.github.ingogriebsch.bricks.maven.plugin.analyzer.discovery.Analyzers;
+import com.github.ingogriebsch.bricks.model.Component;
+
 import lombok.SneakyThrows;
 
 /**
  * Goal that analyzes a Project using a bunch of discovered Analyzers
- * 
  */
 @Mojo(name = "analyze", threadSafe = false)
 public class AnalyzeMojo extends AbstractMojo {
