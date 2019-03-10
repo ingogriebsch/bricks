@@ -121,4 +121,10 @@ public class Component {
     @Valid
     private Communication communication;
 
+    /**
+     * Optional Maven Coordinates, if the Component is buildt by maven.
+     */
+    @Valid
+    private MavenCoordinates mavenCoordinates;
+
 }

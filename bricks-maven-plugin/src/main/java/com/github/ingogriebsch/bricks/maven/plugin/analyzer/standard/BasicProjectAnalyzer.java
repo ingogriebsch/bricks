@@ -22,12 +22,11 @@ package com.github.ingogriebsch.bricks.maven.plugin.analyzer.standard;
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AbstractMavenAnalyzer;
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalysisResult;
 import com.github.ingogriebsch.bricks.model.Component;
+import com.github.ingogriebsch.bricks.model.MavenCoordinates;
 
 import org.apache.maven.project.MavenProject;
 
 public class BasicProjectAnalyzer extends AbstractMavenAnalyzer {
-
-    private static final char DELIMITER = ':';
 
     @Override
     protected AnalysisResult augment(Component c) {
@@ -35,9 +34,7 @@ public class BasicProjectAnalyzer extends AbstractMavenAnalyzer {
         c.setName(project.getName());
         c.setDescription(project.getDescription());
 
-        // TODO ingo if you had other plans for the id, how about adding a
-        // coordinates attribute to the model?
-        c.setId(fromCoordinates(project));
+        c.setMavenCoordinates(fromCoordinates(project));
 
         // this would likely be obsolete then.
         c.setVersion(project.getVersion());
@@ -45,9 +42,14 @@ public class BasicProjectAnalyzer extends AbstractMavenAnalyzer {
         return AnalysisResult.OK;
     }
 
-    private String fromCoordinates(MavenProject project) {
-        return new StringBuilder().append(project.getGroupId()).append(DELIMITER).append(project.getArtifactId())
-            .append(DELIMITER).append(project.getVersion()).toString();
+    private MavenCoordinates fromCoordinates(MavenProject project) {
+
+        MavenCoordinates c = new MavenCoordinates();
+        c.setGroupId(project.getGroupId());
+        c.setArtifactId(project.getArtifactId());
+        c.setVersion(project.getVersion());
+
+        return c;
     }
 
 }
