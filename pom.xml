@@ -38,8 +38,7 @@
         <module>bricks-assemble</module>
         <module>bricks-dashboard</module>
         <module>bricks-maven-plugin</module>
-        <module>bricks-example/bricks-example-custom-analyzers</module>
-        <module>bricks-example/bricks-example-component</module>
+        <module>bricks-example</module>
     </modules>
 
     <scm>
