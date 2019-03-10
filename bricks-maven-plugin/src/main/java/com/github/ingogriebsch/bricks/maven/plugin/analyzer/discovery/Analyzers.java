@@ -83,8 +83,9 @@ public final class Analyzers {
             logFailure(AnalysisResult.FAIL, analyzer, sw, anythingElse);
         }
 
-        if (result == AnalysisResult.FATAL)
+        if (result == AnalysisResult.FATAL) {
             throw new MojoFailureException("Analyzer " + displayName(analyzer) + " had a FATAL result -> stopping");
+        }
 
     }
 
