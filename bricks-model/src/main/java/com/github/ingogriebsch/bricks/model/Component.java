@@ -26,76 +26,72 @@ import javax.validation.Valid;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @Data
-@NoArgsConstructor
 public class Component {
 
     /**
      * The (unique) id of the component.
      */
     @NotBlank
-    private String id;
+    String id;
 
     /**
      * The human readable name of the component.
      */
     @NotBlank
-    private String name;
+    String name;
 
     /**
      * An explanation to describe the main purpose of the component.
      */
     @NotBlank
-    private String description;
+    String description;
 
     /**
      * The (current) version of the component.
      */
     @NotBlank
-    private String version;
+    String version;
 
     /**
      * The license under which the component is published.
      */
     @Valid
-    private License license;
+    License license;
 
     /**
      * A collection of persons or teams which are responsible for the component.
      */
     @NotEmpty
     @Valid
-    private Set<Responsible> responsibles;
+    Set<Responsible> responsibles;
 
     /**
      * Explains in which layer the component is positioned inside the whole application. Legal values could be 'edge',
      * 'integration', 'core', etc.
      */
-    private String layer;
+    String layer;
 
     /**
      * A collection of categories the component is related to. Legal values could be 'functional', 'infrastructure', 'bff',
      * 'apigateway', 'storage', etc.
      */
-    private Set<String> categories;
+    Set<String> categories;
 
     /**
      * A collection of the main ecosystems the component is implemented in.
      */
     @NotEmpty
     @Valid
-    private Set<Ecosystem> ecosystems;
+    Set<Ecosystem> ecosystems;
 
     /**
      * A section to hold information about the development of the component.
      */
     @Valid
-    private Development development;
+    Development development;
 
     /**
      * A section to hold information about how to handle the runtime of the component.
@@ -103,18 +99,18 @@ public class Component {
     // FIXME Is this section really necessary? All (at least most of) the information will heavily depend on a specific
     // environment in which the component is executed.
     @Valid
-    private Runtime runtime;
+    Runtime runtime;
 
     /**
      * A collection of the storages the component is using.
      */
     @Valid
-    private Set<Storage> storages;
+    Set<Storage> storages;
 
     /**
      * Describes the communication capabilities of the component.
      */
     @Valid
-    private Communication communication;
+    Communication communication;
 
 }

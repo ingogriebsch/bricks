@@ -21,13 +21,9 @@ package com.github.ingogriebsch.bricks.model;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @Data
-@NoArgsConstructor
 public class ManagementSystem {
 
     /**
@@ -35,16 +31,16 @@ public class ManagementSystem {
      * inspection', 'source control', etc.
      */
     @NotBlank
-    private String type;
+    String type;
 
     /**
      * The name of the mangement system. Possible values could be 'GitHub', 'Jenkins', 'Jira', 'Sonarcube', etc.
      */
     @NotBlank
-    private String name;
+    String name;
 
     /**
      * An (optional) url to access the management system.
      */
-    private String url;
+    String url;
 }

@@ -21,28 +21,24 @@ package com.github.ingogriebsch.bricks.model;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @Data
-@NoArgsConstructor
 public class BuildTool {
 
     /**
      * The name of the build tool. Possible values could be 'Maven', 'Gradle', 'npm', etc.
      */
     @NotBlank
-    private String name;
+    String name;
 
     /**
      * The (optional) version of the build tool.
      */
-    private String version;
+    String version;
 
     /**
      * An (optional) url to access more information about the framework.
      */
-    private String url;
+    String url;
 }

@@ -26,56 +26,52 @@ import javax.validation.Valid;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @Data
-@NoArgsConstructor
 public class Application {
 
     /**
      * The (unique) id of the application.
      */
     @NotBlank
-    private String id;
+    String id;
 
     /**
      * The human readable name of the application.
      */
     @NotBlank
-    private String name;
+    String name;
 
     /**
      * An explanation to describe the main purpose of the application.
      */
     @NotBlank
-    private String description;
+    String description;
 
     /**
      * The (current) version of the application.
      */
     @NotBlank
-    private String version;
+    String version;
 
     /**
      * The license under which the application is published.
      */
     @Valid
-    private License license;
+    License license;
 
     /**
      * A collection of persons or teams which are responsible for the component.
      */
     @NotEmpty
     @Valid
-    private Set<Responsible> responsibles;
+    Set<Responsible> responsibles;
 
     /**
      * A collection of management systems which are used to manage the application.
      */
     @Valid
-    private Set<ManagementSystem> managementSystems;
+    Set<ManagementSystem> managementSystems;
 
 }
