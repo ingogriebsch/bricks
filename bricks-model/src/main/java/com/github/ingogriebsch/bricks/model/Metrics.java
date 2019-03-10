@@ -21,6 +21,10 @@ package com.github.ingogriebsch.bricks.model;
 
 import lombok.EqualsAndHashCode;
 
+/**
+ * Metrics describe any arbitrary system measurement value (a named numeric value with a timestamp). For example metrics might
+ * record the number of active connections to a server, or the temperature of a meeting room.
+ */
 @EqualsAndHashCode
 public class Metrics {
 

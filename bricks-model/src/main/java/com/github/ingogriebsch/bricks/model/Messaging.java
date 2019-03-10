@@ -27,6 +27,10 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import lombok.Data;
 
+/**
+ * Messaging is the exchange of messages (specially-formatted data describing events, requests, and replies). Messaging makes it
+ * easier for programs to communicate across different programming environments.
+ */
 @Data
 public class Messaging {
 

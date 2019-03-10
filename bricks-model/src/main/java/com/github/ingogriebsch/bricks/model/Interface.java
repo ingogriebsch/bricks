@@ -27,6 +27,9 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import lombok.Data;
 
+/**
+ * An interface is a shared boundary across which two or more separate components of an application exchange information.
+ */
 @Data
 public class Interface {
 

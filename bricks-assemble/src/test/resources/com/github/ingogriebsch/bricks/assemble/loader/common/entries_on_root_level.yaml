@@ -1,0 +1,15 @@
+---
+id: component1
+name: Component 1
+description: Some description...
+version: 1.0.0
+---
+id: component2
+name: Component 2
+description: Some description...
+version: 3.2.1
+---
+id: component3
+name: Component 3
+description: Some description...
+version: 4.0.1-SNAPSHOT

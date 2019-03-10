@@ -1,6 +1,6 @@
 /*-
  * #%L
- * Bricks Dashboard
+ * Bricks Assemble
  * %%
  * Copyright (C) 2018 - 2019 Ingo Griebsch
  * %%
@@ -17,16 +17,10 @@
  * limitations under the License.
  * #L%
  */
-{
-    "id": "sample-app",
-    "name": "Sample Application",
-    "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-    "version": "1.0",
-    "responsibles": [{
-        "name": "Avengers",
-        "email": "avengers@gmail.com"
-    },{
-        "name": "Justice League",
-        "email": "justice-league@gmail.com"
-    }]
+package com.github.ingogriebsch.bricks.assemble.loader.github;
+
+public interface ResourceOriginProvider {
+
+    ResourceOrigin get(String componentId);
+
 }

@@ -23,6 +23,10 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import lombok.Data;
 
+/**
+ * A management system is a set of policies, processes and procedures used by an organization to ensure that it can fulfill the
+ * tasks required to achieve its objectives.
+ */
 @Data
 public class ManagementSystem {
 

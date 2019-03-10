@@ -23,6 +23,9 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import lombok.Data;
 
+/**
+ * A license is an official permission or permit to do, use, or own something.
+ */
 @Data
 public class License {
 

@@ -23,6 +23,9 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import lombok.Data;
 
+/**
+ * A responsible is a person or team who has control over something.
+ */
 @Data
 public class Responsible {
 

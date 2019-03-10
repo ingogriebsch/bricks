@@ -23,6 +23,9 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import lombok.Data;
 
+/**
+ * Storage is a technology consisting of computer components and recording media that are used to retain digital data.
+ */
 @Data
 public class Storage {
 

@@ -1,0 +1,8 @@
+spring:
+  devtools:
+    livereload:
+      enabled: true
+  freemarker:
+    cache: false
+    expose-request-attributes: false
+    expose-session-attributes: false

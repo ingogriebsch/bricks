@@ -21,6 +21,9 @@ package com.github.ingogriebsch.bricks.model;
 
 import lombok.EqualsAndHashCode;
 
+/**
+ * A communication endpoint is an interface exposed by a communicating party or by a communication channel.
+ */
 @EqualsAndHashCode
 public class Endpoint {
 

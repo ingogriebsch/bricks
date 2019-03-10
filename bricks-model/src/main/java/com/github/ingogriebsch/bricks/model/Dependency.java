@@ -27,6 +27,9 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import lombok.Data;
 
+/**
+ * A dependency is a relationship that shows that an element requires other elements for their specification or implementation.
+ */
 @Data
 public class Dependency {
 

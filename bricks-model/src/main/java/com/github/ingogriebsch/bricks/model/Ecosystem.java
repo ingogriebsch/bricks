@@ -23,6 +23,10 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import lombok.Data;
 
+/**
+ * The ecosystem of a programming language is the elements of a language and the links between them. A compiler, libraries,
+ * functions, procedures, classes, instructions, statements, variables and structures all are included in the ecosystem.
+ */
 @Data
 public class Ecosystem {
 

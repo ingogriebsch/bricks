@@ -28,6 +28,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import lombok.Data;
 
+/**
+ * An application is a product or program that can be used by the end user.
+ */
 @Data
 public class Application {
 

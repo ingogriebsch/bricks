@@ -17,21 +17,18 @@
  * limitations under the License.
  * #L%
  */
-package com.github.ingogriebsch.bricks.assemble.loader.github;
+package com.github.ingogriebsch.bricks.assemble.loader.common;
 
-import org.hibernate.validator.constraints.NotBlank;
+import java.io.IOException;
+import java.io.InputStream;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.github.ingogriebsch.bricks.assemble.loader.ResourceLoader;
 
-@AllArgsConstructor
-@Data
-@NoArgsConstructor
-public final class GitHubBasedResourceProperties {
+public class NullResourceLoader implements ResourceLoader {
 
-    @NotBlank
-    private String contentFilename = "bricks.json";
-    private String ref;
+    @Override
+    public InputStream load(String id) throws IOException {
+        return null;
+    }
 
 }

@@ -17,9 +17,10 @@
  * limitations under the License.
  * #L%
  */
-package com.github.ingogriebsch.bricks.assemble.loader.github;
+package com.github.ingogriebsch.bricks.assemble.loader.artifactory;
 
-public interface RepositoryIdProvider {
+public interface ResourceOriginProvider {
 
-    String getId(String id);
+    ResourceOrigin get(String componentId);
+
 }

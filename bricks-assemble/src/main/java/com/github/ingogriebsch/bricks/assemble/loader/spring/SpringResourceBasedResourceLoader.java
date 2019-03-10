@@ -38,7 +38,7 @@ public class SpringResourceBasedResourceLoader implements com.github.ingogriebsc
 
     @Override
     public InputStream load(@NonNull String id) throws IOException {
-        Resource resource = resourceLoader.getResource(resourceLocationProvider.getLocation(id));
+        Resource resource = resourceLoader.getResource(resourceLocationProvider.get(id));
         if (!resource.exists() || !resource.isReadable()) {
             return null;
         }

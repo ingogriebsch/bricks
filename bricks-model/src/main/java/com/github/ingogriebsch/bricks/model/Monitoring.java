@@ -23,6 +23,9 @@ import javax.validation.Valid;
 
 import lombok.Data;
 
+/**
+ * Monitoring is used to monitor system resources and performance in an component or application.
+ */
 @Data
 public class Monitoring {
 

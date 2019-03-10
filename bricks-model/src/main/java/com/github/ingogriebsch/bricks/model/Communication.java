@@ -25,6 +25,10 @@ import javax.validation.Valid;
 
 import lombok.Data;
 
+/**
+ * Communication is the act of conveying meanings from one entity or group to another through the use of mutually understood
+ * signs, symbols, and semiotic rules.
+ */
 @Data
 public class Communication {
 

@@ -72,7 +72,7 @@ public class SpringResourceBasedResourceLoaderTest {
     @Test
     public void load_should_return_null_if_resource_does_not_exist() throws IOException {
         String id = randomAlphabetic(8);
-        given(resourceLocationProvider.getLocation(id)).willReturn(id);
+        given(resourceLocationProvider.get(id)).willReturn(id);
         given(resourceLoader.getResource(id)).willReturn(new DescriptiveResource(id));
 
         SpringResourceBasedResourceLoader springResourceBasedResourceLoader =
@@ -83,7 +83,7 @@ public class SpringResourceBasedResourceLoaderTest {
     @Test
     public void load_should_return_stream_if_resource_does_exist() throws IOException {
         String id = randomAlphabetic(8);
-        given(resourceLocationProvider.getLocation(id)).willReturn(id);
+        given(resourceLocationProvider.get(id)).willReturn(id);
         given(resourceLoader.getResource(id)).willReturn(new ByteArrayResource(random(128).getBytes(), id));
 
         SpringResourceBasedResourceLoader springResourceBasedResourceLoader =
