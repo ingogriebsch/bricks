@@ -19,12 +19,17 @@
  */
 package com.github.ingogriebsch.bricks.maven.plugin.analyzer;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalysisResult.OK;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentCaptor.forClass;
+import static org.mockito.Mockito.RETURNS_MOCKS;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import com.github.ingogriebsch.bricks.model.Component;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -32,24 +37,27 @@ public class AbstractMavenAnalyzerTest {
 
     @Test
     public void testNullContext() throws Exception {
-        Assertions.assertThrows(NullPointerException.class, () -> {
-            NullAnalyzer uut = new NullAnalyzer();
+        NullAnalyzer uut = new NullAnalyzer();
+
+        assertThrows(NullPointerException.class, () -> {
             uut.augment(null, mock(Component.class));
         });
     }
 
     @Test
     public void testNullComponent() throws Exception {
-        Assertions.assertThrows(NullPointerException.class, () -> {
-            NullAnalyzer uut = new NullAnalyzer();
+        NullAnalyzer uut = new NullAnalyzer();
+
+        assertThrows(NullPointerException.class, () -> {
             uut.augment(mock(AnalyzerContext.class), null);
         });
     }
 
     public void testParameterPassesUnchanged() throws Exception {
         NullAnalyzer uut = mock(NullAnalyzer.class);
-        ArgumentCaptor<Component> cap = ArgumentCaptor.forClass(Component.class);
-        when(uut.augment(cap.capture())).thenReturn(AnalysisResult.OK);
+        ArgumentCaptor<Component> cap = forClass(Component.class);
+        when(uut.augment(cap.capture())).thenReturn(OK);
+
         Component probe = new Component();
         uut.augment(mock(AnalyzerContext.class, RETURNS_MOCKS), probe);
         assertSame(cap.getValue(), probe);
@@ -60,7 +68,7 @@ public class AbstractMavenAnalyzerTest {
         @Override
         protected AnalysisResult augment(Component c) {
             assertNotNull(c);
-            return AnalysisResult.OK;
+            return OK;
         }
     }
 }

@@ -19,9 +19,18 @@
  */
 package com.github.ingogriebsch.bricks.maven.plugin.analyzer.discovery;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalysisResult.FAIL;
+import static com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalysisResult.FATAL;
+import static com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalysisResult.OK;
+import static com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalysisResult.SKIPPED;
+import static com.google.common.collect.Lists.newArrayList;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.startsWith;
+import static org.mockito.Mockito.RETURNS_MOCKS;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AbstractMavenAnalyzer;
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalysisResult;
@@ -35,46 +44,53 @@ import org.junit.jupiter.api.Test;
 
 import lombok.RequiredArgsConstructor;
 
-@SuppressWarnings("unchecked")
 public class AnalyzersTest {
 
     @Test
     public void testOK() throws Exception {
-        AnalyzerDiscovery testDiscovery = x -> Lists.newArrayList(DummyAnalyzer.of(AnalysisResult.OK));
+        AnalyzerDiscovery testDiscovery = x -> newArrayList(DummyAnalyzer.of(OK));
         AnalyzerContext context = mock(AnalyzerContext.class, RETURNS_MOCKS);
+
         Log log = mock(Log.class);
         when(context.log()).thenReturn(log);
+
         Analyzers uut = new Analyzers(context, testDiscovery);
         Component c = new Component();
         uut.augment(c);
-        verify(log).info(startsWith(AnalysisResult.OK + " " + DummyAnalyzer.class.getSimpleName() + " done"));
+
+        verify(log).info(startsWith(OK + " " + DummyAnalyzer.class.getSimpleName() + " done"));
     }
 
     @Test
     public void testSkipped() throws Exception {
-        AnalyzerDiscovery testDiscovery = x -> Lists.newArrayList(DummyAnalyzer.of(AnalysisResult.SKIPPED));
+        AnalyzerDiscovery testDiscovery = x -> Lists.newArrayList(DummyAnalyzer.of(SKIPPED));
         AnalyzerContext context = mock(AnalyzerContext.class, RETURNS_MOCKS);
+
         Log log = mock(Log.class);
         when(context.log()).thenReturn(log);
+
         Analyzers uut = new Analyzers(context, testDiscovery);
         Component c = new Component();
         uut.augment(c);
-        verify(log).info(startsWith(AnalysisResult.SKIPPED + " " + DummyAnalyzer.class.getSimpleName() + " done"));
+
+        verify(log).info(startsWith(SKIPPED + " " + DummyAnalyzer.class.getSimpleName() + " done"));
     }
 
     @Test
     public void testFatalOnReturningNull() throws Exception {
-        AnalyzerDiscovery testDiscovery = x -> Lists.newArrayList(DummyAnalyzer.of(null));
+        AnalyzerDiscovery testDiscovery = x -> newArrayList(DummyAnalyzer.of(null));
         AnalyzerContext context = mock(AnalyzerContext.class, RETURNS_MOCKS);
+
         Log log = mock(Log.class);
         when(context.log()).thenReturn(log);
         Analyzers uut = new Analyzers(context, testDiscovery);
+
         Component c = new Component();
         try {
             uut.augment(c);
             fail("should have thrown a MojoFailureException");
         } catch (MojoFailureException e) {
-            verify(log).info(startsWith(AnalysisResult.FATAL.toString()));
+            verify(log).info(startsWith(FATAL.toString()));
         }
     }
 
@@ -82,17 +98,20 @@ public class AnalyzersTest {
     public void testFatalOnMojoException() throws Exception {
         DummyAnalyzer analyzer = mock(DummyAnalyzer.class);
         when(analyzer.augment(any())).thenThrow(MojoFailureException.class);
-        AnalyzerDiscovery testDiscovery = x -> Lists.newArrayList(analyzer);
+
+        AnalyzerDiscovery testDiscovery = x -> newArrayList(analyzer);
         AnalyzerContext context = mock(AnalyzerContext.class, RETURNS_MOCKS);
+
         Log log = mock(Log.class);
         when(context.log()).thenReturn(log);
         Analyzers uut = new Analyzers(context, testDiscovery);
+
         Component c = new Component();
         try {
             uut.augment(c);
             fail("should have thrown a MojoFailureException");
         } catch (MojoFailureException e) {
-            verify(log).info(startsWith(AnalysisResult.FATAL.toString()));
+            verify(log).info(startsWith(FATAL.toString()));
         }
     }
 
@@ -100,14 +119,17 @@ public class AnalyzersTest {
     public void testFailOnArbitraryException() throws Exception {
         DummyAnalyzer analyzer = mock(DummyAnalyzer.class);
         when(analyzer.augment(any())).thenThrow(IllegalStateException.class);
-        AnalyzerDiscovery testDiscovery = x -> Lists.newArrayList(analyzer);
+
+        AnalyzerDiscovery testDiscovery = x -> newArrayList(analyzer);
         AnalyzerContext context = mock(AnalyzerContext.class, RETURNS_MOCKS);
+
         Log log = mock(Log.class);
         when(context.log()).thenReturn(log);
         Analyzers uut = new Analyzers(context, testDiscovery);
+
         Component c = new Component();
         uut.augment(c);
-        verify(log).info(startsWith(AnalysisResult.FAIL.toString()));
+        verify(log).info(startsWith(FAIL.toString()));
     }
 
     @RequiredArgsConstructor(staticName = "of")

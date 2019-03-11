@@ -19,8 +19,6 @@
  */
 package com.github.ingogriebsch.bricks.maven.plugin.analyzer.example;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AbstractMavenAnalyzer;
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalysisResult;
 import com.github.ingogriebsch.bricks.model.Component;
