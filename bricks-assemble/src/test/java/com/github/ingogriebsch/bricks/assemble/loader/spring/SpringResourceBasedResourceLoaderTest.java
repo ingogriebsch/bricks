@@ -19,9 +19,10 @@
  */
 package com.github.ingogriebsch.bricks.assemble.loader.spring;
 
-import static org.apache.commons.lang3.RandomStringUtils.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.BDDMockito.*;
+import static org.apache.commons.lang3.RandomStringUtils.random;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
 
 import java.io.IOException;
 import java.io.InputStream;

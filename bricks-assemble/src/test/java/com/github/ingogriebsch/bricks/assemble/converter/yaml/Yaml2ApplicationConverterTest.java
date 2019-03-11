@@ -19,13 +19,13 @@
  */
 package com.github.ingogriebsch.bricks.assemble.converter.yaml;
 
-import static java.nio.charset.Charset.*;
-import static java.util.stream.Collectors.*;
+import static java.nio.charset.Charset.forName;
+import static java.util.stream.Collectors.toMap;
 
-import static com.fasterxml.jackson.databind.SerializationFeature.*;
-import static org.apache.commons.beanutils.BeanUtils.*;
-import static org.apache.commons.io.IOUtils.*;
-import static org.assertj.core.api.Assertions.*;
+import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS;
+import static org.apache.commons.beanutils.BeanUtils.describe;
+import static org.apache.commons.io.IOUtils.toInputStream;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

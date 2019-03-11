@@ -19,8 +19,8 @@
  */
 package com.github.ingogriebsch.bricks.assemble.loader.common;
 
-import static org.apache.commons.lang3.StringUtils.*;
-import static org.assertj.core.api.Assertions.*;
+import static org.apache.commons.lang3.StringUtils.replace;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.InputStream;
 import java.util.Map;

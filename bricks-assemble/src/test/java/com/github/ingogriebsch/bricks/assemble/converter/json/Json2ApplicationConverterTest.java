@@ -19,10 +19,10 @@
  */
 package com.github.ingogriebsch.bricks.assemble.converter.json;
 
-import static java.nio.charset.Charset.*;
+import static java.nio.charset.Charset.forName;
 
-import static com.fasterxml.jackson.databind.SerializationFeature.*;
-import static org.assertj.core.api.Assertions.*;
+import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
 import java.io.InputStream;

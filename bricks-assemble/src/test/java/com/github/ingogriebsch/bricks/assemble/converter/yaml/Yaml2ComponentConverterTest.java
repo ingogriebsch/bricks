@@ -19,8 +19,8 @@
  */
 package com.github.ingogriebsch.bricks.assemble.converter.yaml;
 
-import static com.fasterxml.jackson.databind.SerializationFeature.*;
-import static org.assertj.core.api.Assertions.*;
+import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

@@ -19,11 +19,11 @@
  */
 package com.github.ingogriebsch.bricks.assemble.loader.common;
 
-import static java.nio.charset.Charset.*;
+import static java.nio.charset.Charset.forName;
 
-import static org.apache.commons.io.IOUtils.*;
-import static org.apache.commons.lang3.RandomStringUtils.*;
-import static org.assertj.core.api.Assertions.*;
+import static org.apache.commons.io.IOUtils.toInputStream;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.InputStream;
 

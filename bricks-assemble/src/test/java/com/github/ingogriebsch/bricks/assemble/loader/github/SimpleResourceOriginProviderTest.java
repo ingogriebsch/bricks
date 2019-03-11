@@ -19,9 +19,10 @@
  */
 package com.github.ingogriebsch.bricks.assemble.loader.github;
 
-import static com.github.ingogriebsch.bricks.assemble.loader.github.SimpleResourceOriginProvider.*;
-import static org.apache.commons.lang3.RandomStringUtils.*;
-import static org.assertj.core.api.Assertions.*;
+import static com.github.ingogriebsch.bricks.assemble.loader.github.SimpleResourceOriginProvider.DEFAULT_PATH;
+import static com.github.ingogriebsch.bricks.assemble.loader.github.SimpleResourceOriginProvider.DEFAULT_REF;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 

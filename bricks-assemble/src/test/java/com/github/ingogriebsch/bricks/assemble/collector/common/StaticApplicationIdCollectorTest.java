@@ -19,9 +19,9 @@
  */
 package com.github.ingogriebsch.bricks.assemble.collector.common;
 
-import static com.google.common.collect.Sets.*;
-import static org.apache.commons.lang3.RandomStringUtils.*;
-import static org.assertj.core.api.Assertions.*;
+import static com.google.common.collect.Sets.newHashSet;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Set;
 

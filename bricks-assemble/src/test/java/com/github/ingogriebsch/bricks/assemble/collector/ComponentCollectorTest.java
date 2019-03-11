@@ -19,11 +19,13 @@
  */
 package com.github.ingogriebsch.bricks.assemble.collector;
 
-import static com.google.common.collect.Sets.*;
-import static org.apache.commons.lang3.RandomStringUtils.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.*;
+import static com.google.common.collect.Sets.newHashSet;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.util.Set;
 
@@ -109,7 +111,7 @@ public class ComponentCollectorTest {
         String componentId = "componentId";
         Set<String> componentIds = newHashSet(componentId, randomAlphabetic(6), randomAlphabetic(6));
         given(collector.collect(applicationId)).willReturn(componentIds);
-        given(reader.read(componentId)).willAnswer(new Answer<Component>() {
+        given(reader.read(anyString())).willAnswer(new Answer<Component>() {
 
             @Override
             public Component answer(InvocationOnMock invocation) throws Throwable {
@@ -127,7 +129,7 @@ public class ComponentCollectorTest {
         String componentId = "componentId";
         Set<String> componentIds = newHashSet(componentId, randomAlphabetic(6), randomAlphabetic(6));
         given(collector.collect(applicationId)).willReturn(componentIds);
-        given(reader.read(componentId)).willAnswer(new Answer<Component>() {
+        given(reader.read(anyString())).willAnswer(new Answer<Component>() {
 
             @Override
             public Component answer(InvocationOnMock invocation) throws Throwable {
