@@ -19,8 +19,10 @@
  */
 package com.github.ingogriebsch.bricks.maven.plugin;
 
-import static com.fasterxml.jackson.annotation.JsonInclude.Include.*;
-import static com.fasterxml.jackson.databind.SerializationFeature.*;
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
+import static com.fasterxml.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
+import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_NULL_MAP_VALUES;
 
 import java.util.function.Supplier;
 
