@@ -86,6 +86,6 @@ public class ServiceConfiguration {
 
     private ResourceLoader resourceLoader(String... parents) {
         return new YamlExtractingResourceLoader(new SpringResourceBasedResourceLoader(resourceLoader,
-            new StaticResourceLocationProvider("classpath:/application.yml")), "id", parents);
+            new StaticResourceLocationProvider("classpath:/example-applications.yml")), "id", parents);
     }
 }
