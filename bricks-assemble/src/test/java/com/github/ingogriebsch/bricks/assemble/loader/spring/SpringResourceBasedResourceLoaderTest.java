@@ -28,7 +28,6 @@ import static org.mockito.BDDMockito.given;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -74,7 +73,7 @@ public class SpringResourceBasedResourceLoaderTest {
 
     @Test
     public void load_should_throw_exception_if_input_is_null() throws IOException {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             new SpringResourceBasedResourceLoader(resourceLoader, resourceLocationProvider).load(null);
         });
     }

@@ -22,6 +22,7 @@ package com.github.ingogriebsch.bricks.assemble.collector;
 import static com.google.common.collect.Sets.newHashSet;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
@@ -32,7 +33,6 @@ import java.util.Set;
 import com.github.ingogriebsch.bricks.assemble.reader.ComponentReader;
 import com.github.ingogriebsch.bricks.model.Component;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -50,28 +50,28 @@ public class ComponentCollectorTest {
 
     @Test
     public void creation_should_throw_exception_if_input_is_null() {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             new ComponentCollector(null, null);
         });
     }
 
     @Test
     public void creation_should_throw_exception_if_collector_is_null() {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             new ComponentCollector(null, reader);
         });
     }
 
     @Test
     public void creation_should_throw_exception_if_assembler_is_null() {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             new ComponentCollector(collector, null);
         });
     }
 
     @Test
     public void collect_should_throw_exception_if_input_is_null() throws Exception {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             new ComponentCollector(collector, reader).collect(null);
         });
     }
@@ -82,7 +82,7 @@ public class ComponentCollectorTest {
 
         given(collector.collect(applicationId)).willThrow(new RuntimeException());
 
-        Assertions.assertThrows(RuntimeException.class, () -> {
+        assertThrows(RuntimeException.class, () -> {
             new ComponentCollector(collector, reader).collect(applicationId);
         });
     }
@@ -94,7 +94,7 @@ public class ComponentCollectorTest {
         given(collector.collect(applicationId)).willReturn(newHashSet(randomAlphabetic(6)));
         given(reader.read(anyString())).willThrow(new RuntimeException());
 
-        Assertions.assertThrows(RuntimeException.class, () -> {
+        assertThrows(RuntimeException.class, () -> {
             new ComponentCollector(collector, reader).collect(applicationId);
         });
     }
