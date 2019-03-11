@@ -119,10 +119,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>license-maven-plugin</artifactId>
                 <configuration>
-                    <excludes>
-                        <exclude>**/materialize*.css</exclude>
-                        <exclude>**/materialize*.js</exclude>
-                    </excludes>
+                    <excludes>${project.build.directory}/**,**/materialize*.css,**/materialize*.js</excludes>
                 </configuration>
             </plugin>
             <plugin><!-- http://docs.spring.io/spring-boot/docs/1.5.19.RELEASE/maven-plugin/ -->
