@@ -172,13 +172,8 @@
                         <failOnMissingHeader>true</failOnMissingHeader>
                         <failOnNotUptodateHeader>true</failOnNotUptodateHeader>
                         <licenseName>apache_v2</licenseName>
-                        <!-- added to prevent license plugin from complaining 
-                            about missing headers in generated sources. WARNING: excludes do not work 
-                            as expected -->
-                        <includes>
-                            <include>src/main/)ava/**</include>
-                            <include>src/test/java/**</include>
-                        </includes>
+                        <!-- Added to prevent license plugin from complaining about missing headers in generated sources -->
+                        <excludes>${project.build.directory}/**</excludes>
                     </configuration>
                     <executions>
                         <execution>
