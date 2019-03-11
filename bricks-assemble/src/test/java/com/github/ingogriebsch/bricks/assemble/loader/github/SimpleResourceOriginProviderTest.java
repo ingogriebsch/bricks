@@ -38,6 +38,7 @@ public class SimpleResourceOriginProviderTest {
     @Test
     public void builder_should_use_default_value_for_path_if_property_ref_is_set_explicitely() {
         String ref = randomAlphabetic(10);
+
         SimpleResourceOriginProvider provider = SimpleResourceOriginProvider.builder().ref(ref).build();
         assertThat(provider).isNotNull().hasFieldOrPropertyWithValue("path", DEFAULT_PATH).hasFieldOrPropertyWithValue("ref",
             ref);
@@ -46,6 +47,7 @@ public class SimpleResourceOriginProviderTest {
     @Test
     public void builder_should_use_default_value_for_ref_if_property_path_is_set_explicitely() {
         String path = randomAlphabetic(10);
+
         SimpleResourceOriginProvider provider = SimpleResourceOriginProvider.builder().path(path).build();
         assertThat(provider).isNotNull().hasFieldOrPropertyWithValue("path", path).hasFieldOrPropertyWithValue("ref",
             DEFAULT_REF);
@@ -55,6 +57,7 @@ public class SimpleResourceOriginProviderTest {
     public void builder_should_use_values_if_set_explicitely() {
         String path = randomAlphabetic(10);
         String ref = randomAlphabetic(10);
+
         SimpleResourceOriginProvider provider = SimpleResourceOriginProvider.builder().path(path).ref(ref).build();
         assertThat(provider).isNotNull().hasFieldOrPropertyWithValue("path", path).hasFieldOrPropertyWithValue("ref", ref);
     }

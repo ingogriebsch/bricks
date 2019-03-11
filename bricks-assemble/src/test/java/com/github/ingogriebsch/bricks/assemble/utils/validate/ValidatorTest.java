@@ -19,10 +19,11 @@
  */
 package com.github.ingogriebsch.bricks.assemble.utils.validate;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import javax.validation.ConstraintViolationException;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import lombok.Value;
@@ -33,14 +34,14 @@ public class ValidatorTest {
 
     @Test
     public void validate_should_throw_exception_if_validatee_is_null() {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             validator.validate(null);
         });
     }
 
     @Test
     public void validate_should_throw_exception_if_validatee_is_not_valid() {
-        Assertions.assertThrows(ConstraintViolationException.class, () -> {
+        assertThrows(ConstraintViolationException.class, () -> {
             validator.validate(new Validatee(null));
         });
     }

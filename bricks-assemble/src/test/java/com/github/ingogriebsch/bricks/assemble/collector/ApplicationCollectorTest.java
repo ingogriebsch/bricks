@@ -22,6 +22,7 @@ package com.github.ingogriebsch.bricks.assemble.collector;
 import static com.google.common.collect.Sets.newHashSet;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
@@ -32,7 +33,6 @@ import java.util.Set;
 import com.github.ingogriebsch.bricks.assemble.reader.ApplicationReader;
 import com.github.ingogriebsch.bricks.model.Application;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -45,44 +45,45 @@ public class ApplicationCollectorTest {
 
     @Mock
     private ApplicationIdCollector collector;
-
     @Mock
     private ApplicationReader reader;
 
     @Test
     public void creation_should_throw_exception_if_input_is_null() {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             new ApplicationCollector(null, null);
         });
     }
 
     @Test
     public void creation_should_throw_exception_if_collector_is_null() {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             new ApplicationCollector(null, reader);
         });
     }
 
     @Test
     public void creation_should_throw_exception_if_assembler_is_null() {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             new ApplicationCollector(collector, null);
         });
     }
 
     @Test
     public void collect_throws_exception_if_collector_throws_exception() throws Exception {
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            given(collector.collect()).willThrow(new RuntimeException());
+        given(collector.collect()).willThrow(new RuntimeException());
+
+        assertThrows(RuntimeException.class, () -> {
             new ApplicationCollector(collector, reader).collect();
         });
     }
 
     @Test
     public void collect_throws_exception_if_assembler_throws_exception() throws Exception {
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            given(collector.collect()).willReturn(newHashSet(randomAlphabetic(6)));
-            given(reader.read(anyString())).willThrow(new RuntimeException());
+        given(collector.collect()).willReturn(newHashSet(randomAlphabetic(6)));
+        given(reader.read(anyString())).willThrow(new RuntimeException());
+
+        assertThrows(RuntimeException.class, () -> {
             new ApplicationCollector(collector, reader).collect();
         });
     }
@@ -91,7 +92,9 @@ public class ApplicationCollectorTest {
     public void collect_should_call_collector() throws Exception {
         given(collector.collect()).willReturn(newHashSet(randomAlphabetic(6)));
         given(reader.read(anyString())).willReturn(null);
+
         new ApplicationCollector(collector, reader).collect();
+
         verify(collector).collect();
     }
 
@@ -99,6 +102,7 @@ public class ApplicationCollectorTest {
     public void collect_should_call_assembler_based_on_the_collector_output() throws Exception {
         String applicationId = "applicationId";
         Set<String> applicationIds = newHashSet(applicationId, randomAlphabetic(6), randomAlphabetic(6));
+
         given(collector.collect()).willReturn(applicationIds);
         given(reader.read(anyString())).willAnswer(new Answer<Application>() {
 
@@ -107,7 +111,9 @@ public class ApplicationCollectorTest {
                 return applicationId.equals(invocation.getArguments()[0]) ? new Application() : null;
             }
         });
+
         new ApplicationCollector(collector, reader).collect();
+
         verify(collector).collect();
         verify(reader, times(applicationIds.size())).read(anyString());
     }
@@ -116,6 +122,7 @@ public class ApplicationCollectorTest {
     public void collect_should_only_return_available_components() throws Exception {
         String applicationId = "applicationId";
         Set<String> applicationIds = newHashSet(applicationId, randomAlphabetic(6), randomAlphabetic(6));
+
         given(collector.collect()).willReturn(applicationIds);
         given(reader.read(anyString())).willAnswer(new Answer<Application>() {
 
@@ -124,7 +131,9 @@ public class ApplicationCollectorTest {
                 return applicationId.equals(invocation.getArguments()[0]) ? new Application() : null;
             }
         });
+
         Set<Application> components = new ApplicationCollector(collector, reader).collect();
+
         assertThat(components).isNotNull().hasSize(1);
         verify(reader, times(applicationIds.size())).read(anyString());
     }

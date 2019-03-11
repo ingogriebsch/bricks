@@ -45,7 +45,6 @@ public class ComponentCollectorTest {
 
     @Mock
     private ComponentIdCollector collector;
-
     @Mock
     private ComponentReader reader;
 
@@ -79,19 +78,23 @@ public class ComponentCollectorTest {
 
     @Test
     public void collect_throws_exception_if_collector_throws_exception() throws Exception {
+        String applicationId = "applicationId";
+
+        given(collector.collect(applicationId)).willThrow(new RuntimeException());
+
         Assertions.assertThrows(RuntimeException.class, () -> {
-            String applicationId = "applicationId";
-            given(collector.collect(applicationId)).willThrow(new RuntimeException());
             new ComponentCollector(collector, reader).collect(applicationId);
         });
     }
 
     @Test
     public void collect_throws_exception_if_assembler_throws_exception() throws Exception {
+        String applicationId = "applicationId";
+
+        given(collector.collect(applicationId)).willReturn(newHashSet(randomAlphabetic(6)));
+        given(reader.read(anyString())).willThrow(new RuntimeException());
+
         Assertions.assertThrows(RuntimeException.class, () -> {
-            String applicationId = "applicationId";
-            given(collector.collect(applicationId)).willReturn(newHashSet(randomAlphabetic(6)));
-            given(reader.read(anyString())).willThrow(new RuntimeException());
             new ComponentCollector(collector, reader).collect(applicationId);
         });
     }
@@ -99,9 +102,12 @@ public class ComponentCollectorTest {
     @Test
     public void collect_should_call_collector() throws Exception {
         String applicationId = "applicationId";
+
         given(collector.collect(applicationId)).willReturn(newHashSet(randomAlphabetic(6)));
         given(reader.read(anyString())).willReturn(null);
+
         new ComponentCollector(collector, reader).collect(applicationId);
+
         verify(collector).collect(applicationId);
     }
 
@@ -110,6 +116,7 @@ public class ComponentCollectorTest {
         String applicationId = "applicationId";
         String componentId = "componentId";
         Set<String> componentIds = newHashSet(componentId, randomAlphabetic(6), randomAlphabetic(6));
+
         given(collector.collect(applicationId)).willReturn(componentIds);
         given(reader.read(anyString())).willAnswer(new Answer<Component>() {
 
@@ -118,7 +125,9 @@ public class ComponentCollectorTest {
                 return componentId.equals(invocation.getArguments()[0]) ? new Component() : null;
             }
         });
+
         new ComponentCollector(collector, reader).collect(applicationId);
+
         verify(collector).collect(applicationId);
         verify(reader, times(componentIds.size())).read(anyString());
     }

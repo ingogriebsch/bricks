@@ -21,6 +21,7 @@ package com.github.ingogriebsch.bricks.assemble.reader.common;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
@@ -36,7 +37,6 @@ import com.github.ingogriebsch.bricks.assemble.converter.ApplicationConverter;
 import com.github.ingogriebsch.bricks.assemble.loader.ResourceLoader;
 import com.github.ingogriebsch.bricks.model.Application;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -47,27 +47,26 @@ public class SimpleApplicationReaderTest {
 
     @Mock
     private ResourceLoader resourceLoader;
-
     @Mock
     private ApplicationConverter applicationConverter;
 
     @Test
     public void creation_should_throw_exception_if_input_is_null() {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             new SimpleApplicationReader(null, null);
         });
     }
 
     @Test
     public void creation_should_throw_exception_if_first_parameter_is_null() {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             new SimpleApplicationReader(null, applicationConverter);
         });
     }
 
     @Test
     public void creation_should_throw_exception_if_second_parameter_is_null() {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             new SimpleApplicationReader(resourceLoader, null);
         });
     }
@@ -79,7 +78,7 @@ public class SimpleApplicationReaderTest {
 
     @Test
     public void read_should_throw_exception_if_input_is_null() throws Exception {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             new SimpleApplicationReader(resourceLoader, applicationConverter).read(null);
         });
     }
@@ -87,8 +86,11 @@ public class SimpleApplicationReaderTest {
     @Test
     public void read_should_return_null_if_resource_is_not_available() throws Exception {
         String id = randomAlphabetic(10);
+
         given(resourceLoader.load(id)).willReturn(null);
+
         SimpleApplicationReader simpleApplicationReader = new SimpleApplicationReader(resourceLoader, applicationConverter);
+
         assertThat(simpleApplicationReader.read(id)).isNull();
         verify(applicationConverter, times(0)).convert(any(), anyString());
     }
@@ -97,20 +99,25 @@ public class SimpleApplicationReaderTest {
     public void read_should_return_application_if_resource_is_available() throws Exception {
         String id = randomAlphabetic(10);
         InputStream stream = new ByteArrayInputStream("{}".getBytes());
+
         given(resourceLoader.load(id)).willReturn(stream);
         given(applicationConverter.convert(stream, id)).willReturn(new Application());
+
         SimpleApplicationReader simpleApplicationReader =
             new SimpleApplicationReader(resourceLoader, applicationConverter, false);
+
         assertThat(simpleApplicationReader.read(id)).isNotNull();
     }
 
     @Test
     public void read_should_throw_exception_if_application_is_not_valid() throws Exception {
-        Assertions.assertThrows(ValidationException.class, () -> {
-            String id = randomAlphabetic(10);
-            InputStream stream = new ByteArrayInputStream("{}".getBytes());
-            given(resourceLoader.load(id)).willReturn(stream);
-            given(applicationConverter.convert(stream, id)).willReturn(new Application());
+        String id = randomAlphabetic(10);
+        InputStream stream = new ByteArrayInputStream("{}".getBytes());
+
+        given(resourceLoader.load(id)).willReturn(stream);
+        given(applicationConverter.convert(stream, id)).willReturn(new Application());
+
+        assertThrows(ValidationException.class, () -> {
             new SimpleApplicationReader(resourceLoader, applicationConverter, true).read(id);
         });
     }

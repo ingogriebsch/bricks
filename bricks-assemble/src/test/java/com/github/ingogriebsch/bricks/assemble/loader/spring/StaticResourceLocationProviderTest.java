@@ -21,15 +21,15 @@ package com.github.ingogriebsch.bricks.assemble.loader.spring;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class StaticResourceLocationProviderTest {
 
     @Test
     public void creation_should_throw_exception_if_input_is_not_given() {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             new StaticResourceLocationProvider(null);
         });
     }

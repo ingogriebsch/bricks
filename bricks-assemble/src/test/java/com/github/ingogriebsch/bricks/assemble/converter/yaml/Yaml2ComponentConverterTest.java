@@ -21,6 +21,7 @@ package com.github.ingogriebsch.bricks.assemble.converter.yaml;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -30,7 +31,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.github.ingogriebsch.bricks.model.Component;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -46,14 +46,14 @@ public class Yaml2ComponentConverterTest {
 
     @Test
     public void convert_should_throw_exception_if_input_is_null() throws Exception {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             new Yaml2ComponentConverter().convert(null, null);
         });
     }
 
     @Test
     public void convert_should_throw_exception_if_input_is_not_legal() throws Exception {
-        Assertions.assertThrows(IOException.class, () -> {
+        assertThrows(IOException.class, () -> {
             try (InputStream is = new ByteArrayInputStream("test".getBytes())) {
                 new Yaml2ComponentConverter().convert(is, "regardless");
             }
@@ -63,10 +63,12 @@ public class Yaml2ComponentConverterTest {
     @Test
     public void convert_should_convert_empty_component_to_matching_output() throws Exception {
         Component source = new Component();
+
         Component target;
         try (InputStream is = new ByteArrayInputStream(objectMapper.writeValueAsBytes(source))) {
             target = new Yaml2ComponentConverter().convert(is, "regardless");
         }
+
         assertThat(target).isNotNull().isEqualTo(source);
     }
 
@@ -78,10 +80,12 @@ public class Yaml2ComponentConverterTest {
         source.setDescription("description");
         source.setVersion("version");
         source.setLayer("layer");
+
         Component target;
         try (InputStream is = new ByteArrayInputStream(objectMapper.writeValueAsBytes(source))) {
             target = new Yaml2ComponentConverter().convert(is, source.getId());
         }
+
         assertThat(target).isNotNull().isEqualTo(source);
     }
 }

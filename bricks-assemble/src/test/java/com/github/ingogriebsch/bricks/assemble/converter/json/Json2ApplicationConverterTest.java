@@ -23,6 +23,7 @@ import static java.nio.charset.Charset.forName;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,7 +33,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.ingogriebsch.bricks.model.Application;
 
 import org.apache.commons.io.IOUtils;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -41,21 +41,21 @@ public class Json2ApplicationConverterTest {
     private static ObjectMapper objectMapper;
 
     @BeforeAll
-    public static void beforeClass() {
+    public static void beforeAll() {
         objectMapper = new ObjectMapper();
         objectMapper.configure(FAIL_ON_EMPTY_BEANS, false);
     }
 
     @Test
     public void convert_should_throw_exception_if_input_is_null() throws Exception {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             new Json2ApplicationConverter().convert(null, null);
         });
     }
 
     @Test
     public void convert_should_throw_exception_if_input_is_not_legal() throws Exception {
-        Assertions.assertThrows(IOException.class, () -> {
+        assertThrows(IOException.class, () -> {
             try (InputStream is = toInputStream("test")) {
                 new Json2ApplicationConverter().convert(is, "regardlesse");
             }
@@ -65,10 +65,12 @@ public class Json2ApplicationConverterTest {
     @Test
     public void convert_should_convert_empty_application_to_matching_output() throws Exception {
         Application source = new Application();
+
         Application target;
         try (InputStream is = toInputStream(source)) {
             target = new Json2ApplicationConverter().convert(is, "regardless");
         }
+
         assertThat(target).isNotNull().isEqualTo(source);
     }
 
@@ -79,10 +81,12 @@ public class Json2ApplicationConverterTest {
         source.setName("name");
         source.setDescription("description");
         source.setVersion("version");
+
         Application target;
         try (InputStream is = toInputStream(source)) {
             target = new Json2ApplicationConverter().convert(is, source.getId());
         }
+
         assertThat(target).isNotNull().isEqualTo(source);
     }
 

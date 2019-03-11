@@ -42,10 +42,12 @@ public class YamlExtractingResourceLoaderTest {
         throws Exception {
         YamlExtractingResourceLoader resourceLoader =
             new YamlExtractingResourceLoader(getResourceLoader("entries_on_root_level.yaml"));
+
         Map<String, String> component;
         try (InputStream resource = resourceLoader.load("component2")) {
             component = (Map<String, String>) new Yaml().load(resource);
         }
+
         assertThat(component).isNotNull().containsEntry("id", "component2");
         assertThat(component).isNotNull().containsEntry("name", "Component 2");
     }
@@ -55,10 +57,12 @@ public class YamlExtractingResourceLoaderTest {
     public void load_should_return_resource_if_yaml_contains_entry_on_root_level_matching_resource() throws Exception {
         YamlExtractingResourceLoader resourceLoader =
             new YamlExtractingResourceLoader(getResourceLoader("entry_on_root_level.yaml"));
+
         Map<String, String> component;
         try (InputStream resource = resourceLoader.load("component1")) {
             component = (Map<String, String>) new Yaml().load(resource);
         }
+
         assertThat(component).isNotNull().containsEntry("id", "component1");
         assertThat(component).isNotNull().containsEntry("name", "Component 1");
     }
@@ -69,10 +73,12 @@ public class YamlExtractingResourceLoaderTest {
         throws Exception {
         YamlExtractingResourceLoader resourceLoader = new YamlExtractingResourceLoader(
             getResourceLoader("entries_as_leafs_of_one_tree.yaml"), "id", "some", "tree", "structure");
+
         Map<String, String> component;
         try (InputStream resource = resourceLoader.load("component2")) {
             component = (Map<String, String>) new Yaml().load(resource);
         }
+
         assertThat(component).isNotNull().containsEntry("id", "component2");
         assertThat(component).isNotNull().containsEntry("name", "Component 2");
     }
@@ -83,10 +89,12 @@ public class YamlExtractingResourceLoaderTest {
         throws Exception {
         YamlExtractingResourceLoader resourceLoader = new YamlExtractingResourceLoader(
             getResourceLoader("entries_as_leafs_of_several_trees.yaml"), "id", "some", "tree", "structure");
+
         Map<String, String> component;
         try (InputStream resource = resourceLoader.load("component2")) {
             component = (Map<String, String>) new Yaml().load(resource);
         }
+
         assertThat(component).isNotNull().containsEntry("id", "component2");
         assertThat(component).isNotNull().containsEntry("name", "Component 2");
     }
@@ -96,10 +104,12 @@ public class YamlExtractingResourceLoaderTest {
     public void load_should_return_resource_if_yaml_contains_entry_as_leaf_of_one_tree_matching_resource() throws Exception {
         YamlExtractingResourceLoader resourceLoader = new YamlExtractingResourceLoader(
             getResourceLoader("entry_as_leaf_of_one_tree.yaml"), "id", "some", "tree", "structure");
+
         Map<String, String> component;
         try (InputStream resource = resourceLoader.load("component1")) {
             component = (Map<String, String>) new Yaml().load(resource);
         }
+
         assertThat(component).isNotNull().containsEntry("id", "component1");
         assertThat(component).isNotNull().containsEntry("name", "Component 1");
     }

@@ -22,6 +22,7 @@ package com.github.ingogriebsch.bricks.assemble.loader.spring;
 import static org.apache.commons.lang3.RandomStringUtils.random;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 
 import java.io.IOException;
@@ -47,21 +48,21 @@ public class SpringResourceBasedResourceLoaderTest {
 
     @Test
     public void creation_should_throw_exception_if_input_is_null() {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             new SpringResourceBasedResourceLoader(null, null);
         });
     }
 
     @Test
     public void creation_should_throw_exception_if_first_parameter_is_null() {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             new SpringResourceBasedResourceLoader(null, resourceLocationProvider);
         });
     }
 
     @Test
     public void creation_should_throw_exception_if_second_parameter_is_null() {
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             new SpringResourceBasedResourceLoader(resourceLoader, null);
         });
     }
@@ -81,8 +82,10 @@ public class SpringResourceBasedResourceLoaderTest {
     @Test
     public void load_should_return_null_if_resource_does_not_exist() throws IOException {
         String id = randomAlphabetic(8);
+
         given(resourceLocationProvider.get(id)).willReturn(id);
         given(resourceLoader.getResource(id)).willReturn(new DescriptiveResource(id));
+
         SpringResourceBasedResourceLoader springResourceBasedResourceLoader =
             new SpringResourceBasedResourceLoader(resourceLoader, resourceLocationProvider);
         assertThat(springResourceBasedResourceLoader.load(id)).isNull();
@@ -91,8 +94,10 @@ public class SpringResourceBasedResourceLoaderTest {
     @Test
     public void load_should_return_stream_if_resource_does_exist() throws IOException {
         String id = randomAlphabetic(8);
+
         given(resourceLocationProvider.get(id)).willReturn(id);
         given(resourceLoader.getResource(id)).willReturn(new ByteArrayResource(random(128).getBytes(), id));
+
         SpringResourceBasedResourceLoader springResourceBasedResourceLoader =
             new SpringResourceBasedResourceLoader(resourceLoader, resourceLocationProvider);
         try (InputStream stream = springResourceBasedResourceLoader.load(id)) {
