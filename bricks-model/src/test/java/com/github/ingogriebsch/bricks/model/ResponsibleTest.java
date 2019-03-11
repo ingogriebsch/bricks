@@ -19,9 +19,9 @@
  */
 package com.github.ingogriebsch.bricks.model;
 
-import static javax.validation.Validation.*;
+import static javax.validation.Validation.byDefaultProvider;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Set;
 
@@ -39,6 +39,7 @@ public class ResponsibleTest {
     public void validation_should_fail_if_name_is_not_set() {
         Responsible responsible = new Responsible();
         responsible.setEmail("email@example.com");
+
         Set<ConstraintViolation<Responsible>> violations = validator.validate(responsible);
         assertThat(violations).isNotNull().hasSize(1);
     }
@@ -47,6 +48,7 @@ public class ResponsibleTest {
     public void validation_should_fail_if_type_is_not_set() {
         Responsible responsible = new Responsible();
         responsible.setName("Max Mustermann");
+
         Set<ConstraintViolation<Responsible>> violations = validator.validate(responsible);
         assertThat(violations).isNotNull().hasSize(1);
     }
@@ -56,6 +58,7 @@ public class ResponsibleTest {
         Responsible responsible = new Responsible();
         responsible.setName("Max Mustermann");
         responsible.setEmail("email@example.com");
+
         Set<ConstraintViolation<Responsible>> violations = validator.validate(responsible);
         assertThat(violations).isNotNull().isEmpty();
     }
