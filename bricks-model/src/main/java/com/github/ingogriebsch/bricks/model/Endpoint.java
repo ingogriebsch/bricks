@@ -19,13 +19,18 @@
  */
 package com.github.ingogriebsch.bricks.model;
 
-import lombok.EqualsAndHashCode;
+import org.hibernate.validator.constraints.NotBlank;
+
+import lombok.Data;
 
 /**
  * A communication endpoint is an interface exposed by a communicating party or by a communication channel.
  */
-@EqualsAndHashCode
+@Data
 public class Endpoint {
+
+    @NotBlank
+    private String id;
 
     // FIXME to be defined!
 }

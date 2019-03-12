@@ -19,12 +19,14 @@
  */
 package com.github.ingogriebsch.bricks.model;
 
-import lombok.EqualsAndHashCode;
+import static lombok.AccessLevel.PRIVATE;
+
+import lombok.NoArgsConstructor;
 
 /**
  * A memory footprint refers to the amount of main memory that a componet or application uses or references while running.
  */
-@EqualsAndHashCode
+@NoArgsConstructor(access = PRIVATE)
 public class MemoryFootprint {
 
     // FIXME to be defined!

@@ -19,14 +19,19 @@
  */
 package com.github.ingogriebsch.bricks.model;
 
-import lombok.EqualsAndHashCode;
+import org.hibernate.validator.constraints.NotBlank;
+
+import lombok.Data;
 
 /**
  * A message is a discrete unit of communication intended by the source for consumption by some recipient or group of recipients.
  * A message can be the content of a broadcast. An interactive exchange of messages forms a conversation.
  */
-@EqualsAndHashCode
+@Data
 public class Message {
+
+    @NotBlank
+    String id;
 
     // FIXME to be defined!
 }

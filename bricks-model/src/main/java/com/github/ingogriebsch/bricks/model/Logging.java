@@ -19,13 +19,15 @@
  */
 package com.github.ingogriebsch.bricks.model;
 
-import lombok.EqualsAndHashCode;
+import static lombok.AccessLevel.PRIVATE;
+
+import lombok.NoArgsConstructor;
 
 /**
  * Logging is the act of keeping a log. A log records either events that occur in a software, or messages between different users
  * of a communication software.
  */
-@EqualsAndHashCode
+@NoArgsConstructor(access = PRIVATE)
 public class Logging {
 
     // FIXME to be defined!
