@@ -34,6 +34,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ComponentService {
 
+    @NonNull
     private final ComponentCollector componentCollector;
 
     public Set<Component> findAll(@NonNull String applicationId) throws Exception {
