@@ -21,7 +21,7 @@ package com.github.ingogriebsch.bricks.dashboard;
 
 import static com.github.ingogriebsch.bricks.dashboard.ServiceApplication.main;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 

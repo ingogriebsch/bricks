@@ -31,7 +31,7 @@ import com.github.ingogriebsch.bricks.dashboard.web.Breadcrumb.Entry;
 import com.github.ingogriebsch.bricks.model.Application;
 import com.github.ingogriebsch.bricks.model.Component;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class BreadcrumbFactoryTest {
 
