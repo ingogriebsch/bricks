@@ -23,6 +23,7 @@ import static java.nio.charset.Charset.forName;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,29 +33,33 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.ingogriebsch.bricks.model.Application;
 
 import org.apache.commons.io.IOUtils;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class Json2ApplicationConverterTest {
 
     private static ObjectMapper objectMapper;
 
-    @BeforeClass
-    public static void beforeClass() {
+    @BeforeAll
+    public static void beforeAll() {
         objectMapper = new ObjectMapper();
         objectMapper.configure(FAIL_ON_EMPTY_BEANS, false);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void convert_should_throw_exception_if_input_is_null() throws Exception {
-        new Json2ApplicationConverter().convert(null, null);
+        assertThrows(NullPointerException.class, () -> {
+            new Json2ApplicationConverter().convert(null, null);
+        });
     }
 
-    @Test(expected = IOException.class)
+    @Test
     public void convert_should_throw_exception_if_input_is_not_legal() throws Exception {
-        try (InputStream is = toInputStream("test")) {
-            new Json2ApplicationConverter().convert(is, "regardlesse");
-        }
+        assertThrows(IOException.class, () -> {
+            try (InputStream is = toInputStream("test")) {
+                new Json2ApplicationConverter().convert(is, "regardlesse");
+            }
+        });
     }
 
     @Test

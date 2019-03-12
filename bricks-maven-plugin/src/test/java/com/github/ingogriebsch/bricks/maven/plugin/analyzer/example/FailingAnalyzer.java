@@ -28,7 +28,6 @@ public class FailingAnalyzer implements MavenAnalyzer {
 
     @Override
     public AnalysisResult augment(AnalyzerContext ctx, Component c) {
-
         ctx.log().info("failing alright");
         return AnalysisResult.FAIL;
     }

@@ -28,7 +28,6 @@ public class SkippingAnalyzer implements MavenAnalyzer {
 
     @Override
     public AnalysisResult augment(AnalyzerContext ctx, Component c) {
-
         ctx.log().info("nothing to do here");
         return AnalysisResult.SKIPPED;
     }

@@ -55,7 +55,46 @@
         <directory-maven-plugin.version>0.3.1</directory-maven-plugin.version>
         <license-maven-plugin.version>1.17</license-maven-plugin.version>
         <tidy-maven-plugin.version>1.1.0</tidy-maven-plugin.version>
+        <assertj.version>3.12.1</assertj.version>
+        <mockito.version>2.25.0</mockito.version>
+        <jupiter.version>5.3.2</jupiter.version>
+        <junit-platform.version>1.4.0</junit-platform.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${jupiter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${jupiter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.platform</groupId>
+                <artifactId>junit-platform-engine</artifactId>
+                <version>${junit-platform.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${assertj.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-junit-jupiter</artifactId>
+                <version>${mockito.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <pluginManagement>
@@ -133,11 +172,8 @@
                         <failOnMissingHeader>true</failOnMissingHeader>
                         <failOnNotUptodateHeader>true</failOnNotUptodateHeader>
                         <licenseName>apache_v2</licenseName>
-                        <!-- added to prevent license plugin from complaining about missing headers in generated sources -->
-                        <excludes>
-                            <exclude>target/**</exclude>
-                            <exclude>**/target/**</exclude>
-                        </excludes>
+                        <!-- Added to prevent license plugin from complaining about missing headers in generated sources -->
+                        <excludes>${project.build.directory}/**</excludes>
                     </configuration>
                     <executions>
                         <execution>
@@ -146,6 +182,32 @@
                                 <goal>check-file-header</goal>
                             </goals>
                             <phase>validate</phase>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.0.0-M3</version>
+                    <configuration>
+                        <includes>*</includes>
+                        <excludedGroups>integration</excludedGroups>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>3.0.0-M3</version>
+                    <configuration>
+                        <groups>integration</groups>
+                        <includes>*</includes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
                         </execution>
                     </executions>
                 </plugin>

@@ -26,6 +26,7 @@ import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_
 import static org.apache.commons.beanutils.BeanUtils.describe;
 import static org.apache.commons.io.IOUtils.toInputStream;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -37,29 +38,33 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.github.ingogriebsch.bricks.model.Application;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class Yaml2ApplicationConverterTest {
 
     private static ObjectMapper objectMapper;
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
         objectMapper = new ObjectMapper(new YAMLFactory());
         objectMapper.configure(FAIL_ON_EMPTY_BEANS, false);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void convert_should_throw_exception_if_input_is_null() throws Exception {
-        new Yaml2ApplicationConverter().convert(null, null);
+        assertThrows(NullPointerException.class, () -> {
+            new Yaml2ApplicationConverter().convert(null, null);
+        });
     }
 
-    @Test(expected = IOException.class)
+    @Test
     public void convert_should_throw_exception_if_input_is_not_legal() throws Exception {
-        try (InputStream is = new ByteArrayInputStream("test".getBytes())) {
-            new Yaml2ApplicationConverter().convert(is, "regardless");
-        }
+        assertThrows(IOException.class, () -> {
+            try (InputStream is = new ByteArrayInputStream("test".getBytes())) {
+                new Yaml2ApplicationConverter().convert(is, "regardless");
+            }
+        });
     }
 
     @Test
@@ -86,6 +91,7 @@ public class Yaml2ApplicationConverterTest {
         try (InputStream is = toInputStream(objectMapper.writeValueAsString(source), forName("UTF-8"))) {
             target = new Yaml2ApplicationConverter().convert(is, source.getId());
         }
+
         assertThat(target).isNotNull().isEqualTo(source);
     }
 

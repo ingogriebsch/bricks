@@ -22,25 +22,28 @@ package com.github.ingogriebsch.bricks.assemble.collector.common;
 import static com.google.common.collect.Sets.newHashSet;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Set;
 
 import com.github.ingogriebsch.bricks.assemble.collector.ApplicationIdCollector;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class StaticApplicationIdCollectorTest {
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void creation_should_throw_exception_if_input_is_null() {
-        new StaticApplicationIdCollector(null);
+        assertThrows(NullPointerException.class, () -> {
+            new StaticApplicationIdCollector(null);
+        });
     }
 
     @Test
     public void collect_should_return_given_input() {
         Set<String> applicationIds = newHashSet(randomAlphabetic(6), randomAlphabetic(6), randomAlphabetic(6));
+
         ApplicationIdCollector collector = new StaticApplicationIdCollector(newHashSet(applicationIds));
         assertThat(collector.collect()).isNotNull().isEqualTo(applicationIds);
     }
-
 }

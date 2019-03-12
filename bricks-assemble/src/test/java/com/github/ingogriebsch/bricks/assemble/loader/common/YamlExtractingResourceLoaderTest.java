@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.io.InputStream;
 import java.util.Map;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.yaml.snakeyaml.Yaml;
 
 public class YamlExtractingResourceLoaderTest {
@@ -126,5 +126,4 @@ public class YamlExtractingResourceLoaderTest {
         InputStream resource = getClass().getClassLoader().getResourceAsStream(location);
         return new InputStreamResourceLoader(resource);
     }
-
 }

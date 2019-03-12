@@ -21,6 +21,7 @@ package com.github.ingogriebsch.bricks.assemble.converter.yaml;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -30,29 +31,33 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.github.ingogriebsch.bricks.model.Component;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class Yaml2ComponentConverterTest {
 
     private static ObjectMapper objectMapper;
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
         objectMapper = new ObjectMapper(new YAMLFactory());
         objectMapper.configure(FAIL_ON_EMPTY_BEANS, false);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void convert_should_throw_exception_if_input_is_null() throws Exception {
-        new Yaml2ComponentConverter().convert(null, null);
+        assertThrows(NullPointerException.class, () -> {
+            new Yaml2ComponentConverter().convert(null, null);
+        });
     }
 
-    @Test(expected = IOException.class)
+    @Test
     public void convert_should_throw_exception_if_input_is_not_legal() throws Exception {
-        try (InputStream is = new ByteArrayInputStream("test".getBytes())) {
-            new Yaml2ComponentConverter().convert(is, "regardless");
-        }
+        assertThrows(IOException.class, () -> {
+            try (InputStream is = new ByteArrayInputStream("test".getBytes())) {
+                new Yaml2ComponentConverter().convert(is, "regardless");
+            }
+        });
     }
 
     @Test

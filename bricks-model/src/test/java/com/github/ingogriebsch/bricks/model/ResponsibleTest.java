@@ -29,7 +29,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ResponsibleTest {
 

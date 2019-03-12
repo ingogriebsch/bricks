@@ -23,23 +23,28 @@ import static com.google.common.collect.ImmutableMap.of;
 import static com.google.common.collect.Sets.newHashSet;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Set;
 
 import com.github.ingogriebsch.bricks.assemble.collector.ComponentIdCollector;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class StaticComponentIdCollectorTest {
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void creation_should_throw_exception_if_input_is_null() {
-        new StaticComponentIdCollector(null);
+        assertThrows(NullPointerException.class, () -> {
+            new StaticComponentIdCollector(null);
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void collect_should_throw_exception_if_input_is_null() {
-        new StaticComponentIdCollector(of(randomAlphabetic(6), newHashSet())).collect(null);
+        assertThrows(NullPointerException.class, () -> {
+            new StaticComponentIdCollector(of(randomAlphabetic(6), newHashSet())).collect(null);
+        });
     }
 
     @Test
@@ -50,5 +55,4 @@ public class StaticComponentIdCollectorTest {
         ComponentIdCollector collector = new StaticComponentIdCollector(of(applicationId, componentIds));
         assertThat(collector.collect(applicationId)).isNotNull().isEqualTo(componentIds);
     }
-
 }

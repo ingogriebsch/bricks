@@ -27,13 +27,10 @@ public class ExampleAnalyzer extends AbstractMavenAnalyzer {
 
     @Override
     protected AnalysisResult augment(Component c) {
-
         c.setName(project.getName());
         c.setDescription(project.getDescription());
         c.setVersion(project.getVersion());
         log.info("from the inside");
-
         return AnalysisResult.OK;
     }
-
 }

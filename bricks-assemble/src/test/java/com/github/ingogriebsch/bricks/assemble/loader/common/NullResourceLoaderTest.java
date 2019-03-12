@@ -22,7 +22,7 @@ package com.github.ingogriebsch.bricks.assemble.loader.common;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class NullResourceLoaderTest {
 

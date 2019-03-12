@@ -31,7 +31,6 @@ public class FatalAnalyzer implements MavenAnalyzer {
     @Override
     @SneakyThrows
     public AnalysisResult augment(AnalyzerContext ctx, Component c) {
-
         return AnalysisResult.FATAL;
     }
 
@@ -39,5 +38,4 @@ public class FatalAnalyzer implements MavenAnalyzer {
     public int ordinal() {
         return 99999999;
     }
-
 }

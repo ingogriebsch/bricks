@@ -28,12 +28,8 @@ public class ExceptionAnalyzer implements MavenAnalyzer {
 
     @Override
     public AnalysisResult augment(AnalyzerContext ctx, Component c) {
-
         ctx.log().info("Fetching reflections");
-
         ctx.reflections();
-
         throw new IllegalArgumentException("damn");
     }
-
 }
