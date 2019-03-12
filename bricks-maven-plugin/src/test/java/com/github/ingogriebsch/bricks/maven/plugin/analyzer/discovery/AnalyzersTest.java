@@ -32,15 +32,14 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugin.logging.Log;
+import org.junit.jupiter.api.Test;
+
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AbstractMavenAnalyzer;
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalysisResult;
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalyzerContext;
 import com.github.ingogriebsch.bricks.model.Component;
-import com.google.common.collect.Lists;
-
-import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugin.logging.Log;
-import org.junit.jupiter.api.Test;
 
 import lombok.RequiredArgsConstructor;
 
@@ -63,7 +62,7 @@ public class AnalyzersTest {
 
     @Test
     public void testSkipped() throws Exception {
-        AnalyzerDiscovery testDiscovery = x -> Lists.newArrayList(DummyAnalyzer.of(SKIPPED));
+        AnalyzerDiscovery testDiscovery = x -> newArrayList(DummyAnalyzer.of(SKIPPED));
         AnalyzerContext context = mock(AnalyzerContext.class, RETURNS_MOCKS);
 
         Log log = mock(Log.class);
