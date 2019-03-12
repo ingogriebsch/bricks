@@ -102,7 +102,6 @@ public class ApplicationCollectorTest {
     public void collect_should_call_assembler_based_on_the_collector_output() throws Exception {
         String applicationId = "applicationId";
         Set<String> applicationIds = newHashSet(applicationId, randomAlphabetic(6), randomAlphabetic(6));
-
         given(collector.collect()).willReturn(applicationIds);
         given(reader.read(anyString())).willAnswer(new Answer<Application>() {
 
@@ -122,7 +121,6 @@ public class ApplicationCollectorTest {
     public void collect_should_only_return_available_components() throws Exception {
         String applicationId = "applicationId";
         Set<String> applicationIds = newHashSet(applicationId, randomAlphabetic(6), randomAlphabetic(6));
-
         given(collector.collect()).willReturn(applicationIds);
         given(reader.read(anyString())).willAnswer(new Answer<Application>() {
 

@@ -79,7 +79,6 @@ public class ComponentCollectorTest {
     @Test
     public void collect_throws_exception_if_collector_throws_exception() throws Exception {
         String applicationId = "applicationId";
-
         given(collector.collect(applicationId)).willThrow(new RuntimeException());
 
         assertThrows(RuntimeException.class, () -> {
@@ -90,7 +89,6 @@ public class ComponentCollectorTest {
     @Test
     public void collect_throws_exception_if_assembler_throws_exception() throws Exception {
         String applicationId = "applicationId";
-
         given(collector.collect(applicationId)).willReturn(newHashSet(randomAlphabetic(6)));
         given(reader.read(anyString())).willThrow(new RuntimeException());
 
@@ -102,7 +100,6 @@ public class ComponentCollectorTest {
     @Test
     public void collect_should_call_collector() throws Exception {
         String applicationId = "applicationId";
-
         given(collector.collect(applicationId)).willReturn(newHashSet(randomAlphabetic(6)));
         given(reader.read(anyString())).willReturn(null);
 
