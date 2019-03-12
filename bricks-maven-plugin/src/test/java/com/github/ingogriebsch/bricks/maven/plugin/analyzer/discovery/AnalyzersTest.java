@@ -32,14 +32,14 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugin.logging.Log;
-import org.junit.jupiter.api.Test;
-
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AbstractMavenAnalyzer;
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalysisResult;
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalyzerContext;
 import com.github.ingogriebsch.bricks.model.Component;
+
+import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugin.logging.Log;
+import org.junit.jupiter.api.Test;
 
 import lombok.RequiredArgsConstructor;
 
