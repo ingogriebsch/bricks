@@ -127,9 +127,8 @@
         </dependency>
     </dependencies>
 
-    <!-- 
-        FIXME Is it really a good idea to define this repository inside the pom? How about if we would like or need to overwrite it some day? Can we do it? Or is the repository area inside the pom the most binding place one can configure? 
-    -->
+    <!-- FIXME Is it really a good idea to define this repository inside the pom? How about if we would like or need to overwrite it 
+        some day? Can we do it? Or is the repository area inside the pom the most binding place one can configure? -->
     <repositories>
         <repository>
             <id>bintray</id>
