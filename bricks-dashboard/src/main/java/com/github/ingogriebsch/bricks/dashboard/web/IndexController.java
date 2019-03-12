@@ -19,6 +19,7 @@
  */
 package com.github.ingogriebsch.bricks.dashboard.web;
 
+import static com.github.ingogriebsch.bricks.dashboard.web.BreadcrumbFactory.create;
 import static org.apache.commons.lang3.StringUtils.join;
 import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
 
@@ -26,7 +27,6 @@ import java.util.Set;
 
 import com.github.ingogriebsch.bricks.dashboard.DashboardProperties;
 import com.github.ingogriebsch.bricks.dashboard.service.ApplicationService;
-import com.github.ingogriebsch.bricks.dashboard.web.Breadcrumb.Entry;
 import com.github.ingogriebsch.bricks.model.Application;
 
 import org.springframework.stereotype.Controller;
@@ -40,7 +40,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class IndexController {
 
-    private static final String PAGE_INDEX = "/index";
+    private static final String PAGE_APPLICATIONS = "/index";
 
     static final String PATH_ROOT = "/";
     static final String PATH_APPLICATIONS = "/applications";
@@ -68,19 +68,13 @@ public class IndexController {
         Set<Application> applications = applicationService.findAll();
         model.addAttribute("applications", applications);
 
-        Breadcrumb breadcrumb = breadcrumb();
+        Breadcrumb breadcrumb = create(PATH_APPLICATIONS);
         model.addAttribute("breadcrumb", breadcrumb);
 
-        return PAGE_INDEX;
+        return PAGE_APPLICATIONS;
     }
 
     static String buildPath(String... parts) {
         return join(parts, "/");
-    }
-
-    private static Breadcrumb breadcrumb() {
-        Entry applicationsEntry = Entry.builder().name("Applications").href(PATH_APPLICATIONS).build();
-        Breadcrumb breadcrumb = Breadcrumb.builder().entry(applicationsEntry).build();
-        return breadcrumb;
     }
 }

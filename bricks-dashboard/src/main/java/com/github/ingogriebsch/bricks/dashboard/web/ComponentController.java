@@ -19,9 +19,10 @@
  */
 package com.github.ingogriebsch.bricks.dashboard.web;
 
+import static com.github.ingogriebsch.bricks.dashboard.web.BreadcrumbFactory.create;
+
 import com.github.ingogriebsch.bricks.dashboard.service.ApplicationService;
 import com.github.ingogriebsch.bricks.dashboard.service.ComponentService;
-import com.github.ingogriebsch.bricks.dashboard.web.Breadcrumb.Entry;
 import com.github.ingogriebsch.bricks.model.Application;
 import com.github.ingogriebsch.bricks.model.Component;
 
@@ -38,12 +39,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ComponentController {
 
+    private static final String PAGE_COMPONENT_OVERVIEW = "/component/overview";
+
+    static final String PATH_COMPONENT = "/applications/{applicationId}/components/{componentId}";
+    static final String PATH_COMPONENT_OVERVIEW = PATH_COMPONENT + "/overview";
+
     @NonNull
     private final ApplicationService applicationService;
     @NonNull
     private final ComponentService componentService;
 
-    @GetMapping(path = "/applications/{applicationId}/components/{componentId}/overview", produces = MediaType.TEXT_HTML_VALUE)
+    @GetMapping(path = { PATH_COMPONENT, PATH_COMPONENT_OVERVIEW }, produces = MediaType.TEXT_HTML_VALUE)
     public String overview(@PathVariable String applicationId, @PathVariable String componentId, @NonNull Model model)
         throws Exception {
         Application application = getApplication(applicationId);
@@ -52,10 +58,10 @@ public class ComponentController {
         Component component = getComponent(applicationId, componentId);
         model.addAttribute("component", component);
 
-        Breadcrumb breadcrumb = breadcrumb(application, component);
+        Breadcrumb breadcrumb = create(PATH_COMPONENT_OVERVIEW, application, component);
         model.addAttribute("breadcrumb", breadcrumb);
 
-        return "/component/overview";
+        return PAGE_COMPONENT_OVERVIEW;
     }
 
     private Application getApplication(String applicationId) throws Exception {
@@ -70,18 +76,5 @@ public class ComponentController {
                 String.format("Weird things happen! Component with id '%s' for application with id '%s' is not available!",
                     componentId, applicationId)));
         return component;
-    }
-
-    private Breadcrumb breadcrumb(Application application, Component component) {
-        Entry applicationsEntry = Entry.builder().name("Applications").href("/applications").build();
-        Entry applicationEntry =
-            Entry.builder().name(application.getName()).href(applicationsEntry.getHref() + "/" + application.getId()).build();
-        Entry componentsEntry = Entry.builder().name("Components").href(applicationEntry.getHref() + "/components").build();
-        Entry componentEntry =
-            Entry.builder().name(component.getName()).href(componentsEntry.getHref() + "/" + component.getId()).build();
-
-        Breadcrumb breadcrumb = Breadcrumb.builder().entry(applicationsEntry).entry(applicationEntry).entry(componentsEntry)
-            .entry(componentEntry).build();
-        return breadcrumb;
     }
 }

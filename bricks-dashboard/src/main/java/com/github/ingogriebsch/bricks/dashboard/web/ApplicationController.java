@@ -21,13 +21,13 @@ package com.github.ingogriebsch.bricks.dashboard.web;
 
 import static java.lang.String.format;
 
+import static com.github.ingogriebsch.bricks.dashboard.web.BreadcrumbFactory.create;
 import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
 
 import java.util.Set;
 
 import com.github.ingogriebsch.bricks.dashboard.service.ApplicationService;
 import com.github.ingogriebsch.bricks.dashboard.service.ComponentService;
-import com.github.ingogriebsch.bricks.dashboard.web.Breadcrumb.Entry;
 import com.github.ingogriebsch.bricks.model.Application;
 import com.github.ingogriebsch.bricks.model.Component;
 
@@ -43,23 +43,32 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ApplicationController {
 
+    private static final String PAGE_APPLICATION_OVERVIEW = "/application/overview";
+    private static final String PAGE_APPLICATION_COMPONENTS = "/application/components";
+    private static final String PAGE_APPLICATION_DEPENDENCIES = "/application/dependencies";
+
+    static final String PATH_APPLICATION = "/applications/{applicationId}";
+    static final String PATH_APPLICATION_OVERVIEW = PATH_APPLICATION + "/overview";
+    static final String PATH_APPLICATION_COMPONENTS = PATH_APPLICATION + "/components";
+    static final String PATH_APPLICATION_DEPENDENCIES = PATH_APPLICATION + "/dependencies";
+
     @NonNull
     private final ApplicationService applicationService;
     @NonNull
     private final ComponentService componentService;
 
-    @GetMapping(path = { "/applications/{applicationId}", "/applications/{applicationId}/overview" }, produces = TEXT_HTML_VALUE)
+    @GetMapping(path = { PATH_APPLICATION, PATH_APPLICATION_OVERVIEW }, produces = TEXT_HTML_VALUE)
     public String overview(@PathVariable String applicationId, @NonNull Model model) throws Exception {
         Application application = application(applicationId);
         model.addAttribute("application", application);
 
-        Breadcrumb breadcrumb = breadcrumb(application);
+        Breadcrumb breadcrumb = create(PATH_APPLICATION_OVERVIEW, application);
         model.addAttribute("breadcrumb", breadcrumb);
 
-        return "/application/overview";
+        return PAGE_APPLICATION_OVERVIEW;
     }
 
-    @GetMapping(path = "/applications/{applicationId}/components", produces = TEXT_HTML_VALUE)
+    @GetMapping(path = PATH_APPLICATION_COMPONENTS, produces = TEXT_HTML_VALUE)
     public String components(@PathVariable String applicationId, @NonNull Model model) throws Exception {
         Application application = application(applicationId);
         model.addAttribute("application", application);
@@ -67,35 +76,26 @@ public class ApplicationController {
         Set<Component> components = componentService.findAll(applicationId);
         model.addAttribute("components", components);
 
-        Breadcrumb breadcrumb = breadcrumb(application);
+        Breadcrumb breadcrumb = create(PATH_APPLICATION_COMPONENTS, application);
         model.addAttribute("breadcrumb", breadcrumb);
 
-        return "/application/components";
+        return PAGE_APPLICATION_COMPONENTS;
     }
 
-    @GetMapping(path = "/applications/{applicationId}/dependencies", produces = TEXT_HTML_VALUE)
+    @GetMapping(path = PATH_APPLICATION_DEPENDENCIES, produces = TEXT_HTML_VALUE)
     public String dependencies(@PathVariable String applicationId, @NonNull Model model) throws Exception {
         Application application = application(applicationId);
         model.addAttribute("application", application);
 
-        Breadcrumb breadcrumb = breadcrumb(application);
+        Breadcrumb breadcrumb = create(PATH_APPLICATION_DEPENDENCIES, application);
         model.addAttribute("breadcrumb", breadcrumb);
 
-        return "/application/dependencies";
+        return PAGE_APPLICATION_DEPENDENCIES;
     }
 
     private Application application(String applicationId) throws Exception {
         Application application = applicationService.findOne(applicationId).orElseThrow(() -> new IllegalStateException(
             format("Weird things happen! Application with id '%s' is not available!", applicationId)));
         return application;
-    }
-
-    private static Breadcrumb breadcrumb(Application application) {
-        Entry applicationsEntry = Entry.builder().name("Applications").href("/applications").build();
-        Entry applicationEntry =
-            Entry.builder().name(application.getName()).href(applicationsEntry.getHref() + "/" + application.getId()).build();
-
-        Breadcrumb breadcrumb = Breadcrumb.builder().entry(applicationsEntry).entry(applicationEntry).build();
-        return breadcrumb;
     }
 }
