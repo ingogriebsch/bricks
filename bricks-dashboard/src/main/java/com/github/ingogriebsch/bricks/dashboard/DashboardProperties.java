@@ -22,11 +22,11 @@ package com.github.ingogriebsch.bricks.dashboard;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-import lombok.Getter;
+import lombok.Data;
 
 @Configuration
 @ConfigurationProperties("bricks.dashboard")
-@Getter
+@Data
 public class DashboardProperties {
 
     /**
