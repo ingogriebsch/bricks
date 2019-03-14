@@ -39,10 +39,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ComponentController {
 
-    private static final String PAGE_COMPONENT_OVERVIEW = "/component/overview";
-
     static final String PATH_COMPONENT = "/applications/{applicationId}/components/{componentId}";
     static final String PATH_COMPONENT_OVERVIEW = PATH_COMPONENT + "/overview";
+    static final String MODEL_ATTRIBUTE_APPLICATION = "application";
+    static final String MODEL_ATTRIBUTE_COMPONENT = "component";
+    static final String MODEL_ATTRIBUTE_BREADCRUMB = "breadcrumb";
+    static final String PAGE_COMPONENT_OVERVIEW = "/component/overview";
 
     @NonNull
     private final ApplicationService applicationService;
@@ -53,13 +55,13 @@ public class ComponentController {
     public String overview(@PathVariable String applicationId, @PathVariable String componentId, @NonNull Model model)
         throws Exception {
         Application application = getApplication(applicationId);
-        model.addAttribute("application", application);
+        model.addAttribute(MODEL_ATTRIBUTE_APPLICATION, application);
 
         Component component = getComponent(applicationId, componentId);
-        model.addAttribute("component", component);
+        model.addAttribute(MODEL_ATTRIBUTE_COMPONENT, component);
 
         Breadcrumb breadcrumb = create(PATH_COMPONENT_OVERVIEW, application, component);
-        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute(MODEL_ATTRIBUTE_BREADCRUMB, breadcrumb);
 
         return PAGE_COMPONENT_OVERVIEW;
     }
