@@ -47,6 +47,13 @@ public class ComponentServiceTest {
     }
 
     @Test
+    public void findAll_should_throw_exception_if_input_is_null(@Mock ComponentCollector collector) {
+        assertThrows(NullPointerException.class, () -> {
+            new ComponentService(collector).findAll(null);
+        });
+    }
+
+    @Test
     public void findAll_should_return_empty_set_if_no_components_are_available(@Mock ComponentCollector collector)
         throws Exception {
         String applicationId = randomNumeric(8);
