@@ -23,4 +23,5 @@
 	<include
 		resource="org/springframework/boot/logging/logback/base.xml" />
 	<logger name="root" level="info" />
+    <logger name="org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator" level="error"/>
 </configuration>
