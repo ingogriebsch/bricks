@@ -110,8 +110,7 @@
             <testResource>
                 <directory>src/test/resources</directory>
             </testResource>
-            <testResource><!-- Only to get it added as a resource folder 
-                    in the IDE. -->
+            <testResource><!-- Only to get it added as a resource folder in the IDE. -->
                 <directory>src/it</directory>
                 <targetPath></targetPath>
                 <excludes>
