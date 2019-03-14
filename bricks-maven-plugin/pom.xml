@@ -18,7 +18,7 @@
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <project.dependency.jackson.version>2.8.10</project.dependency.jackson.version>
+        <project.dependency.jackson.version>2.9.8</project.dependency.jackson.version>
     </properties>
 
     <dependencies>
