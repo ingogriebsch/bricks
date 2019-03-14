@@ -171,9 +171,10 @@
                         <addJavaLicenseAfterPackage>>false</addJavaLicenseAfterPackage>
                         <failOnMissingHeader>true</failOnMissingHeader>
                         <failOnNotUptodateHeader>true</failOnNotUptodateHeader>
+                        <ignoreNoFileToScan>true</ignoreNoFileToScan>
                         <licenseName>apache_v2</licenseName>
                         <!-- Added to prevent license plugin from complaining about missing headers in generated sources -->
-                        <excludes>${project.build.directory}/**</excludes>
+                        <roots>src</roots>
                     </configuration>
                     <executions>
                         <execution>
