@@ -19,30 +19,24 @@
  */
 package com.github.ingogriebsch.bricks.assemble.utils.artifactory;
 
-import javax.validation.Valid;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.Constraint;
+import javax.validation.Payload;
 
-import lombok.Data;
+@Documented
+@Constraint(validatedBy = CredentialsOrAccessTokenValidator.class)
+@Target({ ElementType.TYPE })
+@Retention(RetentionPolicy.RUNTIME)
+public @interface CredentialsOrAccessToken {
 
-@CredentialsOrAccessToken
-@Data
-public class ArtifactoryConfiguration {
+    String message() default "Neither credentials nor an access token is available";
 
-    @NotBlank
-    private String url;
+    Class<?>[] groups() default {};
 
-    @Valid
-    private Credentials credentials;
-    private String accessToken;
-
-    @Data
-    public static final class Credentials {
-
-        @NotBlank
-        private String username;
-        @NotBlank
-        private String password;
-    }
-
+    Class<? extends Payload>[] payload() default {};
 }
