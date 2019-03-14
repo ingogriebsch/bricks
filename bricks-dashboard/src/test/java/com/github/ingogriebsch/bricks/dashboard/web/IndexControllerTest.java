@@ -21,10 +21,14 @@ package com.github.ingogriebsch.bricks.dashboard.web;
 
 import static java.util.stream.Collectors.toSet;
 
+import static com.github.ingogriebsch.bricks.dashboard.web.IndexController.MODEL_ATTRIBUTE_APPLICATIONS;
+import static com.github.ingogriebsch.bricks.dashboard.web.IndexController.MODEL_ATTRIBUTE_BREADCRUMB;
+import static com.github.ingogriebsch.bricks.dashboard.web.IndexController.PAGE_APPLICATIONS;
 import static com.github.ingogriebsch.bricks.dashboard.web.IndexController.PATH_APPLICATIONS;
 import static com.github.ingogriebsch.bricks.dashboard.web.IndexController.PATH_ROOT;
 import static com.github.ingogriebsch.bricks.dashboard.web.IndexController.buildPath;
 import static com.google.common.collect.Sets.newHashSet;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -32,8 +36,10 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.util.Set;
 
@@ -128,6 +134,34 @@ public class IndexControllerTest {
         verifyNoMoreInteractions(applicationService);
     }
 
+    @Test
+    public void applications_should_return_matching_view_and_model_if_no_applications_are_available() throws Exception {
+        given(applicationService.findAll()).willReturn(newHashSet());
+
+        ResultActions resultActions = mockMvc.perform(get(PATH_APPLICATIONS).accept(TEXT_HTML_VALUE));
+        resultActions.andExpect(status().isOk());
+        resultActions.andExpect(view().name(PAGE_APPLICATIONS));
+        resultActions.andExpect(model().attributeExists(MODEL_ATTRIBUTE_APPLICATIONS, MODEL_ATTRIBUTE_BREADCRUMB));
+
+        verify(applicationService).findAll();
+        verifyNoMoreInteractions(applicationService);
+        verifyZeroInteractions(dashboardProperties);
+    }
+
+    @Test
+    public void applications_should_return_matching_view_and_model_if_applications_are_available() throws Exception {
+        given(applicationService.findAll()).willReturn(newHashSet(applications("id1", "id2", "id3")));
+
+        ResultActions resultActions = mockMvc.perform(get(PATH_APPLICATIONS).accept(TEXT_HTML_VALUE));
+        resultActions.andExpect(status().isOk());
+        resultActions.andExpect(view().name(PAGE_APPLICATIONS));
+        resultActions.andExpect(model().attributeExists(MODEL_ATTRIBUTE_APPLICATIONS, MODEL_ATTRIBUTE_BREADCRUMB));
+
+        verify(applicationService).findAll();
+        verifyNoMoreInteractions(applicationService);
+        verifyZeroInteractions(dashboardProperties);
+    }
+
     private static Set<Application> applications(String... ids) {
         return newHashSet(ids).stream().map(id -> application(id)).collect(toSet());
     }
@@ -135,6 +169,7 @@ public class IndexControllerTest {
     private static Application application(String id) {
         Application application = new Application();
         application.setId(id);
+        application.setName(randomAlphabetic(12));
         return application;
     }
 }

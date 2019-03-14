@@ -40,10 +40,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class IndexController {
 
-    private static final String PAGE_APPLICATIONS = "/index";
-
     static final String PATH_ROOT = "/";
     static final String PATH_APPLICATIONS = "/applications";
+    static final String MODEL_ATTRIBUTE_BREADCRUMB = "breadcrumb";
+    static final String MODEL_ATTRIBUTE_APPLICATIONS = "applications";
+    static final String PAGE_APPLICATIONS = "/index";
 
     @NonNull
     private final ApplicationService applicationService;
@@ -66,10 +67,10 @@ public class IndexController {
     @GetMapping(path = PATH_APPLICATIONS, produces = TEXT_HTML_VALUE)
     public String applications(@NonNull Model model) throws Exception {
         Set<Application> applications = applicationService.findAll();
-        model.addAttribute("applications", applications);
+        model.addAttribute(MODEL_ATTRIBUTE_APPLICATIONS, applications);
 
         Breadcrumb breadcrumb = create(PATH_APPLICATIONS);
-        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute(MODEL_ATTRIBUTE_BREADCRUMB, breadcrumb);
 
         return PAGE_APPLICATIONS;
     }
