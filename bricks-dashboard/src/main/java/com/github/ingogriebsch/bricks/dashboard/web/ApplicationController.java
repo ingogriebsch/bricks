@@ -43,14 +43,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ApplicationController {
 
-    private static final String PAGE_APPLICATION_OVERVIEW = "/application/overview";
-    private static final String PAGE_APPLICATION_COMPONENTS = "/application/components";
-    private static final String PAGE_APPLICATION_DEPENDENCIES = "/application/dependencies";
-
     static final String PATH_APPLICATION = "/applications/{applicationId}";
     static final String PATH_APPLICATION_OVERVIEW = PATH_APPLICATION + "/overview";
     static final String PATH_APPLICATION_COMPONENTS = PATH_APPLICATION + "/components";
     static final String PATH_APPLICATION_DEPENDENCIES = PATH_APPLICATION + "/dependencies";
+    static final String MODEL_ATTRIBUTE_APPLICATION = "application";
+    static final String MODEL_ATTRIBUTE_COMPONENTS = "components";
+    static final String MODEL_ATTRIBUTE_BREADCRUMB = "breadcrumb";
+    static final String PAGE_APPLICATION_OVERVIEW = "/application/overview";
+    static final String PAGE_APPLICATION_COMPONENTS = "/application/components";
+    static final String PAGE_APPLICATION_DEPENDENCIES = "/application/dependencies";
 
     @NonNull
     private final ApplicationService applicationService;
@@ -60,10 +62,10 @@ public class ApplicationController {
     @GetMapping(path = { PATH_APPLICATION, PATH_APPLICATION_OVERVIEW }, produces = TEXT_HTML_VALUE)
     public String overview(@PathVariable String applicationId, @NonNull Model model) throws Exception {
         Application application = application(applicationId);
-        model.addAttribute("application", application);
+        model.addAttribute(MODEL_ATTRIBUTE_APPLICATION, application);
 
         Breadcrumb breadcrumb = create(PATH_APPLICATION_OVERVIEW, application);
-        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute(MODEL_ATTRIBUTE_BREADCRUMB, breadcrumb);
 
         return PAGE_APPLICATION_OVERVIEW;
     }
@@ -71,13 +73,13 @@ public class ApplicationController {
     @GetMapping(path = PATH_APPLICATION_COMPONENTS, produces = TEXT_HTML_VALUE)
     public String components(@PathVariable String applicationId, @NonNull Model model) throws Exception {
         Application application = application(applicationId);
-        model.addAttribute("application", application);
+        model.addAttribute(MODEL_ATTRIBUTE_APPLICATION, application);
 
         Set<Component> components = componentService.findAll(applicationId);
-        model.addAttribute("components", components);
+        model.addAttribute(MODEL_ATTRIBUTE_COMPONENTS, components);
 
         Breadcrumb breadcrumb = create(PATH_APPLICATION_COMPONENTS, application);
-        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute(MODEL_ATTRIBUTE_BREADCRUMB, breadcrumb);
 
         return PAGE_APPLICATION_COMPONENTS;
     }
@@ -85,10 +87,10 @@ public class ApplicationController {
     @GetMapping(path = PATH_APPLICATION_DEPENDENCIES, produces = TEXT_HTML_VALUE)
     public String dependencies(@PathVariable String applicationId, @NonNull Model model) throws Exception {
         Application application = application(applicationId);
-        model.addAttribute("application", application);
+        model.addAttribute(MODEL_ATTRIBUTE_APPLICATION, application);
 
         Breadcrumb breadcrumb = create(PATH_APPLICATION_DEPENDENCIES, application);
-        model.addAttribute("breadcrumb", breadcrumb);
+        model.addAttribute(MODEL_ATTRIBUTE_BREADCRUMB, breadcrumb);
 
         return PAGE_APPLICATION_DEPENDENCIES;
     }
