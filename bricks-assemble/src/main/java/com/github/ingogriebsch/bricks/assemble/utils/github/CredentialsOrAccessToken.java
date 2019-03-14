@@ -19,34 +19,24 @@
  */
 package com.github.ingogriebsch.bricks.assemble.utils.github;
 
-import javax.validation.Valid;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.Constraint;
+import javax.validation.Payload;
 
-import lombok.Data;
+@Documented
+@Constraint(validatedBy = CredentialsOrAccessTokenValidator.class)
+@Target({ ElementType.TYPE })
+@Retention(RetentionPolicy.RUNTIME)
+public @interface CredentialsOrAccessToken {
 
-@CredentialsOrAccessToken
-@Data
-public final class GitHubConfiguration {
+    String message() default "Neither credentials nor an access token is available";
 
-    @NotBlank
-    private String scheme = "https";
-    @NotBlank
-    private String host;
-    @Port
-    private Integer port = -1;
+    Class<?>[] groups() default {};
 
-    @Valid
-    private Credentials credentials;
-    private String accessToken;
-
-    @Data
-    public static final class Credentials {
-
-        @NotBlank
-        private String username;
-        @NotBlank
-        private String password;
-    }
-
+    Class<? extends Payload>[] payload() default {};
 }

@@ -19,34 +19,22 @@
  */
 package com.github.ingogriebsch.bricks.assemble.utils.github;
 
-import javax.validation.Valid;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
-import org.hibernate.validator.constraints.NotBlank;
+public class PortValidator implements ConstraintValidator<Port, Integer> {
 
-import lombok.Data;
+    private static final int MIN_PORT = -1;
+    private static final int MAX_PORT = 65535;
 
-@CredentialsOrAccessToken
-@Data
-public final class GitHubConfiguration {
+    @Override
+    public void initialize(Port port) {
+        // nothing to do here
+    }
 
-    @NotBlank
-    private String scheme = "https";
-    @NotBlank
-    private String host;
-    @Port
-    private Integer port = -1;
-
-    @Valid
-    private Credentials credentials;
-    private String accessToken;
-
-    @Data
-    public static final class Credentials {
-
-        @NotBlank
-        private String username;
-        @NotBlank
-        private String password;
+    @Override
+    public boolean isValid(Integer value, ConstraintValidatorContext context) {
+        return value != null && value.intValue() >= MIN_PORT && value.intValue() <= MAX_PORT;
     }
 
 }

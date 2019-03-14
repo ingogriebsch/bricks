@@ -68,8 +68,9 @@ public class GitHubComponentIdCollector implements ComponentIdCollector {
     private static GitHubClient createClient(GitHubConfiguration configuration) {
         GitHubClient client = new GitHubClient(configuration.getHost(), configuration.getPort(), configuration.getScheme());
 
-        if (!StringUtils.isBlank(configuration.getOAuth2Token())) {
-            client.setOAuth2Token(configuration.getOAuth2Token());
+        String accessToken = configuration.getAccessToken();
+        if (!StringUtils.isBlank(accessToken)) {
+            client.setOAuth2Token(accessToken);
         } else {
             Credentials credentials = configuration.getCredentials();
             client.setCredentials(credentials.getUsername(), credentials.getPassword());
