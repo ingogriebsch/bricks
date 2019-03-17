@@ -25,6 +25,7 @@ import static java.util.Optional.of;
 import static com.github.ingogriebsch.bricks.dashboard.web.ComponentController.MODEL_ATTRIBUTE_APPLICATION;
 import static com.github.ingogriebsch.bricks.dashboard.web.ComponentController.MODEL_ATTRIBUTE_BREADCRUMB;
 import static com.github.ingogriebsch.bricks.dashboard.web.ComponentController.MODEL_ATTRIBUTE_COMPONENT;
+import static com.github.ingogriebsch.bricks.dashboard.web.ComponentController.MODEL_ATTRIBUTE_VIEW;
 import static com.github.ingogriebsch.bricks.dashboard.web.ComponentController.PAGE_COMPONENT_OVERVIEW;
 import static com.github.ingogriebsch.bricks.dashboard.web.ComponentController.PATH_COMPONENT_OVERVIEW;
 import static com.github.ingogriebsch.bricks.dashboard.web.ExceptionHandler.PAGE_ERROR;
@@ -76,8 +77,8 @@ public class ComponentControllerTest {
             mockMvc.perform(get(PATH_COMPONENT_OVERVIEW, applicationId, componentId).accept(TEXT_HTML_VALUE));
         resultActions.andExpect(status().isOk());
         resultActions.andExpect(view().name(PAGE_COMPONENT_OVERVIEW));
-        resultActions.andExpect(
-            model().attributeExists(MODEL_ATTRIBUTE_APPLICATION, MODEL_ATTRIBUTE_COMPONENT, MODEL_ATTRIBUTE_BREADCRUMB));
+        resultActions.andExpect(model().attributeExists(MODEL_ATTRIBUTE_APPLICATION, MODEL_ATTRIBUTE_COMPONENT,
+            MODEL_ATTRIBUTE_BREADCRUMB, MODEL_ATTRIBUTE_VIEW));
 
         verify(applicationService).findOne(applicationId);
         verify(componentService).findOne(applicationId, componentId);

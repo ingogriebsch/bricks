@@ -17,11 +17,18 @@
  limitations under the License.
  #L%
 -->
+<#function active tab>
+    <#if tab == "${view}">
+        <#return " class=\"active\"">
+    <#else>
+        <#return "">
+    </#if>
+</#function>
 <#macro compo title>
 <#import "../skeleton.ftl" as skeleton>
 <@skeleton.skeleton "${title}">
     <ul class="tabs z-depth-1">
-        <li class="tab"><a href="/applications/${application.id}/components/${component.id}/overview" class="grey-text">Overview</a></li>
+        <li class="tab"><a href="/applications/${application.id}/components/${component.id}/overview"${active("overview")}>Overview</a></li>
     </ul>
     <#nested />
 </@skeleton.skeleton>
