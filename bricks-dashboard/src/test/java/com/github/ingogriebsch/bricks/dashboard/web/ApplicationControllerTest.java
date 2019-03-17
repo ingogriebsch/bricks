@@ -25,6 +25,7 @@ import static java.util.Optional.of;
 import static com.github.ingogriebsch.bricks.dashboard.web.ApplicationController.MODEL_ATTRIBUTE_APPLICATION;
 import static com.github.ingogriebsch.bricks.dashboard.web.ApplicationController.MODEL_ATTRIBUTE_BREADCRUMB;
 import static com.github.ingogriebsch.bricks.dashboard.web.ApplicationController.MODEL_ATTRIBUTE_COMPONENTS;
+import static com.github.ingogriebsch.bricks.dashboard.web.ApplicationController.MODEL_ATTRIBUTE_VIEW;
 import static com.github.ingogriebsch.bricks.dashboard.web.ApplicationController.PAGE_APPLICATION_COMPONENTS;
 import static com.github.ingogriebsch.bricks.dashboard.web.ApplicationController.PAGE_APPLICATION_DEPENDENCIES;
 import static com.github.ingogriebsch.bricks.dashboard.web.ApplicationController.PAGE_APPLICATION_OVERVIEW;
@@ -78,7 +79,8 @@ public class ApplicationControllerTest {
         ResultActions resultActions = mockMvc.perform(get(PATH_APPLICATION_OVERVIEW, applicationId).accept(TEXT_HTML_VALUE));
         resultActions.andExpect(status().isOk());
         resultActions.andExpect(view().name(PAGE_APPLICATION_OVERVIEW));
-        resultActions.andExpect(model().attributeExists(MODEL_ATTRIBUTE_APPLICATION, MODEL_ATTRIBUTE_BREADCRUMB));
+        resultActions
+            .andExpect(model().attributeExists(MODEL_ATTRIBUTE_APPLICATION, MODEL_ATTRIBUTE_BREADCRUMB, MODEL_ATTRIBUTE_VIEW));
 
         verify(applicationService).findOne(applicationId);
         verifyNoMoreInteractions(applicationService);
@@ -109,8 +111,8 @@ public class ApplicationControllerTest {
         ResultActions resultActions = mockMvc.perform(get(PATH_APPLICATION_COMPONENTS, applicationId).accept(TEXT_HTML_VALUE));
         resultActions.andExpect(status().isOk());
         resultActions.andExpect(view().name(PAGE_APPLICATION_COMPONENTS));
-        resultActions.andExpect(
-            model().attributeExists(MODEL_ATTRIBUTE_APPLICATION, MODEL_ATTRIBUTE_COMPONENTS, MODEL_ATTRIBUTE_BREADCRUMB));
+        resultActions.andExpect(model().attributeExists(MODEL_ATTRIBUTE_APPLICATION, MODEL_ATTRIBUTE_COMPONENTS,
+            MODEL_ATTRIBUTE_BREADCRUMB, MODEL_ATTRIBUTE_VIEW));
 
         verify(applicationService).findOne(applicationId);
         verify(componentService).findAll(applicationId);
@@ -140,7 +142,8 @@ public class ApplicationControllerTest {
         ResultActions resultActions = mockMvc.perform(get(PATH_APPLICATION_DEPENDENCIES, applicationId).accept(TEXT_HTML_VALUE));
         resultActions.andExpect(status().isOk());
         resultActions.andExpect(view().name(PAGE_APPLICATION_DEPENDENCIES));
-        resultActions.andExpect(model().attributeExists(MODEL_ATTRIBUTE_APPLICATION, MODEL_ATTRIBUTE_BREADCRUMB));
+        resultActions
+            .andExpect(model().attributeExists(MODEL_ATTRIBUTE_APPLICATION, MODEL_ATTRIBUTE_BREADCRUMB, MODEL_ATTRIBUTE_VIEW));
 
         verify(applicationService).findOne(applicationId);
         verifyNoMoreInteractions(applicationService);
