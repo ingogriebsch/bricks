@@ -50,6 +50,7 @@ public class ApplicationController {
     static final String MODEL_ATTRIBUTE_APPLICATION = "application";
     static final String MODEL_ATTRIBUTE_COMPONENTS = "components";
     static final String MODEL_ATTRIBUTE_BREADCRUMB = "breadcrumb";
+    static final String MODEL_ATTRIBUTE_VIEW = "view";
     static final String PAGE_APPLICATION_OVERVIEW = "/application/overview";
     static final String PAGE_APPLICATION_COMPONENTS = "/application/components";
     static final String PAGE_APPLICATION_DEPENDENCIES = "/application/dependencies";
@@ -67,6 +68,7 @@ public class ApplicationController {
         Breadcrumb breadcrumb = create(PATH_APPLICATION_OVERVIEW, application);
         model.addAttribute(MODEL_ATTRIBUTE_BREADCRUMB, breadcrumb);
 
+        model.addAttribute(MODEL_ATTRIBUTE_VIEW, "overview");
         return PAGE_APPLICATION_OVERVIEW;
     }
 
@@ -81,6 +83,7 @@ public class ApplicationController {
         Breadcrumb breadcrumb = create(PATH_APPLICATION_COMPONENTS, application);
         model.addAttribute(MODEL_ATTRIBUTE_BREADCRUMB, breadcrumb);
 
+        model.addAttribute(MODEL_ATTRIBUTE_VIEW, "components");
         return PAGE_APPLICATION_COMPONENTS;
     }
 
@@ -92,6 +95,7 @@ public class ApplicationController {
         Breadcrumb breadcrumb = create(PATH_APPLICATION_DEPENDENCIES, application);
         model.addAttribute(MODEL_ATTRIBUTE_BREADCRUMB, breadcrumb);
 
+        model.addAttribute(MODEL_ATTRIBUTE_VIEW, "dependencies");
         return PAGE_APPLICATION_DEPENDENCIES;
     }
 
