@@ -44,6 +44,7 @@ public class ComponentController {
     static final String MODEL_ATTRIBUTE_APPLICATION = "application";
     static final String MODEL_ATTRIBUTE_COMPONENT = "component";
     static final String MODEL_ATTRIBUTE_BREADCRUMB = "breadcrumb";
+    static final String MODEL_ATTRIBUTE_VIEW = "view";
     static final String PAGE_COMPONENT_OVERVIEW = "/component/overview";
 
     @NonNull
@@ -63,6 +64,7 @@ public class ComponentController {
         Breadcrumb breadcrumb = create(PATH_COMPONENT_OVERVIEW, application, component);
         model.addAttribute(MODEL_ATTRIBUTE_BREADCRUMB, breadcrumb);
 
+        model.addAttribute(MODEL_ATTRIBUTE_VIEW, "overview");
         return PAGE_COMPONENT_OVERVIEW;
     }
 
