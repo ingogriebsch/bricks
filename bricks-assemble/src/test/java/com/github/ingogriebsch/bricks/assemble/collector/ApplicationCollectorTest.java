@@ -31,6 +31,7 @@ import static org.mockito.Mockito.verify;
 import java.util.Set;
 
 import com.github.ingogriebsch.bricks.assemble.reader.ApplicationReader;
+import com.github.ingogriebsch.bricks.assemble.reader.ApplicationReaderFactory;
 import com.github.ingogriebsch.bricks.model.Application;
 
 import org.junit.jupiter.api.Test;
@@ -44,9 +45,11 @@ import org.mockito.stubbing.Answer;
 public class ApplicationCollectorTest {
 
     @Mock
-    private ApplicationIdCollector collector;
+    private ApplicationIdCollector applicationIdCollector;
     @Mock
-    private ApplicationReader reader;
+    private ApplicationReaderFactory applicationReaderfactory;
+    @Mock
+    private ApplicationReader applicationReader;
 
     @Test
     public void creation_should_throw_exception_if_input_is_null() {
@@ -58,52 +61,64 @@ public class ApplicationCollectorTest {
     @Test
     public void creation_should_throw_exception_if_collector_is_null() {
         assertThrows(NullPointerException.class, () -> {
-            new ApplicationCollector(null, reader);
+            new ApplicationCollector(null, applicationReaderfactory);
         });
     }
 
     @Test
     public void creation_should_throw_exception_if_assembler_is_null() {
         assertThrows(NullPointerException.class, () -> {
-            new ApplicationCollector(collector, null);
+            new ApplicationCollector(applicationIdCollector, null);
         });
     }
 
     @Test
     public void collect_throws_exception_if_collector_throws_exception() throws Exception {
-        given(collector.collect()).willThrow(new RuntimeException());
+        given(applicationIdCollector.collect()).willThrow(new RuntimeException());
 
         assertThrows(RuntimeException.class, () -> {
-            new ApplicationCollector(collector, reader).collect();
+            new ApplicationCollector(applicationIdCollector, applicationReaderfactory).collect();
         });
     }
 
     @Test
-    public void collect_throws_exception_if_assembler_throws_exception() throws Exception {
-        given(collector.collect()).willReturn(newHashSet(randomAlphabetic(6)));
-        given(reader.read(anyString())).willThrow(new RuntimeException());
+    public void collect_throws_exception_if_factory_throws_exception() throws Exception {
+        given(applicationIdCollector.collect()).willReturn(newHashSet(randomAlphabetic(6)));
+        given(applicationReaderfactory.create(anyString())).willThrow(new RuntimeException());
 
         assertThrows(RuntimeException.class, () -> {
-            new ApplicationCollector(collector, reader).collect();
+            new ApplicationCollector(applicationIdCollector, applicationReaderfactory).collect();
+        });
+    }
+
+    @Test
+    public void collect_throws_exception_if_factory_does_not_create_a_reader() throws Exception {
+        given(applicationIdCollector.collect()).willReturn(newHashSet(randomAlphabetic(6)));
+        given(applicationReaderfactory.create(anyString())).willReturn(null);
+
+        assertThrows(IllegalStateException.class, () -> {
+            new ApplicationCollector(applicationIdCollector, applicationReaderfactory).collect();
         });
     }
 
     @Test
     public void collect_should_call_collector() throws Exception {
-        given(collector.collect()).willReturn(newHashSet(randomAlphabetic(6)));
-        given(reader.read(anyString())).willReturn(null);
+        given(applicationIdCollector.collect()).willReturn(newHashSet(randomAlphabetic(6)));
+        given(applicationReaderfactory.create(anyString())).willReturn(applicationReader);
 
-        new ApplicationCollector(collector, reader).collect();
+        new ApplicationCollector(applicationIdCollector, applicationReaderfactory).collect();
 
-        verify(collector).collect();
+        verify(applicationIdCollector).collect();
     }
 
     @Test
-    public void collect_should_call_assembler_based_on_the_collector_output() throws Exception {
+    public void collect_should_call_reader_based_on_the_collector_output() throws Exception {
         String applicationId = "applicationId";
         Set<String> applicationIds = newHashSet(applicationId, randomAlphabetic(6), randomAlphabetic(6));
-        given(collector.collect()).willReturn(applicationIds);
-        given(reader.read(anyString())).willAnswer(new Answer<Application>() {
+
+        given(applicationIdCollector.collect()).willReturn(applicationIds);
+        given(applicationReaderfactory.create(anyString())).willReturn(applicationReader);
+        given(applicationReader.read(anyString())).willAnswer(new Answer<Application>() {
 
             @Override
             public Application answer(InvocationOnMock invocation) throws Throwable {
@@ -111,18 +126,20 @@ public class ApplicationCollectorTest {
             }
         });
 
-        new ApplicationCollector(collector, reader).collect();
+        new ApplicationCollector(applicationIdCollector, applicationReaderfactory).collect();
 
-        verify(collector).collect();
-        verify(reader, times(applicationIds.size())).read(anyString());
+        verify(applicationIdCollector).collect();
+        verify(applicationReader, times(applicationIds.size())).read(anyString());
     }
 
     @Test
-    public void collect_should_only_return_available_components() throws Exception {
+    public void collect_should_only_return_available_applications() throws Exception {
         String applicationId = "applicationId";
         Set<String> applicationIds = newHashSet(applicationId, randomAlphabetic(6), randomAlphabetic(6));
-        given(collector.collect()).willReturn(applicationIds);
-        given(reader.read(anyString())).willAnswer(new Answer<Application>() {
+
+        given(applicationIdCollector.collect()).willReturn(applicationIds);
+        given(applicationReaderfactory.create(anyString())).willReturn(applicationReader);
+        given(applicationReader.read(anyString())).willAnswer(new Answer<Application>() {
 
             @Override
             public Application answer(InvocationOnMock invocation) throws Throwable {
@@ -130,9 +147,9 @@ public class ApplicationCollectorTest {
             }
         });
 
-        Set<Application> components = new ApplicationCollector(collector, reader).collect();
+        Set<Application> applications = new ApplicationCollector(applicationIdCollector, applicationReaderfactory).collect();
 
-        assertThat(components).isNotNull().hasSize(1);
-        verify(reader, times(applicationIds.size())).read(anyString());
+        assertThat(applications).isNotNull().hasSize(1);
+        verify(applicationReader, times(applicationIds.size())).read(anyString());
     }
 }
