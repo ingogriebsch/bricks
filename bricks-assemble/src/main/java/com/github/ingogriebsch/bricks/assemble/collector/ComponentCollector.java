@@ -19,10 +19,13 @@
  */
 package com.github.ingogriebsch.bricks.assemble.collector;
 
+import static java.lang.String.format;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import com.github.ingogriebsch.bricks.assemble.reader.ComponentReader;
+import com.github.ingogriebsch.bricks.assemble.reader.ComponentReaderFactory;
 import com.github.ingogriebsch.bricks.model.Component;
 
 import lombok.NonNull;
@@ -34,14 +37,20 @@ public class ComponentCollector {
     @NonNull
     private final ComponentIdCollector componentIdCollector;
     @NonNull
-    private final ComponentReader componentReader;
+    private final ComponentReaderFactory componentReaderFactory;
 
     public Set<Component> collect(@NonNull String applicationId) throws Exception {
         Set<String> componentIds = componentIdCollector.collect(applicationId);
 
         Set<Component> result = new HashSet<>(componentIds.size());
         for (String id : componentIds) {
-            Component component = componentReader.read(id);
+            ComponentReader reader = componentReaderFactory.create(id);
+            if (reader == null) {
+                throw new IllegalStateException(
+                    format("No reader found for component '%s' of application '%s'!", id, applicationId));
+            }
+
+            Component component = reader.read(id);
             if (component != null) {
                 result.add(component);
             }

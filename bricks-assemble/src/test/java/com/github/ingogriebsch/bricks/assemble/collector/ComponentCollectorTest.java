@@ -31,6 +31,7 @@ import static org.mockito.Mockito.verify;
 import java.util.Set;
 
 import com.github.ingogriebsch.bricks.assemble.reader.ComponentReader;
+import com.github.ingogriebsch.bricks.assemble.reader.ComponentReaderFactory;
 import com.github.ingogriebsch.bricks.model.Component;
 
 import org.junit.jupiter.api.Test;
@@ -44,9 +45,11 @@ import org.mockito.stubbing.Answer;
 public class ComponentCollectorTest {
 
     @Mock
-    private ComponentIdCollector collector;
+    private ComponentIdCollector componentIdCollector;
     @Mock
-    private ComponentReader reader;
+    private ComponentReaderFactory componentReaderFactory;
+    @Mock
+    private ComponentReader componentReader;
 
     @Test
     public void creation_should_throw_exception_if_input_is_null() {
@@ -58,64 +61,78 @@ public class ComponentCollectorTest {
     @Test
     public void creation_should_throw_exception_if_collector_is_null() {
         assertThrows(NullPointerException.class, () -> {
-            new ComponentCollector(null, reader);
+            new ComponentCollector(null, componentReaderFactory);
         });
     }
 
     @Test
     public void creation_should_throw_exception_if_assembler_is_null() {
         assertThrows(NullPointerException.class, () -> {
-            new ComponentCollector(collector, null);
+            new ComponentCollector(componentIdCollector, null);
         });
     }
 
     @Test
     public void collect_should_throw_exception_if_input_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new ComponentCollector(collector, reader).collect(null);
+            new ComponentCollector(componentIdCollector, componentReaderFactory).collect(null);
         });
     }
 
     @Test
     public void collect_throws_exception_if_collector_throws_exception() throws Exception {
         String applicationId = "applicationId";
-        given(collector.collect(applicationId)).willThrow(new RuntimeException());
+        given(componentIdCollector.collect(applicationId)).willThrow(new RuntimeException());
 
         assertThrows(RuntimeException.class, () -> {
-            new ComponentCollector(collector, reader).collect(applicationId);
+            new ComponentCollector(componentIdCollector, componentReaderFactory).collect(applicationId);
         });
     }
 
     @Test
-    public void collect_throws_exception_if_assembler_throws_exception() throws Exception {
+    public void collect_throws_exception_if_factory_throws_exception() throws Exception {
         String applicationId = "applicationId";
-        given(collector.collect(applicationId)).willReturn(newHashSet(randomAlphabetic(6)));
-        given(reader.read(anyString())).willThrow(new RuntimeException());
+        given(componentIdCollector.collect(applicationId)).willReturn(newHashSet(randomAlphabetic(6)));
+        given(componentReaderFactory.create(anyString())).willThrow(new IllegalStateException());
 
         assertThrows(RuntimeException.class, () -> {
-            new ComponentCollector(collector, reader).collect(applicationId);
+            new ComponentCollector(componentIdCollector, componentReaderFactory).collect(applicationId);
+        });
+    }
+
+    @Test
+    public void collect_throws_exception_if_reader_throws_exception() throws Exception {
+        String applicationId = "applicationId";
+        given(componentIdCollector.collect(applicationId)).willReturn(newHashSet(randomAlphabetic(6)));
+        given(componentReaderFactory.create(anyString())).willReturn(componentReader);
+        given(componentReader.read(anyString())).willThrow(new RuntimeException());
+
+        assertThrows(RuntimeException.class, () -> {
+            new ComponentCollector(componentIdCollector, componentReaderFactory).collect(applicationId);
         });
     }
 
     @Test
     public void collect_should_call_collector() throws Exception {
         String applicationId = "applicationId";
-        given(collector.collect(applicationId)).willReturn(newHashSet(randomAlphabetic(6)));
-        given(reader.read(anyString())).willReturn(null);
+        given(componentIdCollector.collect(applicationId)).willReturn(newHashSet(randomAlphabetic(6)));
+        given(componentReaderFactory.create(anyString())).willReturn(componentReader);
+        given(componentReader.read(anyString())).willReturn(null);
 
-        new ComponentCollector(collector, reader).collect(applicationId);
+        new ComponentCollector(componentIdCollector, componentReaderFactory).collect(applicationId);
 
-        verify(collector).collect(applicationId);
+        verify(componentIdCollector).collect(applicationId);
     }
 
     @Test
-    public void collect_should_call_assembler_based_on_the_collector_output() throws Exception {
+    public void collect_should_call_reader_based_on_the_collector_output() throws Exception {
         String applicationId = "applicationId";
         String componentId = "componentId";
         Set<String> componentIds = newHashSet(componentId, randomAlphabetic(6), randomAlphabetic(6));
 
-        given(collector.collect(applicationId)).willReturn(componentIds);
-        given(reader.read(anyString())).willAnswer(new Answer<Component>() {
+        given(componentIdCollector.collect(applicationId)).willReturn(componentIds);
+        given(componentReaderFactory.create(anyString())).willReturn(componentReader);
+        given(componentReader.read(anyString())).willAnswer(new Answer<Component>() {
 
             @Override
             public Component answer(InvocationOnMock invocation) throws Throwable {
@@ -123,10 +140,10 @@ public class ComponentCollectorTest {
             }
         });
 
-        new ComponentCollector(collector, reader).collect(applicationId);
+        new ComponentCollector(componentIdCollector, componentReaderFactory).collect(applicationId);
 
-        verify(collector).collect(applicationId);
-        verify(reader, times(componentIds.size())).read(anyString());
+        verify(componentIdCollector).collect(applicationId);
+        verify(componentReader, times(componentIds.size())).read(anyString());
     }
 
     @Test
@@ -134,16 +151,18 @@ public class ComponentCollectorTest {
         String applicationId = "applicationId";
         String componentId = "componentId";
         Set<String> componentIds = newHashSet(componentId, randomAlphabetic(6), randomAlphabetic(6));
-        given(collector.collect(applicationId)).willReturn(componentIds);
-        given(reader.read(anyString())).willAnswer(new Answer<Component>() {
+
+        given(componentIdCollector.collect(applicationId)).willReturn(componentIds);
+        given(componentReaderFactory.create(anyString())).willReturn(componentReader);
+        given(componentReader.read(anyString())).willAnswer(new Answer<Component>() {
 
             @Override
             public Component answer(InvocationOnMock invocation) throws Throwable {
                 return componentId.equals(invocation.getArguments()[0]) ? new Component() : null;
             }
         });
-        Set<Component> components = new ComponentCollector(collector, reader).collect(applicationId);
+        Set<Component> components = new ComponentCollector(componentIdCollector, componentReaderFactory).collect(applicationId);
         assertThat(components).isNotNull().hasSize(1);
-        verify(reader, times(componentIds.size())).read(anyString());
+        verify(componentReader, times(componentIds.size())).read(anyString());
     }
 }
