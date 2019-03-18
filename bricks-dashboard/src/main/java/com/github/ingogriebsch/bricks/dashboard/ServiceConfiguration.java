@@ -38,6 +38,7 @@ import com.github.ingogriebsch.bricks.assemble.reader.ApplicationReader;
 import com.github.ingogriebsch.bricks.assemble.reader.ComponentReader;
 import com.github.ingogriebsch.bricks.assemble.reader.common.SimpleApplicationReader;
 import com.github.ingogriebsch.bricks.assemble.reader.common.SimpleComponentReader;
+import com.github.ingogriebsch.bricks.assemble.reader.common.StaticApplicationReaderFactory;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
@@ -56,7 +57,7 @@ public class ServiceConfiguration {
 
     @Bean
     public ApplicationCollector applicationCollector() {
-        return new ApplicationCollector(applicationIdCollector(), applicationReader());
+        return new ApplicationCollector(applicationIdCollector(), new StaticApplicationReaderFactory(applicationReader()));
     }
 
     @Bean
