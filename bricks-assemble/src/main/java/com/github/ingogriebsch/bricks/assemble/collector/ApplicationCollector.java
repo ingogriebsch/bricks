@@ -19,10 +19,13 @@
  */
 package com.github.ingogriebsch.bricks.assemble.collector;
 
+import static java.lang.String.format;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import com.github.ingogriebsch.bricks.assemble.reader.ApplicationReader;
+import com.github.ingogriebsch.bricks.assemble.reader.ApplicationReaderFactory;
 import com.github.ingogriebsch.bricks.model.Application;
 
 import lombok.NonNull;
@@ -34,14 +37,19 @@ public class ApplicationCollector {
     @NonNull
     private final ApplicationIdCollector applicationIdCollector;
     @NonNull
-    private final ApplicationReader applicationReader;
+    private final ApplicationReaderFactory applicationReaderFactory;
 
     public Set<Application> collect() throws Exception {
         Set<String> applicationIds = applicationIdCollector.collect();
 
         Set<Application> result = new HashSet<>(applicationIds.size());
         for (String id : applicationIds) {
-            Application application = applicationReader.read(id);
+            ApplicationReader reader = applicationReaderFactory.create(id);
+            if (reader == null) {
+                throw new IllegalStateException(format("No reader found for application '%s'!", id));
+            }
+
+            Application application = reader.read(id);
             if (application != null) {
                 result.add(application);
             }
