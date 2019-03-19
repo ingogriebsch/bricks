@@ -1,0 +1,24 @@
+---
+some:
+  tree:
+    structure:
+      - id: app1
+        name: App 1
+        description: Some description...
+        version: 1.0.0
+---
+some:
+  tree:
+    structure:
+      - id: app2
+        name: App 2
+        description: Some description...
+        version: 3.2.1
+---
+some:
+  tree:
+    structure:
+      - id: app3
+        name: App 3
+        description: Some description...
+        version: 4.0.1-SNAPSHOT

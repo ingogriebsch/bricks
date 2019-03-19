@@ -1,0 +1,7 @@
+some:
+  tree:
+    structure:
+      id: app1
+      name: App 1
+      description: Some description...
+      version: 1.0.0
