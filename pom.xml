@@ -36,6 +36,7 @@
     <modules>
         <module>bricks-model</module>
         <module>bricks-assemble</module>
+        <module>bricks-visualize</module>
         <module>bricks-dashboard</module>
         <module>bricks-maven-plugin</module>
         <module>bricks-example</module>
