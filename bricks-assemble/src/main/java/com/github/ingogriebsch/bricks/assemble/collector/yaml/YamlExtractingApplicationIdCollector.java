@@ -22,7 +22,6 @@ package com.github.ingogriebsch.bricks.assemble.collector.yaml;
 import static java.util.Arrays.copyOfRange;
 
 import static com.google.common.collect.Sets.newHashSet;
-import static org.apache.commons.io.IOUtils.closeQuietly;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -60,7 +59,12 @@ public class YamlExtractingApplicationIdCollector implements ApplicationIdCollec
     @SneakyThrows
     @SuppressWarnings("unchecked")
     public Set<String> collect() {
-        Set<Map<String, Object>> trees = load();
+        InputStream resource = resourceLoader.load();
+        if (resource == null) {
+            return null;
+        }
+
+        Set<Map<String, Object>> trees = load(resource);
         if (trees == null || trees.isEmpty()) {
             return newHashSet();
         }
@@ -77,19 +81,11 @@ public class YamlExtractingApplicationIdCollector implements ApplicationIdCollec
         return result;
     }
 
-    @SuppressWarnings({ "unchecked", "deprecation" })
-    private Set<Map<String, Object>> load() throws IOException {
-        InputStream resource = resourceLoader.load();
-        if (resource == null) {
-            return null;
-        }
-
+    @SuppressWarnings("unchecked")
+    private static Set<Map<String, Object>> load(InputStream resource) throws IOException {
         Set<Map<String, Object>> result = newHashSet();
         try {
-            Iterable<Object> all = yaml.loadAll(resource);
-            for (Object obj : all) {
-                result.add((Map<String, Object>) obj);
-            }
+            yaml.loadAll(resource).forEach(o -> result.add((Map<String, Object>) o));
         } finally {
             closeQuietly(resource);
         }
@@ -114,5 +110,14 @@ public class YamlExtractingApplicationIdCollector implements ApplicationIdCollec
         }
 
         return access(result, copyOfRange(parents, 1, parents.length));
+    }
+
+    private static void closeQuietly(InputStream is) {
+        if (is != null) {
+            try {
+                is.close();
+            } catch (Exception e) {
+            }
+        }
     }
 }
