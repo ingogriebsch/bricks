@@ -17,20 +17,9 @@
  * limitations under the License.
  * #L%
  */
-package com.github.ingogriebsch.bricks.assemble.loader.common;
+package com.github.ingogriebsch.bricks.assemble.loader.zip;
 
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+public interface ZipEntryLocationProvider {
 
-@RequiredArgsConstructor
-public class StaticZipEntryLocationProvider implements ZipEntryLocationProvider {
-
-    @NonNull
-    private final String location;
-
-    @Override
-    public String get(String componentId) {
-        return location;
-    }
-
+    String get(String componentId);
 }

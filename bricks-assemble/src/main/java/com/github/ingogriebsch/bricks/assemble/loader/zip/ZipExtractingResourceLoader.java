@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package com.github.ingogriebsch.bricks.assemble.loader.common;
+package com.github.ingogriebsch.bricks.assemble.loader.zip;
 
 import static java.io.File.createTempFile;
 
