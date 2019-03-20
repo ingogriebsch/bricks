@@ -101,7 +101,20 @@ public class YamlExtractingResourceLoader implements ResourceLoader {
     @SuppressWarnings("unchecked")
     private static Set<Map<String, Object>> load(InputStream resource) {
         Set<Map<String, Object>> result = newHashSet();
-        yaml.loadAll(resource).forEach(o -> result.add((Map<String, Object>) o));
+        try {
+            yaml.loadAll(resource).forEach(o -> result.add((Map<String, Object>) o));
+        } finally {
+            closeQuietly(resource);
+        }
         return result;
+    }
+
+    private static void closeQuietly(InputStream is) {
+        if (is != null) {
+            try {
+                is.close();
+            } catch (Exception e) {
+            }
+        }
     }
 }
