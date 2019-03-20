@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package com.github.ingogriebsch.bricks.assemble.loader.common;
+package com.github.ingogriebsch.bricks.assemble.loader.yaml;
 
 import static java.nio.charset.Charset.forName;
 import static java.util.Arrays.copyOfRange;

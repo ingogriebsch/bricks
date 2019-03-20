@@ -31,9 +31,9 @@ import com.github.ingogriebsch.bricks.assemble.collector.common.StaticComponentI
 import com.github.ingogriebsch.bricks.assemble.converter.yaml.Yaml2ApplicationConverter;
 import com.github.ingogriebsch.bricks.assemble.converter.yaml.Yaml2ComponentConverter;
 import com.github.ingogriebsch.bricks.assemble.loader.ResourceLoader;
-import com.github.ingogriebsch.bricks.assemble.loader.common.YamlExtractingResourceLoader;
 import com.github.ingogriebsch.bricks.assemble.loader.spring.SpringResourceBasedResourceLoader;
 import com.github.ingogriebsch.bricks.assemble.loader.spring.StaticResourceLocationProvider;
+import com.github.ingogriebsch.bricks.assemble.loader.yaml.YamlExtractingResourceLoader;
 import com.github.ingogriebsch.bricks.assemble.reader.ApplicationReader;
 import com.github.ingogriebsch.bricks.assemble.reader.ComponentReader;
 import com.github.ingogriebsch.bricks.assemble.reader.common.SimpleApplicationReader;

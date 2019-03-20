@@ -17,13 +17,17 @@
  * limitations under the License.
  * #L%
  */
-package com.github.ingogriebsch.bricks.assemble.loader.common;
+package com.github.ingogriebsch.bricks.assemble.loader.yaml;
 
 import static org.apache.commons.lang3.StringUtils.replace;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.InputStream;
 import java.util.Map;
+
+import com.github.ingogriebsch.bricks.assemble.loader.common.InputStreamResourceLoader;
+import com.github.ingogriebsch.bricks.assemble.loader.common.NullResourceLoader;
+import com.github.ingogriebsch.bricks.assemble.loader.yaml.YamlExtractingResourceLoader;
 
 import org.junit.jupiter.api.Test;
 import org.yaml.snakeyaml.Yaml;
