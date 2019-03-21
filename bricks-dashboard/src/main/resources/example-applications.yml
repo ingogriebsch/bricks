@@ -15,7 +15,8 @@ bricks:
             name: Core Component
             description: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
             version: 1.2.3
-            layer: core,
+            layer: 
+              id: core,
             responsibles:
               - name: The Avengers
                 email: avengers@gmail.com
@@ -27,7 +28,8 @@ bricks:
             name: Edge Component
             description: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
             version: 4.0.1
-            layer: edge,
+            layer: 
+              id: edge,
             responsibles:
               - name: Justice League
                 email: justice-league@gmail.com
