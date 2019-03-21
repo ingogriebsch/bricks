@@ -21,7 +21,7 @@ package com.github.ingogriebsch.bricks.assemble.collector.yaml;
 
 import java.io.InputStream;
 
-public interface ResourceLoader {
+public interface YamlResourceLoader {
 
     InputStream load();
 
