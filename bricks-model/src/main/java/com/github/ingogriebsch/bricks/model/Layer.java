@@ -19,6 +19,8 @@
  */
 package com.github.ingogriebsch.bricks.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import lombok.Data;
 
 /**
@@ -30,5 +32,6 @@ public class Layer {
     /**
      * The id of the layer. Legal values could be 'edge', 'integration', 'core', etc.
      */
+    @NotBlank
     String id;
 }
