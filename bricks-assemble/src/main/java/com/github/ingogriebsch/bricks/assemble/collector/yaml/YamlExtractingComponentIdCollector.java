@@ -1,0 +1,137 @@
+/*-
+ * #%L
+ * Bricks Assemble
+ * %%
+ * Copyright (C) 2018 - 2019 Ingo Griebsch
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+package com.github.ingogriebsch.bricks.assemble.collector.yaml;
+
+import static java.util.Arrays.copyOfRange;
+
+import static com.github.ingogriebsch.bricks.assemble.collector.yaml.ComponentIdOrigin.defaultOrigin;
+import static com.google.common.collect.Sets.newHashSet;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
+
+import com.github.ingogriebsch.bricks.assemble.collector.ComponentIdCollector;
+
+import org.yaml.snakeyaml.Yaml;
+
+import lombok.NonNull;
+import lombok.SneakyThrows;
+
+public class YamlExtractingComponentIdCollector implements ComponentIdCollector {
+
+    private static final Yaml yaml = new Yaml();
+
+    private final YamlResourceLoader yamlResourceLoader;
+    private ComponentIdOrigin componentIdOrigin;
+
+    public YamlExtractingComponentIdCollector(@NonNull YamlResourceLoader yamlResourceLoader) {
+        this(yamlResourceLoader, defaultOrigin());
+    }
+
+    public YamlExtractingComponentIdCollector(@NonNull YamlResourceLoader yamlResourceLoader,
+        @NonNull ComponentIdOrigin componentIdOrigin) {
+        this.yamlResourceLoader = yamlResourceLoader;
+        this.componentIdOrigin = componentIdOrigin;
+    }
+
+    @Override
+    @SneakyThrows
+    public Set<String> collect(@NonNull String applicationId) {
+        InputStream resource = yamlResourceLoader.load();
+        if (resource == null) {
+            return null;
+        }
+
+        Set<Map<String, Object>> trees = load(resource);
+        if (trees == null || trees.isEmpty()) {
+            return newHashSet();
+        }
+
+        Set<String> result = newHashSet();
+        for (Map<String, Object> tree : trees) {
+            collect(tree, applicationId, result);
+        }
+        return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    private void collect(Map<String, Object> tree, String applicationId, Set<String> result) {
+        for (Map<String, Object> application : access(newHashSet(tree),
+            componentIdOrigin.getApplicationIdOrigin().getParents())) {
+            Object appId = application.get(componentIdOrigin.getApplicationIdOrigin().getKey());
+            if (applicationId.equals(appId)) {
+                collect(application, result);
+            }
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void collect(Map<String, Object> application, Set<String> result) {
+        for (Map<String, Object> component : access(newHashSet(application), componentIdOrigin.getParents())) {
+            Object compId = component.get(componentIdOrigin.getKey());
+            if (compId != null && compId instanceof String) {
+                result.add((String) compId);
+            }
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static Set<Map<String, Object>> load(InputStream resource) throws IOException {
+        Set<Map<String, Object>> result = newHashSet();
+        try {
+            yaml.loadAll(resource).forEach(o -> result.add((Map<String, Object>) o));
+        } finally {
+            closeQuietly(resource);
+        }
+        return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    private static Set<Map<String, Object>> access(Set<Map<String, Object>> things, String[] parents) {
+        if (parents == null || parents.length == 0) {
+            return things;
+        }
+
+        Set<Map<String, Object>> result = newHashSet();
+        for (Map<String, Object> thing : things) {
+            Object object = thing.get(parents[0]);
+
+            if (object instanceof Collection) {
+                result.addAll((Collection<Map<String, Object>>) object);
+            } else if (object instanceof Map) {
+                result.add((Map<String, Object>) object);
+            }
+        }
+
+        return access(result, copyOfRange(parents, 1, parents.length));
+    }
+
+    private static void closeQuietly(InputStream is) {
+        if (is != null) {
+            try {
+                is.close();
+            } catch (Exception e) {
+            }
+        }
+    }
+}

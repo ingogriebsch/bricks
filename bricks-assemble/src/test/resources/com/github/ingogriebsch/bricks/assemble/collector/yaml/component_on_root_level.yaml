@@ -1,0 +1,10 @@
+id: app1
+name: App 1
+description: Some description...
+version: 1.0.0
+components:
+  - id: comp1
+    name: Comp 1
+    description: Some description...
+    version: 1.0.0
+  

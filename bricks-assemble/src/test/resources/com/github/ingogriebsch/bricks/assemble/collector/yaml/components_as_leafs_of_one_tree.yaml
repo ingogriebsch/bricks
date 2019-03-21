@@ -1,0 +1,31 @@
+
+some:
+  tree:
+    structure:
+      - id: app1
+        name: App 1
+        description: Some description...
+        version: 1.0.0
+        components:
+          - id: comp1
+            name: Comp 1
+            description: Some description...
+            version: 3.2.1
+          - id: comp2
+            name: Comp 2
+            description: Some description...
+            version: 4.0.1-SNAPSHOT
+      - id: app2
+        name: App 2
+        description: Some description...
+        version: 1.0.0
+        components:
+          - id: comp3
+            name: Comp 3
+            description: Some description...
+            version: 3.2.1
+          - id: comp4
+            name: Comp 4
+            description: Some description...
+            version: 4.0.1-SNAPSHOT
+            
