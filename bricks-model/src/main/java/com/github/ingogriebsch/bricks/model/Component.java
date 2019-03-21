@@ -81,7 +81,8 @@ public class Component {
      * A collection of categories the component is related to. Legal values could be 'functional', 'infrastructure', 'bff',
      * 'apigateway', 'storage', etc.
      */
-    Set<String> categories;
+    @Valid
+    Set<Category> categories;
 
     /**
      * A collection of the main ecosystems the component is implemented in.
