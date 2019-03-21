@@ -21,6 +21,7 @@ package com.github.ingogriebsch.bricks.assemble.collector.yaml;
 
 import static java.util.Arrays.copyOfRange;
 
+import static com.github.ingogriebsch.bricks.assemble.collector.yaml.ApplicationIdOrigin.defaultOrigin;
 import static com.google.common.collect.Sets.newHashSet;
 
 import java.io.IOException;
@@ -40,26 +41,23 @@ public class YamlExtractingApplicationIdCollector implements ApplicationIdCollec
 
     private static final Yaml yaml = new Yaml();
 
-    private final ResourceLoader resourceLoader;
-    private final String identifier;
-    private final String[] parents;
+    private final YamlResourceLoader yamlResourceLoader;
+    private final ApplicationIdOrigin applicationIdOrigin;
 
-    public YamlExtractingApplicationIdCollector(@NonNull ResourceLoader resourceLoader) {
-        this(resourceLoader, "id");
+    public YamlExtractingApplicationIdCollector(@NonNull YamlResourceLoader yamlResourceLoader) {
+        this(yamlResourceLoader, defaultOrigin());
     }
 
-    public YamlExtractingApplicationIdCollector(@NonNull ResourceLoader resourceLoader, @NonNull String identifier,
-        String... parents) {
-        this.resourceLoader = resourceLoader;
-        this.identifier = identifier;
-        this.parents = parents;
+    public YamlExtractingApplicationIdCollector(@NonNull YamlResourceLoader yamlResourceLoader,
+        @NonNull ApplicationIdOrigin applicationIdOrigin) {
+        this.yamlResourceLoader = yamlResourceLoader;
+        this.applicationIdOrigin = applicationIdOrigin;
     }
 
     @Override
     @SneakyThrows
-    @SuppressWarnings("unchecked")
     public Set<String> collect() {
-        InputStream resource = resourceLoader.load();
+        InputStream resource = yamlResourceLoader.load();
         if (resource == null) {
             return null;
         }
@@ -71,14 +69,19 @@ public class YamlExtractingApplicationIdCollector implements ApplicationIdCollec
 
         Set<String> result = newHashSet();
         for (Map<String, Object> tree : trees) {
-            for (Map<String, Object> entry : access(newHashSet(tree), parents)) {
-                Object id = entry.get(identifier);
-                if (id != null && id instanceof String) {
-                    result.add((String) id);
-                }
-            }
+            collect(tree, result);
         }
         return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    private void collect(Map<String, Object> tree, Set<String> result) {
+        for (Map<String, Object> entry : access(newHashSet(tree), applicationIdOrigin.getParents())) {
+            Object id = entry.get(applicationIdOrigin.getKey());
+            if (id != null && id instanceof String) {
+                result.add((String) id);
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -93,7 +96,7 @@ public class YamlExtractingApplicationIdCollector implements ApplicationIdCollec
     }
 
     @SuppressWarnings("unchecked")
-    private static Set<Map<String, Object>> access(Set<Map<String, Object>> things, String... parents) {
+    private static Set<Map<String, Object>> access(Set<Map<String, Object>> things, String[] parents) {
         if (parents == null || parents.length == 0) {
             return things;
         }

@@ -31,13 +31,14 @@ public class YamlExtractingApplicationIdCollectorTest {
 
     @Test
     public void ctor_should_throw_exception_if_resource_loader_is_null() {
-        assertThrows(NullPointerException.class, () -> new YamlExtractingApplicationIdCollector(null, "identifier"));
+        assertThrows(NullPointerException.class, () -> new YamlExtractingApplicationIdCollector(null));
     }
 
     @Test
     public void collect_should_return_matching_id_if_yaml_contains_application_as_leaf_of_one_tree() throws Exception {
-        YamlExtractingApplicationIdCollector collector = new YamlExtractingApplicationIdCollector(
-            getResourceLoader("application_as_leaf_of_one_tree.yaml"), "id", "some", "tree", "structure");
+        ApplicationIdOrigin origin = ApplicationIdOrigin.builder().parents(new String[] { "some", "tree", "structure" }).build();
+        YamlExtractingApplicationIdCollector collector =
+            new YamlExtractingApplicationIdCollector(getResourceLoader("application_as_leaf_of_one_tree.yaml"), origin);
 
         assertThat(collector.collect()).isNotNull().contains("app1");
     }
@@ -52,16 +53,18 @@ public class YamlExtractingApplicationIdCollectorTest {
 
     @Test
     public void collect_should_return_matching_ids_if_yaml_contains_applications_as_leaf_of_one_tree() throws Exception {
-        YamlExtractingApplicationIdCollector collector = new YamlExtractingApplicationIdCollector(
-            getResourceLoader("applications_as_leafs_of_one_tree.yaml"), "id", "some", "tree", "structure");
+        ApplicationIdOrigin origin = ApplicationIdOrigin.builder().parents(new String[] { "some", "tree", "structure" }).build();
+        YamlExtractingApplicationIdCollector collector =
+            new YamlExtractingApplicationIdCollector(getResourceLoader("applications_as_leafs_of_one_tree.yaml"), origin);
 
         assertThat(collector.collect()).isNotNull().contains("app1", "app2", "app3");
     }
 
     @Test
     public void collect_should_return_matching_ids_if_yaml_contains_applications_as_leaf_of_several_trees() throws Exception {
-        YamlExtractingApplicationIdCollector collector = new YamlExtractingApplicationIdCollector(
-            getResourceLoader("applications_as_leafs_of_several_trees.yaml"), "id", "some", "tree", "structure");
+        ApplicationIdOrigin origin = ApplicationIdOrigin.builder().parents(new String[] { "some", "tree", "structure" }).build();
+        YamlExtractingApplicationIdCollector collector =
+            new YamlExtractingApplicationIdCollector(getResourceLoader("applications_as_leafs_of_several_trees.yaml"), origin);
 
         assertThat(collector.collect()).isNotNull().contains("app1", "app2", "app3");
     }
@@ -74,10 +77,10 @@ public class YamlExtractingApplicationIdCollectorTest {
         assertThat(collector.collect()).isNotNull().contains("app1", "app2", "app3");
     }
 
-    private ResourceLoader getResourceLoader(String resourceName) {
+    private YamlResourceLoader getResourceLoader(String resourceName) {
         String location = replace(getClass().getPackage().getName(), ".", "/") + "/" + resourceName;
         InputStream resource = getClass().getClassLoader().getResourceAsStream(location);
-        return new ResourceLoader() {
+        return new YamlResourceLoader() {
 
             @Override
             public InputStream load() {
