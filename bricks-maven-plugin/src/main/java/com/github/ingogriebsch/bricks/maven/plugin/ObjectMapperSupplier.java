@@ -22,7 +22,6 @@ package com.github.ingogriebsch.bricks.maven.plugin;
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import static com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT;
 import static com.fasterxml.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
-import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_NULL_MAP_VALUES;
 
 import java.util.function.Supplier;
 
@@ -44,7 +43,6 @@ public class ObjectMapperSupplier implements Supplier<ObjectMapper> {
     public ObjectMapperSupplier() {
         objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(NON_NULL);
-        objectMapper.disable(WRITE_NULL_MAP_VALUES);
         objectMapper.enable(ORDER_MAP_ENTRIES_BY_KEYS);
         objectMapper.enable(INDENT_OUTPUT);
     }
