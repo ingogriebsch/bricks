@@ -75,6 +75,7 @@ public class Component {
     /**
      * Explains in which layer the component is 'positioned' inside the whole application.
      */
+    @Valid
     Layer layer;
 
     /**
