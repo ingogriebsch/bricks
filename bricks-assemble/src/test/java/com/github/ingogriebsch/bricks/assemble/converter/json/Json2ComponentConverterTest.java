@@ -78,7 +78,6 @@ public class Json2ComponentConverterTest {
         source.setName("name");
         source.setDescription("description");
         source.setVersion("version");
-        source.setLayer("layer");
 
         Component target;
         try (InputStream is = new ByteArrayInputStream(objectMapper.writeValueAsBytes(source))) {

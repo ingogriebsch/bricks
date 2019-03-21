@@ -73,10 +73,9 @@ public class Component {
     Set<Responsible> responsibles;
 
     /**
-     * Explains in which layer the component is positioned inside the whole application. Legal values could be 'edge',
-     * 'integration', 'core', etc.
+     * Explains in which layer the component is 'positioned' inside the whole application.
      */
-    String layer;
+    Layer layer;
 
     /**
      * A collection of categories the component is related to. Legal values could be 'functional', 'infrastructure', 'bff',

@@ -22,6 +22,7 @@ package com.github.ingogriebsch.bricks.example.custom.analyzers;
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.AnalysisResult;
 import com.github.ingogriebsch.bricks.maven.plugin.analyzer.CustomMavenAnalyzer;
 import com.github.ingogriebsch.bricks.model.Component;
+import com.github.ingogriebsch.bricks.model.Layer;
 
 public class MyCustomAnalyzer extends CustomMavenAnalyzer {
 
@@ -29,7 +30,9 @@ public class MyCustomAnalyzer extends CustomMavenAnalyzer {
     protected AnalysisResult augment(Component c) {
         log.info("started");
 
-        c.setLayer("custom-value");
+        Layer layer = new Layer();
+        layer.setId("layer");
+        c.setLayer(layer);
 
         return AnalysisResult.OK;
     }
