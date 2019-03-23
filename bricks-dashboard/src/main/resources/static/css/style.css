@@ -38,6 +38,6 @@ main {
     flex: 1 0 auto;
 }
 
-.bricks-green {
-    background-color: #6ab700 !important;
+.bricks-background {
+    background-color: #4b91cd !important;
 }

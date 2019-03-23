@@ -33,7 +33,7 @@
     <body>
         <header>
             <nav>
-                <div class="nav-wrapper bricks-green">
+                <div class="nav-wrapper bricks-background">
                     <div class="col s12">
                         <#list breadcrumb.entries as entry>
                         <a href="${entry.href}" class="breadcrumb">${entry.name}</a>
@@ -45,7 +45,7 @@
         <main>
             <#nested />
         </main>
-        <footer class="page-footer bricks-green">
+        <footer class="page-footer bricks-background">
             <div class="footer-copyright white-text">
               © 2014-<noscript>2018</noscript><script type="text/javascript">document.write(new Date().getFullYear());</script>, All rights reserved.
               <a class="white-text right" href="https://github.com/ingogriebsch/bricks">Bricks</a>
