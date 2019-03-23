@@ -55,8 +55,8 @@ import lombok.SneakyThrows;
 public class ServiceConfiguration {
 
     private static final String SAMPLE_APPLICATIONS_LOCATION = "classpath:/example-applications.yml";
-    private static final String[] YAML_PATH_APPLICATIONS = new String[] { "bricks", "dashboard", "applications" };
-    private static final String[] YAML_PATH_COMPONENTS = new String[] { "bricks", "dashboard", "applications", "components" };
+    private static final String[] YAML_PATH_APPLICATIONS = new String[] { "applications" };
+    private static final String[] YAML_PATH_COMPONENTS = new String[] { "applications", "components" };
     private static final String YAML_KEY_ID = "id";
 
     @NonNull
