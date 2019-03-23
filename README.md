@@ -5,7 +5,7 @@
 [![DepShield Status](https://depshield.sonatype.org/badges/ingogriebsch/bricks/depshield.svg)](https://depshield.github.io)
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
-Bricks is a framework that allows you to create automated documentation about an application and its components. 
+**Bricks** is a framework that allows you to create automated documentation about an application and its components. 
 The framework is easy to integrate and offers maximum flexibility to document any type of application.
 
 Frameworks like [Structurizr](https://structurizr.com/), [CodeScene](https://empear.com/) or [Arc42](https://arc42.de/) are very powerful, but cost money and / or require a lot of training. 
