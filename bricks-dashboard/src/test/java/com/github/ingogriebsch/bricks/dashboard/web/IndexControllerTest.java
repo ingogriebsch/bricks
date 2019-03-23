@@ -170,6 +170,8 @@ public class IndexControllerTest {
         Application application = new Application();
         application.setId(id);
         application.setName(randomAlphabetic(12));
+        application.setDescription(randomAlphabetic(64));
+        application.setVersion("1.0.0");
         return application;
     }
 }
