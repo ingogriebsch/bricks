@@ -18,5 +18,17 @@ Our primary goals are:
 *   An easy to extend framework to document different types of applications (monolithic, microservice based).
 *   Make available a visualization of the collected information in the form of a dashboard and documents that can be reused offline.
 
+## Modules
+The project consists of the following modules:
+
+*   **bricks-model** contains the base model. It provides the abstract description of an application and its components. The definition of the model follows a concrete idea of ​​what information is needed to describe an application and its components. Nevertheless, it tries to be as flexible and expandable as possible.
+*   **bricks-generate** contains all the necessary parts to generate the documentation of a component based on source code, build and meta information.
+*   **bricks-maven-plugin** includes a Maven plugin that allows for the repetitive creation of component documentation during the component build process.
+*   **bricks-assemble** contains all the necessary parts to collect the generated documentation from different 'places' and make it available as a data model.
+*   **bricks-visualize** contains all the necessary parts to visualize the model. This includes the output of the documentation as svg, ppt, pdf and other formats.
+*   **bricks-analyze** contains all the necessary parts to analyze the model and to calculate or aggregate certain aspects.
+*   **bricks-dashboard** contains a Spring Boot application that processes and displays the generated components of an application and its components.
+*   **bricks-example** contains examples that make certain use cases clearer.
+
 ## License
 This code is open source software licensed under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0.html).
