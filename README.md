@@ -25,8 +25,8 @@ The project consists of the following modules:
 *   **bricks-generate** contains all the necessary parts to generate the documentation of a component based on source code, build and meta information.
 *   **bricks-maven-plugin** includes a Maven plugin that allows for the repetitive creation of component documentation during the component build process.
 *   **bricks-assemble** contains all the necessary parts to collect the generated documentation from different 'places' and make it available as a data model.
-*   **bricks-visualize** contains all the necessary parts to visualize the model. This includes the output of the documentation as svg, ppt, pdf and other formats.
 *   **bricks-analyze** contains all the necessary parts to analyze the model and to calculate or aggregate certain aspects.
+*   **bricks-visualize** contains all the necessary parts to visualize the model. This includes the output of the documentation as svg, ppt, pdf and other formats.
 *   **bricks-dashboard** contains a Spring Boot application that processes and displays the generated components of an application and its components.
 *   **bricks-example** contains examples that make certain use cases clearer.
 
