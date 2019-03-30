@@ -19,11 +19,14 @@
  */
 package com.github.ingogriebsch.bricks.analyze;
 
-import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toSet;
 
 import static com.google.common.collect.Sets.newHashSet;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.github.ingogriebsch.bricks.model.Component;
 import com.github.ingogriebsch.bricks.model.Layer;
@@ -39,10 +42,9 @@ public class ComponentsPerLayerAnalyzer {
     private Set<Component> components;
 
     public Set<ComponentsPerLayer> analyze() {
-        Set<ComponentsPerLayer> componentsPerLayers = newHashSet();
-        components.stream().collect(groupingBy(Component::getLayer))
-            .forEach((k, v) -> componentsPerLayers.add(new ComponentsPerLayer(k, newHashSet(v))));
-        return componentsPerLayers;
+        Map<Layer, List<Component>> groupedByLayer = components.stream().collect(Collectors.groupingBy(Component::getLayer));
+        return groupedByLayer.entrySet().stream().map((e) -> new ComponentsPerLayer(e.getKey(), newHashSet(e.getValue())))
+            .collect(toSet());
     }
 
     @Value
