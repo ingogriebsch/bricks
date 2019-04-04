@@ -47,35 +47,35 @@ public class Json2ApplicationConverterTest {
     }
 
     @Test
-    public void convert_should_throw_exception_if_input_is_null() throws Exception {
+    public void from_should_throw_exception_if_input_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Json2ApplicationConverter().convert(null, null);
+            new Json2ApplicationConverter().from(null, null);
         });
     }
 
     @Test
-    public void convert_should_throw_exception_if_input_is_not_legal() throws Exception {
+    public void from_should_throw_exception_if_input_is_not_legal() throws Exception {
         assertThrows(IOException.class, () -> {
             try (InputStream is = toInputStream("test")) {
-                new Json2ApplicationConverter().convert(is, "regardlesse");
+                new Json2ApplicationConverter().from(is, "regardlesse");
             }
         });
     }
 
     @Test
-    public void convert_should_convert_empty_application_to_matching_output() throws Exception {
+    public void from_should_convert_empty_application_to_matching_output() throws Exception {
         Application source = new Application();
 
         Application target;
         try (InputStream is = toInputStream(source)) {
-            target = new Json2ApplicationConverter().convert(is, "regardless");
+            target = new Json2ApplicationConverter().from(is, "regardless");
         }
 
         assertThat(target).isNotNull().isEqualTo(source);
     }
 
     @Test
-    public void convert_should_convert_filled_application_to_matching_output() throws Exception {
+    public void from_should_convert_filled_application_to_matching_output() throws Exception {
         Application source = new Application();
         source.setId("id");
         source.setName("name");
@@ -84,7 +84,7 @@ public class Json2ApplicationConverterTest {
 
         Application target;
         try (InputStream is = toInputStream(source)) {
-            target = new Json2ApplicationConverter().convert(is, source.getId());
+            target = new Json2ApplicationConverter().from(is, source.getId());
         }
 
         assertThat(target).isNotNull().isEqualTo(source);

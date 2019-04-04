@@ -52,35 +52,35 @@ public class Yaml2ApplicationConverterTest {
     }
 
     @Test
-    public void convert_should_throw_exception_if_input_is_null() throws Exception {
+    public void from_should_throw_exception_if_input_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Yaml2ApplicationConverter().convert(null, null);
+            new Yaml2ApplicationConverter().from(null, null);
         });
     }
 
     @Test
-    public void convert_should_throw_exception_if_input_is_not_legal() throws Exception {
+    public void from_should_throw_exception_if_input_is_not_legal() throws Exception {
         assertThrows(IOException.class, () -> {
             try (InputStream is = new ByteArrayInputStream("test".getBytes())) {
-                new Yaml2ApplicationConverter().convert(is, "regardless");
+                new Yaml2ApplicationConverter().from(is, "regardless");
             }
         });
     }
 
     @Test
-    public void convert_should_convert_empty_application_to_matching_output() throws Exception {
+    public void from_should_convert_empty_application_to_matching_output() throws Exception {
         Application source = new Application();
 
         Application target;
         try (InputStream is = new ByteArrayInputStream(objectMapper.writeValueAsBytes(source))) {
-            target = new Yaml2ApplicationConverter().convert(is, "regardless");
+            target = new Yaml2ApplicationConverter().from(is, "regardless");
         }
 
         assertThat(target).isNotNull().isEqualTo(source);
     }
 
     @Test
-    public void convert_should_convert_application_to_matching_output() throws Exception {
+    public void from_should_convert_application_to_matching_output() throws Exception {
         Application source = new Application();
         source.setId("id");
         source.setName("name");
@@ -89,14 +89,14 @@ public class Yaml2ApplicationConverterTest {
 
         Application target;
         try (InputStream is = toInputStream(objectMapper.writeValueAsString(source), forName("UTF-8"))) {
-            target = new Yaml2ApplicationConverter().convert(is, source.getId());
+            target = new Yaml2ApplicationConverter().from(is, source.getId());
         }
 
         assertThat(target).isNotNull().isEqualTo(source);
     }
 
     @Test
-    public void convert_should_convert_application_even_if_underlying_resource_contains_content_not_related_to_the_model()
+    public void from_should_convert_application_even_if_underlying_resource_contains_content_not_related_to_the_model()
         throws Exception {
         Map<String, String> source = new HashMap<>();
         source.put("id", "id");
@@ -108,7 +108,7 @@ public class Yaml2ApplicationConverterTest {
 
         Application target;
         try (InputStream is = toInputStream(objectMapper.writeValueAsString(source), forName("UTF-8"))) {
-            target = new Yaml2ApplicationConverter().convert(is, source.get("id"));
+            target = new Yaml2ApplicationConverter().from(is, source.get("id"));
         }
 
         assertThat(target).isNotNull();

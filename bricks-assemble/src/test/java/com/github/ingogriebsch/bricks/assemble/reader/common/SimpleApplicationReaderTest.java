@@ -92,7 +92,7 @@ public class SimpleApplicationReaderTest {
         SimpleApplicationReader simpleApplicationReader = new SimpleApplicationReader(resourceLoader, applicationConverter);
 
         assertThat(simpleApplicationReader.read(id)).isNull();
-        verify(applicationConverter, times(0)).convert(any(), anyString());
+        verify(applicationConverter, times(0)).from(any(), anyString());
     }
 
     @Test
@@ -101,7 +101,7 @@ public class SimpleApplicationReaderTest {
         InputStream stream = new ByteArrayInputStream("{}".getBytes());
 
         given(resourceLoader.load(id)).willReturn(stream);
-        given(applicationConverter.convert(stream, id)).willReturn(new Application());
+        given(applicationConverter.from(stream, id)).willReturn(new Application());
 
         SimpleApplicationReader simpleApplicationReader =
             new SimpleApplicationReader(resourceLoader, applicationConverter, false);
@@ -115,7 +115,7 @@ public class SimpleApplicationReaderTest {
         InputStream stream = new ByteArrayInputStream("{}".getBytes());
 
         given(resourceLoader.load(id)).willReturn(stream);
-        given(applicationConverter.convert(stream, id)).willReturn(new Application());
+        given(applicationConverter.from(stream, id)).willReturn(new Application());
 
         assertThrows(ValidationException.class, () -> {
             new SimpleApplicationReader(resourceLoader, applicationConverter, true).read(id);
