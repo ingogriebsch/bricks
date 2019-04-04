@@ -35,6 +35,7 @@
 
     <modules>
         <module>bricks-model</module>
+        <module>bricks-discover</module>
         <module>bricks-maven-plugin</module>
         <module>bricks-assemble</module>
         <module>bricks-analyze</module>
