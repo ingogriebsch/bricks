@@ -31,6 +31,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,6 +41,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.github.ingogriebsch.bricks.model.Application;
 
+import org.apache.commons.io.input.ReaderInputStream;
+import org.apache.commons.io.output.WriterOutputStream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -116,4 +121,58 @@ public class Yaml2ApplicationConverterTest {
             .filter(e -> !e.getKey().equals("class") && e.getValue() != null).collect(toMap(e -> e.getKey(), e -> e.getValue()));
         assertThat(source).containsAllEntriesOf(description);
     }
+
+    // ---
+
+    @Test
+    public void to_should_throw_exception_if_input_is_null() throws Exception {
+        assertThrows(NullPointerException.class, () -> {
+            new Yaml2ApplicationConverter().to(null, null);
+        });
+    }
+
+    @Test
+    public void to_should_convert_empty_application_to_matching_output() throws Exception {
+        Application source = new Application();
+
+        String raw;
+        try (StringWriter writer = new StringWriter()) {
+            try (OutputStream os = new WriterOutputStream(writer, forName("UTF-8"))) {
+                new Yaml2ApplicationConverter().to(source, os);
+            }
+            raw = writer.toString();
+        }
+        assertThat(raw).isNotNull();
+
+        Application target;
+        try (InputStream is = new ReaderInputStream(new StringReader(raw), forName("UTF-8"))) {
+            target = new Yaml2ApplicationConverter().from(is, "regardless");
+        }
+        assertThat(target).isEqualTo(source);
+    }
+
+    @Test
+    public void to_should_convert_application_to_matching_output() throws Exception {
+        Application source = new Application();
+        source.setId("id");
+        source.setName("name");
+        source.setDescription("description");
+        source.setVersion("version");
+
+        String raw;
+        try (StringWriter writer = new StringWriter()) {
+            try (OutputStream os = new WriterOutputStream(writer, forName("UTF-8"))) {
+                new Yaml2ApplicationConverter().to(source, os);
+            }
+            raw = writer.toString();
+        }
+        assertThat(raw).isNotNull();
+
+        Application target;
+        try (InputStream is = new ReaderInputStream(new StringReader(raw), forName("UTF-8"))) {
+            target = new Yaml2ApplicationConverter().from(is, "regardless");
+        }
+        assertThat(target).isEqualTo(source);
+    }
+
 }
