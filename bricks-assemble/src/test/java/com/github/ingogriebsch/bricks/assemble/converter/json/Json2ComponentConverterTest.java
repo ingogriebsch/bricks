@@ -44,35 +44,35 @@ public class Json2ComponentConverterTest {
     }
 
     @Test
-    public void convert_should_throw_exception_if_input_is_null() throws Exception {
+    public void from_should_throw_exception_if_input_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Json2ComponentConverter().convert(null, null);
+            new Json2ComponentConverter().from(null, null);
         });
     }
 
     @Test
-    public void convert_should_throw_exception_if_input_is_not_legal() throws Exception {
+    public void from_should_throw_exception_if_input_is_not_legal() throws Exception {
         assertThrows(IOException.class, () -> {
             try (InputStream is = new ByteArrayInputStream("test".getBytes())) {
-                new Json2ComponentConverter().convert(is, "regardless");
+                new Json2ComponentConverter().from(is, "regardless");
             }
         });
     }
 
     @Test
-    public void convert_should_convert_empty_component_to_matching_output() throws Exception {
+    public void from_should_convert_empty_component_to_matching_output() throws Exception {
         Component source = new Component();
 
         Component target;
         try (InputStream is = new ByteArrayInputStream(objectMapper.writeValueAsBytes(source))) {
-            target = new Json2ComponentConverter().convert(is, "regardless");
+            target = new Json2ComponentConverter().from(is, "regardless");
         }
 
         assertThat(target).isNotNull().isEqualTo(source);
     }
 
     @Test
-    public void convert_should_convert_filled_component_to_matching_output() throws Exception {
+    public void from_should_convert_filled_component_to_matching_output() throws Exception {
         Component source = new Component();
         source.setId("id");
         source.setName("name");
@@ -81,7 +81,7 @@ public class Json2ComponentConverterTest {
 
         Component target;
         try (InputStream is = new ByteArrayInputStream(objectMapper.writeValueAsBytes(source))) {
-            target = new Json2ComponentConverter().convert(is, source.getId());
+            target = new Json2ComponentConverter().from(is, source.getId());
         }
 
         assertThat(target).isNotNull().isEqualTo(source);

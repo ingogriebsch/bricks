@@ -41,7 +41,7 @@ public class Json2ComponentConverter implements ComponentConverter {
     }
 
     @Override
-    public Component convert(@NonNull InputStream source, @NonNull String id) throws IOException {
+    public Component from(@NonNull InputStream source, @NonNull String id) throws IOException {
         return objectMapper.readValue(source, Component.class);
     }
 

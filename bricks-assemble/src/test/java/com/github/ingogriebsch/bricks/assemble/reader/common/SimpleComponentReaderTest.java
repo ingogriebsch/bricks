@@ -92,7 +92,7 @@ public class SimpleComponentReaderTest {
         SimpleComponentReader simpleComponentReader = new SimpleComponentReader(resourceLoader, componentConverter);
 
         assertThat(simpleComponentReader.read(id)).isNull();
-        verify(componentConverter, times(0)).convert(any(), anyString());
+        verify(componentConverter, times(0)).from(any(), anyString());
     }
 
     @Test
@@ -101,7 +101,7 @@ public class SimpleComponentReaderTest {
         InputStream stream = new ByteArrayInputStream("{}".getBytes());
 
         given(resourceLoader.load(id)).willReturn(stream);
-        given(componentConverter.convert(stream, id)).willReturn(new Component());
+        given(componentConverter.from(stream, id)).willReturn(new Component());
 
         SimpleComponentReader simpleComponentReader = new SimpleComponentReader(resourceLoader, componentConverter, false);
 
@@ -114,7 +114,7 @@ public class SimpleComponentReaderTest {
         InputStream stream = new ByteArrayInputStream("{}".getBytes());
 
         given(resourceLoader.load(id)).willReturn(stream);
-        given(componentConverter.convert(stream, id)).willReturn(new Component());
+        given(componentConverter.from(stream, id)).willReturn(new Component());
 
         assertThrows(ValidationException.class, () -> {
             new SimpleComponentReader(resourceLoader, componentConverter, true).read(id);

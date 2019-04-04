@@ -45,35 +45,35 @@ public class Yaml2ComponentConverterTest {
     }
 
     @Test
-    public void convert_should_throw_exception_if_input_is_null() throws Exception {
+    public void from_should_throw_exception_if_input_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Yaml2ComponentConverter().convert(null, null);
+            new Yaml2ComponentConverter().from(null, null);
         });
     }
 
     @Test
-    public void convert_should_throw_exception_if_input_is_not_legal() throws Exception {
+    public void from_should_throw_exception_if_input_is_not_legal() throws Exception {
         assertThrows(IOException.class, () -> {
             try (InputStream is = new ByteArrayInputStream("test".getBytes())) {
-                new Yaml2ComponentConverter().convert(is, "regardless");
+                new Yaml2ComponentConverter().from(is, "regardless");
             }
         });
     }
 
     @Test
-    public void convert_should_convert_empty_component_to_matching_output() throws Exception {
+    public void from_should_convert_empty_component_to_matching_output() throws Exception {
         Component source = new Component();
 
         Component target;
         try (InputStream is = new ByteArrayInputStream(objectMapper.writeValueAsBytes(source))) {
-            target = new Yaml2ComponentConverter().convert(is, "regardless");
+            target = new Yaml2ComponentConverter().from(is, "regardless");
         }
 
         assertThat(target).isNotNull().isEqualTo(source);
     }
 
     @Test
-    public void convert_should_convert_filled_component_to_matching_output() throws Exception {
+    public void from_should_convert_filled_component_to_matching_output() throws Exception {
         Component source = new Component();
         source.setId("id");
         source.setName("name");
@@ -82,7 +82,7 @@ public class Yaml2ComponentConverterTest {
 
         Component target;
         try (InputStream is = new ByteArrayInputStream(objectMapper.writeValueAsBytes(source))) {
-            target = new Yaml2ComponentConverter().convert(is, source.getId());
+            target = new Yaml2ComponentConverter().from(is, source.getId());
         }
 
         assertThat(target).isNotNull().isEqualTo(source);

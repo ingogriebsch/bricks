@@ -26,6 +26,6 @@ import com.github.ingogriebsch.bricks.model.Component;
 
 public interface ComponentConverter {
 
-    Component convert(InputStream source, String id) throws IOException;
+    Component from(InputStream source, String id) throws IOException;
 
 }
