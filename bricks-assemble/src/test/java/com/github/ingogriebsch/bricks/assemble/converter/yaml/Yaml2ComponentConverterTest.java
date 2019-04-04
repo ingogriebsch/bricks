@@ -19,6 +19,8 @@
  */
 package com.github.ingogriebsch.bricks.assemble.converter.yaml;
 
+import static java.nio.charset.Charset.forName;
+
 import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -26,11 +28,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.github.ingogriebsch.bricks.model.Component;
 
+import org.apache.commons.io.input.ReaderInputStream;
+import org.apache.commons.io.output.WriterOutputStream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -87,4 +94,56 @@ public class Yaml2ComponentConverterTest {
 
         assertThat(target).isNotNull().isEqualTo(source);
     }
+
+    @Test
+    public void to_should_throw_exception_if_input_is_null() throws Exception {
+        assertThrows(NullPointerException.class, () -> {
+            new Yaml2ComponentConverter().to(null, null);
+        });
+    }
+
+    @Test
+    public void to_should_convert_empty_application_to_matching_output() throws Exception {
+        Component source = new Component();
+
+        String raw;
+        try (StringWriter writer = new StringWriter()) {
+            try (OutputStream os = new WriterOutputStream(writer, forName("UTF-8"))) {
+                new Yaml2ComponentConverter().to(source, os);
+            }
+            raw = writer.toString();
+        }
+        assertThat(raw).isNotNull();
+
+        Component target;
+        try (InputStream is = new ReaderInputStream(new StringReader(raw), forName("UTF-8"))) {
+            target = new Yaml2ComponentConverter().from(is, "regardless");
+        }
+        assertThat(target).isEqualTo(source);
+    }
+
+    @Test
+    public void to_should_convert_application_to_matching_output() throws Exception {
+        Component source = new Component();
+        source.setId("id");
+        source.setName("name");
+        source.setDescription("description");
+        source.setVersion("version");
+
+        String raw;
+        try (StringWriter writer = new StringWriter()) {
+            try (OutputStream os = new WriterOutputStream(writer, forName("UTF-8"))) {
+                new Yaml2ComponentConverter().to(source, os);
+            }
+            raw = writer.toString();
+        }
+        assertThat(raw).isNotNull();
+
+        Component target;
+        try (InputStream is = new ReaderInputStream(new StringReader(raw), forName("UTF-8"))) {
+            target = new Yaml2ComponentConverter().from(is, "regardless");
+        }
+        assertThat(target).isEqualTo(source);
+    }
+
 }

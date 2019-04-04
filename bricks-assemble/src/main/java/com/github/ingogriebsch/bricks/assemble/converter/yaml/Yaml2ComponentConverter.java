@@ -24,6 +24,7 @@ import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKN
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
@@ -43,6 +44,11 @@ public class Yaml2ComponentConverter implements ComponentConverter {
     @Override
     public Component from(@NonNull InputStream source, @NonNull String id) throws IOException {
         return objectMapper.readValue(source, Component.class);
+    }
+
+    @Override
+    public void to(@NonNull Component component, @NonNull OutputStream target) throws IOException {
+        objectMapper.writeValue(target, component);
     }
 
     private static ObjectMapper createAndPrepareObjectMapper() {

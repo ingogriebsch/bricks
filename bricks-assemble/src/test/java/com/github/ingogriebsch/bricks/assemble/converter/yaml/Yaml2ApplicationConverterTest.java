@@ -122,8 +122,6 @@ public class Yaml2ApplicationConverterTest {
         assertThat(source).containsAllEntriesOf(description);
     }
 
-    // ---
-
     @Test
     public void to_should_throw_exception_if_input_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {

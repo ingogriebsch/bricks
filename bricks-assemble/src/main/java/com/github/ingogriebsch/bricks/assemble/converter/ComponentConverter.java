@@ -21,11 +21,14 @@ package com.github.ingogriebsch.bricks.assemble.converter;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import com.github.ingogriebsch.bricks.model.Component;
 
 public interface ComponentConverter {
 
     Component from(InputStream source, String id) throws IOException;
+
+    void to(Component component, OutputStream target) throws IOException;
 
 }
