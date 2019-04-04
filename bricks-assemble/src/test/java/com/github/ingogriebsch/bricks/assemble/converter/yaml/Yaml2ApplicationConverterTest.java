@@ -41,7 +41,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.github.ingogriebsch.bricks.model.Application;
 
+import org.apache.commons.io.input.NullInputStream;
 import org.apache.commons.io.input.ReaderInputStream;
+import org.apache.commons.io.output.NullOutputStream;
 import org.apache.commons.io.output.WriterOutputStream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -60,6 +62,20 @@ public class Yaml2ApplicationConverterTest {
     public void from_should_throw_exception_if_input_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
             new Yaml2ApplicationConverter().from(null, null);
+        });
+    }
+
+    @Test
+    public void from_should_throw_exception_if_component_is_null() throws Exception {
+        assertThrows(NullPointerException.class, () -> {
+            new Yaml2ApplicationConverter().from(null, "regardless");
+        });
+    }
+
+    @Test
+    public void from_should_throw_exception_if_id_is_null() throws Exception {
+        assertThrows(NullPointerException.class, () -> {
+            new Yaml2ApplicationConverter().from(new NullInputStream(0), null);
         });
     }
 
@@ -126,6 +142,20 @@ public class Yaml2ApplicationConverterTest {
     public void to_should_throw_exception_if_input_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
             new Yaml2ApplicationConverter().to(null, null);
+        });
+    }
+
+    @Test
+    public void to_should_throw_exception_if_application_is_null() throws Exception {
+        assertThrows(NullPointerException.class, () -> {
+            new Yaml2ApplicationConverter().to(null, new NullOutputStream());
+        });
+    }
+
+    @Test
+    public void to_should_throw_exception_if_target_is_null() throws Exception {
+        assertThrows(NullPointerException.class, () -> {
+            new Yaml2ApplicationConverter().to(new Application(), null);
         });
     }
 

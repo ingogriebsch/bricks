@@ -35,7 +35,9 @@ import java.io.StringWriter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.ingogriebsch.bricks.model.Component;
 
+import org.apache.commons.io.input.NullInputStream;
 import org.apache.commons.io.input.ReaderInputStream;
+import org.apache.commons.io.output.NullOutputStream;
 import org.apache.commons.io.output.WriterOutputStream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -54,6 +56,20 @@ public class Json2ComponentConverterTest {
     public void from_should_throw_exception_if_input_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
             new Json2ComponentConverter().from(null, null);
+        });
+    }
+
+    @Test
+    public void from_should_throw_exception_if_component_is_null() throws Exception {
+        assertThrows(NullPointerException.class, () -> {
+            new Json2ComponentConverter().from(null, "regardless");
+        });
+    }
+
+    @Test
+    public void from_should_throw_exception_if_id_is_null() throws Exception {
+        assertThrows(NullPointerException.class, () -> {
+            new Json2ComponentConverter().from(new NullInputStream(0), null);
         });
     }
 
@@ -98,6 +114,20 @@ public class Json2ComponentConverterTest {
     public void to_should_throw_exception_if_input_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
             new Json2ComponentConverter().to(null, null);
+        });
+    }
+
+    @Test
+    public void to_should_throw_exception_if_application_is_null() throws Exception {
+        assertThrows(NullPointerException.class, () -> {
+            new Json2ComponentConverter().to(null, new NullOutputStream());
+        });
+    }
+
+    @Test
+    public void to_should_throw_exception_if_target_is_null() throws Exception {
+        assertThrows(NullPointerException.class, () -> {
+            new Json2ComponentConverter().to(new Component(), null);
         });
     }
 
