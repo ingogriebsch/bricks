@@ -21,11 +21,14 @@ package com.github.ingogriebsch.bricks.assemble.converter;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import com.github.ingogriebsch.bricks.model.Application;
 
 public interface ApplicationConverter {
 
-    Application convert(InputStream source, String id) throws IOException;
+    Application from(InputStream source, String id) throws IOException;
+
+    void to(Application application, OutputStream target) throws IOException;
 
 }
