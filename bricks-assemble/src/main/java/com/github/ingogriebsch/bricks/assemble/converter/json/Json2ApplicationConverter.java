@@ -28,7 +28,7 @@ import java.io.OutputStream;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.ingogriebsch.bricks.assemble.converter.ApplicationConverter;
+import com.github.ingogriebsch.bricks.converter.ApplicationConverter;
 import com.github.ingogriebsch.bricks.model.Application;
 
 import lombok.NonNull;
