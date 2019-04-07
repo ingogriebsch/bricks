@@ -33,11 +33,11 @@ import com.github.ingogriebsch.bricks.model.Component;
 
 import lombok.NonNull;
 
-public class Json2ComponentConverter implements ComponentConverter {
+public class JsonBasedComponentConverter implements ComponentConverter {
 
     private final ObjectMapper objectMapper;
 
-    public Json2ComponentConverter() {
+    public JsonBasedComponentConverter() {
         objectMapper = createAndPrepareObjectMapper();
     }
 

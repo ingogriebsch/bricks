@@ -33,7 +33,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.ingogriebsch.bricks.converter.json.Json2ComponentConverter;
+import com.github.ingogriebsch.bricks.converter.json.JsonBasedComponentConverter;
 import com.github.ingogriebsch.bricks.model.Component;
 
 import org.apache.commons.io.input.NullInputStream;
@@ -43,7 +43,7 @@ import org.apache.commons.io.output.WriterOutputStream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-public class Json2ComponentConverterTest {
+public class JsonBasedComponentConverterTest {
 
     private static ObjectMapper objectMapper;
 
@@ -56,21 +56,21 @@ public class Json2ComponentConverterTest {
     @Test
     public void from_should_throw_exception_if_input_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Json2ComponentConverter().from(null, null);
+            new JsonBasedComponentConverter().from(null, null);
         });
     }
 
     @Test
     public void from_should_throw_exception_if_component_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Json2ComponentConverter().from(null, "regardless");
+            new JsonBasedComponentConverter().from(null, "regardless");
         });
     }
 
     @Test
     public void from_should_throw_exception_if_id_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Json2ComponentConverter().from(new NullInputStream(0), null);
+            new JsonBasedComponentConverter().from(new NullInputStream(0), null);
         });
     }
 
@@ -78,7 +78,7 @@ public class Json2ComponentConverterTest {
     public void from_should_throw_exception_if_input_is_not_legal() throws Exception {
         assertThrows(IOException.class, () -> {
             try (InputStream is = new ByteArrayInputStream("test".getBytes())) {
-                new Json2ComponentConverter().from(is, "regardless");
+                new JsonBasedComponentConverter().from(is, "regardless");
             }
         });
     }
@@ -89,7 +89,7 @@ public class Json2ComponentConverterTest {
 
         Component target;
         try (InputStream is = new ByteArrayInputStream(objectMapper.writeValueAsBytes(source))) {
-            target = new Json2ComponentConverter().from(is, "regardless");
+            target = new JsonBasedComponentConverter().from(is, "regardless");
         }
 
         assertThat(target).isNotNull().isEqualTo(source);
@@ -105,7 +105,7 @@ public class Json2ComponentConverterTest {
 
         Component target;
         try (InputStream is = new ByteArrayInputStream(objectMapper.writeValueAsBytes(source))) {
-            target = new Json2ComponentConverter().from(is, source.getId());
+            target = new JsonBasedComponentConverter().from(is, source.getId());
         }
 
         assertThat(target).isNotNull().isEqualTo(source);
@@ -114,21 +114,21 @@ public class Json2ComponentConverterTest {
     @Test
     public void to_should_throw_exception_if_input_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Json2ComponentConverter().to(null, null);
+            new JsonBasedComponentConverter().to(null, null);
         });
     }
 
     @Test
     public void to_should_throw_exception_if_application_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Json2ComponentConverter().to(null, new NullOutputStream());
+            new JsonBasedComponentConverter().to(null, new NullOutputStream());
         });
     }
 
     @Test
     public void to_should_throw_exception_if_target_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Json2ComponentConverter().to(new Component(), null);
+            new JsonBasedComponentConverter().to(new Component(), null);
         });
     }
 
@@ -139,7 +139,7 @@ public class Json2ComponentConverterTest {
         String raw;
         try (StringWriter writer = new StringWriter()) {
             try (OutputStream os = new WriterOutputStream(writer, forName("UTF-8"))) {
-                new Json2ComponentConverter().to(source, os);
+                new JsonBasedComponentConverter().to(source, os);
             }
             raw = writer.toString();
         }
@@ -147,7 +147,7 @@ public class Json2ComponentConverterTest {
 
         Component target;
         try (InputStream is = new ReaderInputStream(new StringReader(raw), forName("UTF-8"))) {
-            target = new Json2ComponentConverter().from(is, "regardless");
+            target = new JsonBasedComponentConverter().from(is, "regardless");
         }
         assertThat(target).isEqualTo(source);
     }
@@ -163,7 +163,7 @@ public class Json2ComponentConverterTest {
         String raw;
         try (StringWriter writer = new StringWriter()) {
             try (OutputStream os = new WriterOutputStream(writer, forName("UTF-8"))) {
-                new Json2ComponentConverter().to(source, os);
+                new JsonBasedComponentConverter().to(source, os);
             }
             raw = writer.toString();
         }
@@ -171,7 +171,7 @@ public class Json2ComponentConverterTest {
 
         Component target;
         try (InputStream is = new ReaderInputStream(new StringReader(raw), forName("UTF-8"))) {
-            target = new Json2ComponentConverter().from(is, "regardless");
+            target = new JsonBasedComponentConverter().from(is, "regardless");
         }
         assertThat(target).isEqualTo(source);
     }
