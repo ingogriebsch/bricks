@@ -40,7 +40,7 @@ import com.github.ingogriebsch.bricks.assemble.reader.common.SimpleApplicationRe
 import com.github.ingogriebsch.bricks.assemble.reader.common.SimpleComponentReader;
 import com.github.ingogriebsch.bricks.assemble.reader.common.StaticApplicationReaderFactory;
 import com.github.ingogriebsch.bricks.assemble.reader.common.StaticComponentReaderFactory;
-import com.github.ingogriebsch.bricks.converter.yaml.Yaml2ApplicationConverter;
+import com.github.ingogriebsch.bricks.converter.yaml.YamlBasedApplicationConverter;
 import com.github.ingogriebsch.bricks.converter.yaml.Yaml2ComponentConverter;
 
 import org.springframework.context.annotation.Bean;
@@ -81,7 +81,7 @@ public class ServiceConfiguration {
     }
 
     private ApplicationReader applicationReader() {
-        return new SimpleApplicationReader(resourceLoader(YAML_PATH_APPLICATIONS), new Yaml2ApplicationConverter());
+        return new SimpleApplicationReader(resourceLoader(YAML_PATH_APPLICATIONS), new YamlBasedApplicationConverter());
     }
 
     private ComponentReader componentReader() {

@@ -33,11 +33,11 @@ import com.github.ingogriebsch.bricks.model.Application;
 
 import lombok.NonNull;
 
-public class Yaml2ApplicationConverter implements ApplicationConverter {
+public class YamlBasedApplicationConverter implements ApplicationConverter {
 
     private final ObjectMapper objectMapper;
 
-    public Yaml2ApplicationConverter() {
+    public YamlBasedApplicationConverter() {
         objectMapper = createAndPrepareObjectMapper();
     }
 
