@@ -33,7 +33,7 @@ import java.io.StringWriter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.ingogriebsch.bricks.converter.json.Json2ApplicationConverter;
+import com.github.ingogriebsch.bricks.converter.json.JsonBasedApplicationConverter;
 import com.github.ingogriebsch.bricks.model.Application;
 
 import org.apache.commons.io.IOUtils;
@@ -44,7 +44,7 @@ import org.apache.commons.io.output.WriterOutputStream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-public class Json2ApplicationConverterTest {
+public class JsonBasedApplicationConverterTest {
 
     private static ObjectMapper objectMapper;
 
@@ -57,21 +57,21 @@ public class Json2ApplicationConverterTest {
     @Test
     public void from_should_throw_exception_if_input_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Json2ApplicationConverter().from(null, null);
+            new JsonBasedApplicationConverter().from(null, null);
         });
     }
 
     @Test
     public void from_should_throw_exception_if_component_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Json2ApplicationConverter().from(null, "regardless");
+            new JsonBasedApplicationConverter().from(null, "regardless");
         });
     }
 
     @Test
     public void from_should_throw_exception_if_id_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Json2ApplicationConverter().from(new NullInputStream(0), null);
+            new JsonBasedApplicationConverter().from(new NullInputStream(0), null);
         });
     }
 
@@ -79,7 +79,7 @@ public class Json2ApplicationConverterTest {
     public void from_should_throw_exception_if_input_is_not_legal() throws Exception {
         assertThrows(IOException.class, () -> {
             try (InputStream is = toInputStream("test")) {
-                new Json2ApplicationConverter().from(is, "regardlesse");
+                new JsonBasedApplicationConverter().from(is, "regardlesse");
             }
         });
     }
@@ -90,7 +90,7 @@ public class Json2ApplicationConverterTest {
 
         Application target;
         try (InputStream is = toInputStream(source)) {
-            target = new Json2ApplicationConverter().from(is, "regardless");
+            target = new JsonBasedApplicationConverter().from(is, "regardless");
         }
 
         assertThat(target).isNotNull().isEqualTo(source);
@@ -106,7 +106,7 @@ public class Json2ApplicationConverterTest {
 
         Application target;
         try (InputStream is = toInputStream(source)) {
-            target = new Json2ApplicationConverter().from(is, source.getId());
+            target = new JsonBasedApplicationConverter().from(is, source.getId());
         }
 
         assertThat(target).isNotNull().isEqualTo(source);
@@ -115,21 +115,21 @@ public class Json2ApplicationConverterTest {
     @Test
     public void to_should_throw_exception_if_input_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Json2ApplicationConverter().to(null, null);
+            new JsonBasedApplicationConverter().to(null, null);
         });
     }
 
     @Test
     public void to_should_throw_exception_if_application_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Json2ApplicationConverter().to(null, new NullOutputStream());
+            new JsonBasedApplicationConverter().to(null, new NullOutputStream());
         });
     }
 
     @Test
     public void to_should_throw_exception_if_target_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Json2ApplicationConverter().to(new Application(), null);
+            new JsonBasedApplicationConverter().to(new Application(), null);
         });
     }
 
@@ -140,7 +140,7 @@ public class Json2ApplicationConverterTest {
         String raw;
         try (StringWriter writer = new StringWriter()) {
             try (OutputStream os = new WriterOutputStream(writer, forName("UTF-8"))) {
-                new Json2ApplicationConverter().to(source, os);
+                new JsonBasedApplicationConverter().to(source, os);
             }
             raw = writer.toString();
         }
@@ -148,7 +148,7 @@ public class Json2ApplicationConverterTest {
 
         Application target;
         try (InputStream is = new ReaderInputStream(new StringReader(raw), forName("UTF-8"))) {
-            target = new Json2ApplicationConverter().from(is, "regardless");
+            target = new JsonBasedApplicationConverter().from(is, "regardless");
         }
         assertThat(target).isEqualTo(source);
     }
@@ -164,7 +164,7 @@ public class Json2ApplicationConverterTest {
         String raw;
         try (StringWriter writer = new StringWriter()) {
             try (OutputStream os = new WriterOutputStream(writer, forName("UTF-8"))) {
-                new Json2ApplicationConverter().to(source, os);
+                new JsonBasedApplicationConverter().to(source, os);
             }
             raw = writer.toString();
         }
@@ -172,7 +172,7 @@ public class Json2ApplicationConverterTest {
 
         Application target;
         try (InputStream is = new ReaderInputStream(new StringReader(raw), forName("UTF-8"))) {
-            target = new Json2ApplicationConverter().from(is, "regardless");
+            target = new JsonBasedApplicationConverter().from(is, "regardless");
         }
         assertThat(target).isEqualTo(source);
     }

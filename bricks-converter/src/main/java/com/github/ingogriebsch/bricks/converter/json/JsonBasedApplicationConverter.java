@@ -33,11 +33,11 @@ import com.github.ingogriebsch.bricks.model.Application;
 
 import lombok.NonNull;
 
-public class Json2ApplicationConverter implements ApplicationConverter {
+public class JsonBasedApplicationConverter implements ApplicationConverter {
 
     private final ObjectMapper objectMapper;
 
-    public Json2ApplicationConverter() {
+    public JsonBasedApplicationConverter() {
         objectMapper = createAndPrepareObjectMapper();
     }
 
