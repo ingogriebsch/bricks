@@ -33,11 +33,11 @@ import com.github.ingogriebsch.bricks.model.Component;
 
 import lombok.NonNull;
 
-public class Yaml2ComponentConverter implements ComponentConverter {
+public class YamlBasedComponentConverter implements ComponentConverter {
 
     private final ObjectMapper objectMapper;
 
-    public Yaml2ComponentConverter() {
+    public YamlBasedComponentConverter() {
         objectMapper = createAndPrepareObjectMapper();
     }
 
