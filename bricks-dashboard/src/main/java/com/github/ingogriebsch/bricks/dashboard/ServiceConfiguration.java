@@ -30,7 +30,6 @@ import com.github.ingogriebsch.bricks.assemble.collector.yaml.ComponentIdOrigin;
 import com.github.ingogriebsch.bricks.assemble.collector.yaml.YamlExtractingApplicationIdCollector;
 import com.github.ingogriebsch.bricks.assemble.collector.yaml.YamlExtractingComponentIdCollector;
 import com.github.ingogriebsch.bricks.assemble.collector.yaml.YamlResourceLoader;
-import com.github.ingogriebsch.bricks.assemble.converter.yaml.Yaml2ApplicationConverter;
 import com.github.ingogriebsch.bricks.assemble.converter.yaml.Yaml2ComponentConverter;
 import com.github.ingogriebsch.bricks.assemble.loader.ResourceLoader;
 import com.github.ingogriebsch.bricks.assemble.loader.spring.SpringResourceBasedResourceLoader;
@@ -42,6 +41,7 @@ import com.github.ingogriebsch.bricks.assemble.reader.common.SimpleApplicationRe
 import com.github.ingogriebsch.bricks.assemble.reader.common.SimpleComponentReader;
 import com.github.ingogriebsch.bricks.assemble.reader.common.StaticApplicationReaderFactory;
 import com.github.ingogriebsch.bricks.assemble.reader.common.StaticComponentReaderFactory;
+import com.github.ingogriebsch.bricks.converter.yaml.Yaml2ApplicationConverter;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package com.github.ingogriebsch.bricks.assemble.converter.yaml;
+package com.github.ingogriebsch.bricks.converter.yaml;
 
 import static java.nio.charset.Charset.forName;
 import static java.util.stream.Collectors.toMap;
@@ -39,6 +39,7 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.github.ingogriebsch.bricks.converter.yaml.Yaml2ApplicationConverter;
 import com.github.ingogriebsch.bricks.model.Application;
 
 import org.apache.commons.io.input.NullInputStream;
