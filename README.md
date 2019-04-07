@@ -22,7 +22,7 @@ Our primary goals are:
 The project consists of the following modules:
 
 *   **bricks-model** contains the base model. It provides the abstract description of an application and its components. The definition of the model follows a concrete idea of ​​what information is needed to describe an application and its components. Nevertheless, it tries to be as flexible and expandable as possible.
-*   **bricks-generate** contains all the necessary parts to generate the documentation of a component based on source code, build and meta information.
+*   **bricks-discover** contains all the necessary parts to discover parts of a component based on source code, build and meta information.
 *   **bricks-maven-plugin** includes a Maven plugin that allows for the repetitive creation of documentation during the components build process.
 *   **bricks-assemble** contains all the necessary parts to collect the generated documentation from different 'places' and make it available as a data model.
 *   **bricks-analyze** contains code to analyze the model and to calculate or aggregate certain aspects.
