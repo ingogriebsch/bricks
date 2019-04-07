@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package com.github.ingogriebsch.bricks.assemble.converter;
+package com.github.ingogriebsch.bricks.converter;
 
 import java.io.IOException;
 import java.io.InputStream;
