@@ -21,10 +21,10 @@ package com.github.ingogriebsch.bricks.assemble.reader.common;
 
 import java.io.InputStream;
 
-import com.github.ingogriebsch.bricks.assemble.converter.ApplicationConverter;
 import com.github.ingogriebsch.bricks.assemble.loader.ResourceLoader;
 import com.github.ingogriebsch.bricks.assemble.reader.ApplicationReader;
 import com.github.ingogriebsch.bricks.assemble.utils.validate.Validator;
+import com.github.ingogriebsch.bricks.converter.ApplicationConverter;
 import com.github.ingogriebsch.bricks.model.Application;
 
 import lombok.NonNull;

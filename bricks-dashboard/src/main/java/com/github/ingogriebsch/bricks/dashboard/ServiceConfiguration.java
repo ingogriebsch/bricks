@@ -30,8 +30,6 @@ import com.github.ingogriebsch.bricks.assemble.collector.yaml.ComponentIdOrigin;
 import com.github.ingogriebsch.bricks.assemble.collector.yaml.YamlExtractingApplicationIdCollector;
 import com.github.ingogriebsch.bricks.assemble.collector.yaml.YamlExtractingComponentIdCollector;
 import com.github.ingogriebsch.bricks.assemble.collector.yaml.YamlResourceLoader;
-import com.github.ingogriebsch.bricks.assemble.converter.yaml.Yaml2ApplicationConverter;
-import com.github.ingogriebsch.bricks.assemble.converter.yaml.Yaml2ComponentConverter;
 import com.github.ingogriebsch.bricks.assemble.loader.ResourceLoader;
 import com.github.ingogriebsch.bricks.assemble.loader.spring.SpringResourceBasedResourceLoader;
 import com.github.ingogriebsch.bricks.assemble.loader.spring.StaticResourceLocationProvider;
@@ -42,6 +40,8 @@ import com.github.ingogriebsch.bricks.assemble.reader.common.SimpleApplicationRe
 import com.github.ingogriebsch.bricks.assemble.reader.common.SimpleComponentReader;
 import com.github.ingogriebsch.bricks.assemble.reader.common.StaticApplicationReaderFactory;
 import com.github.ingogriebsch.bricks.assemble.reader.common.StaticComponentReaderFactory;
+import com.github.ingogriebsch.bricks.converter.yaml.YamlBasedApplicationConverter;
+import com.github.ingogriebsch.bricks.converter.yaml.YamlBasedComponentConverter;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -81,11 +81,11 @@ public class ServiceConfiguration {
     }
 
     private ApplicationReader applicationReader() {
-        return new SimpleApplicationReader(resourceLoader(YAML_PATH_APPLICATIONS), new Yaml2ApplicationConverter());
+        return new SimpleApplicationReader(resourceLoader(YAML_PATH_APPLICATIONS), new YamlBasedApplicationConverter());
     }
 
     private ComponentReader componentReader() {
-        return new SimpleComponentReader(resourceLoader(YAML_PATH_COMPONENTS), new Yaml2ComponentConverter());
+        return new SimpleComponentReader(resourceLoader(YAML_PATH_COMPONENTS), new YamlBasedComponentConverter());
     }
 
     private ResourceLoader resourceLoader(String... parents) {

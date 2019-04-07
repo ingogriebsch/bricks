@@ -17,11 +17,14 @@
  * limitations under the License.
  * #L%
  */
-package com.github.ingogriebsch.bricks.assemble.converter.yaml;
+package com.github.ingogriebsch.bricks.converter.yaml;
 
 import static java.nio.charset.Charset.forName;
+import static java.util.stream.Collectors.toMap;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS;
+import static org.apache.commons.beanutils.BeanUtils.describe;
+import static org.apache.commons.io.IOUtils.toInputStream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -31,10 +34,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.github.ingogriebsch.bricks.model.Component;
+import com.github.ingogriebsch.bricks.converter.yaml.YamlBasedApplicationConverter;
+import com.github.ingogriebsch.bricks.model.Application;
 
 import org.apache.commons.io.input.NullInputStream;
 import org.apache.commons.io.input.ReaderInputStream;
@@ -43,7 +49,7 @@ import org.apache.commons.io.output.WriterOutputStream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-public class Yaml2ComponentConverterTest {
+public class YamlBasedApplicationConverterTest {
 
     private static ObjectMapper objectMapper;
 
@@ -56,21 +62,21 @@ public class Yaml2ComponentConverterTest {
     @Test
     public void from_should_throw_exception_if_input_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Yaml2ComponentConverter().from(null, null);
+            new YamlBasedApplicationConverter().from(null, null);
         });
     }
 
     @Test
     public void from_should_throw_exception_if_component_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Yaml2ComponentConverter().from(null, "regardless");
+            new YamlBasedApplicationConverter().from(null, "regardless");
         });
     }
 
     @Test
     public void from_should_throw_exception_if_id_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Yaml2ComponentConverter().from(new NullInputStream(0), null);
+            new YamlBasedApplicationConverter().from(new NullInputStream(0), null);
         });
     }
 
@@ -78,83 +84,105 @@ public class Yaml2ComponentConverterTest {
     public void from_should_throw_exception_if_input_is_not_legal() throws Exception {
         assertThrows(IOException.class, () -> {
             try (InputStream is = new ByteArrayInputStream("test".getBytes())) {
-                new Yaml2ComponentConverter().from(is, "regardless");
+                new YamlBasedApplicationConverter().from(is, "regardless");
             }
         });
     }
 
     @Test
-    public void from_should_convert_empty_component_to_matching_output() throws Exception {
-        Component source = new Component();
+    public void from_should_convert_empty_application_to_matching_output() throws Exception {
+        Application source = new Application();
 
-        Component target;
+        Application target;
         try (InputStream is = new ByteArrayInputStream(objectMapper.writeValueAsBytes(source))) {
-            target = new Yaml2ComponentConverter().from(is, "regardless");
+            target = new YamlBasedApplicationConverter().from(is, "regardless");
         }
 
         assertThat(target).isNotNull().isEqualTo(source);
     }
 
     @Test
-    public void from_should_convert_filled_component_to_matching_output() throws Exception {
-        Component source = new Component();
+    public void from_should_convert_application_to_matching_output() throws Exception {
+        Application source = new Application();
         source.setId("id");
         source.setName("name");
         source.setDescription("description");
         source.setVersion("version");
 
-        Component target;
-        try (InputStream is = new ByteArrayInputStream(objectMapper.writeValueAsBytes(source))) {
-            target = new Yaml2ComponentConverter().from(is, source.getId());
+        Application target;
+        try (InputStream is = toInputStream(objectMapper.writeValueAsString(source), forName("UTF-8"))) {
+            target = new YamlBasedApplicationConverter().from(is, source.getId());
         }
 
         assertThat(target).isNotNull().isEqualTo(source);
     }
 
     @Test
+    public void from_should_convert_application_even_if_underlying_resource_contains_content_not_related_to_the_model()
+        throws Exception {
+        Map<String, String> source = new HashMap<>();
+        source.put("id", "id");
+        source.put("name", "name");
+        source.put("description", "description");
+        source.put("version", "version");
+        source.put("components", "components");
+        source.put("prop", "prop");
+
+        Application target;
+        try (InputStream is = toInputStream(objectMapper.writeValueAsString(source), forName("UTF-8"))) {
+            target = new YamlBasedApplicationConverter().from(is, source.get("id"));
+        }
+
+        assertThat(target).isNotNull();
+        Map<String, String> description = describe(target).entrySet().stream()
+            .filter(e -> !e.getKey().equals("class") && e.getValue() != null).collect(toMap(e -> e.getKey(), e -> e.getValue()));
+        assertThat(source).containsAllEntriesOf(description);
+    }
+
+    @Test
     public void to_should_throw_exception_if_input_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Yaml2ComponentConverter().to(null, null);
+            new YamlBasedApplicationConverter().to(null, null);
         });
     }
 
     @Test
     public void to_should_throw_exception_if_application_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Yaml2ComponentConverter().to(null, new NullOutputStream());
+            new YamlBasedApplicationConverter().to(null, new NullOutputStream());
         });
     }
 
     @Test
     public void to_should_throw_exception_if_target_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Yaml2ComponentConverter().to(new Component(), null);
+            new YamlBasedApplicationConverter().to(new Application(), null);
         });
     }
 
     @Test
     public void to_should_convert_empty_application_to_matching_output() throws Exception {
-        Component source = new Component();
+        Application source = new Application();
 
         String raw;
         try (StringWriter writer = new StringWriter()) {
             try (OutputStream os = new WriterOutputStream(writer, forName("UTF-8"))) {
-                new Yaml2ComponentConverter().to(source, os);
+                new YamlBasedApplicationConverter().to(source, os);
             }
             raw = writer.toString();
         }
         assertThat(raw).isNotNull();
 
-        Component target;
+        Application target;
         try (InputStream is = new ReaderInputStream(new StringReader(raw), forName("UTF-8"))) {
-            target = new Yaml2ComponentConverter().from(is, "regardless");
+            target = new YamlBasedApplicationConverter().from(is, "regardless");
         }
         assertThat(target).isEqualTo(source);
     }
 
     @Test
     public void to_should_convert_application_to_matching_output() throws Exception {
-        Component source = new Component();
+        Application source = new Application();
         source.setId("id");
         source.setName("name");
         source.setDescription("description");
@@ -163,15 +191,15 @@ public class Yaml2ComponentConverterTest {
         String raw;
         try (StringWriter writer = new StringWriter()) {
             try (OutputStream os = new WriterOutputStream(writer, forName("UTF-8"))) {
-                new Yaml2ComponentConverter().to(source, os);
+                new YamlBasedApplicationConverter().to(source, os);
             }
             raw = writer.toString();
         }
         assertThat(raw).isNotNull();
 
-        Component target;
+        Application target;
         try (InputStream is = new ReaderInputStream(new StringReader(raw), forName("UTF-8"))) {
-            target = new Yaml2ComponentConverter().from(is, "regardless");
+            target = new YamlBasedApplicationConverter().from(is, "regardless");
         }
         assertThat(target).isEqualTo(source);
     }

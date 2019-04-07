@@ -33,8 +33,8 @@ import java.io.InputStream;
 
 import javax.validation.ValidationException;
 
-import com.github.ingogriebsch.bricks.assemble.converter.ApplicationConverter;
 import com.github.ingogriebsch.bricks.assemble.loader.ResourceLoader;
+import com.github.ingogriebsch.bricks.converter.ApplicationConverter;
 import com.github.ingogriebsch.bricks.model.Application;
 
 import org.junit.jupiter.api.Test;

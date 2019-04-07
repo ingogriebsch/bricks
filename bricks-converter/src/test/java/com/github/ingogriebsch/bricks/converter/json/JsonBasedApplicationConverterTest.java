@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package com.github.ingogriebsch.bricks.assemble.converter.json;
+package com.github.ingogriebsch.bricks.converter.json;
 
 import static java.nio.charset.Charset.forName;
 
@@ -25,16 +25,18 @@ import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.ingogriebsch.bricks.model.Component;
+import com.github.ingogriebsch.bricks.converter.json.JsonBasedApplicationConverter;
+import com.github.ingogriebsch.bricks.model.Application;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.NullInputStream;
 import org.apache.commons.io.input.ReaderInputStream;
 import org.apache.commons.io.output.NullOutputStream;
@@ -42,12 +44,12 @@ import org.apache.commons.io.output.WriterOutputStream;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-public class Json2ComponentConverterTest {
+public class JsonBasedApplicationConverterTest {
 
     private static ObjectMapper objectMapper;
 
     @BeforeAll
-    public static void beforeClass() {
+    public static void beforeAll() {
         objectMapper = new ObjectMapper();
         objectMapper.configure(FAIL_ON_EMPTY_BEANS, false);
     }
@@ -55,56 +57,56 @@ public class Json2ComponentConverterTest {
     @Test
     public void from_should_throw_exception_if_input_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Json2ComponentConverter().from(null, null);
+            new JsonBasedApplicationConverter().from(null, null);
         });
     }
 
     @Test
     public void from_should_throw_exception_if_component_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Json2ComponentConverter().from(null, "regardless");
+            new JsonBasedApplicationConverter().from(null, "regardless");
         });
     }
 
     @Test
     public void from_should_throw_exception_if_id_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Json2ComponentConverter().from(new NullInputStream(0), null);
+            new JsonBasedApplicationConverter().from(new NullInputStream(0), null);
         });
     }
 
     @Test
     public void from_should_throw_exception_if_input_is_not_legal() throws Exception {
         assertThrows(IOException.class, () -> {
-            try (InputStream is = new ByteArrayInputStream("test".getBytes())) {
-                new Json2ComponentConverter().from(is, "regardless");
+            try (InputStream is = toInputStream("test")) {
+                new JsonBasedApplicationConverter().from(is, "regardlesse");
             }
         });
     }
 
     @Test
-    public void from_should_convert_empty_component_to_matching_output() throws Exception {
-        Component source = new Component();
+    public void from_should_convert_empty_application_to_matching_output() throws Exception {
+        Application source = new Application();
 
-        Component target;
-        try (InputStream is = new ByteArrayInputStream(objectMapper.writeValueAsBytes(source))) {
-            target = new Json2ComponentConverter().from(is, "regardless");
+        Application target;
+        try (InputStream is = toInputStream(source)) {
+            target = new JsonBasedApplicationConverter().from(is, "regardless");
         }
 
         assertThat(target).isNotNull().isEqualTo(source);
     }
 
     @Test
-    public void from_should_convert_filled_component_to_matching_output() throws Exception {
-        Component source = new Component();
+    public void from_should_convert_filled_application_to_matching_output() throws Exception {
+        Application source = new Application();
         source.setId("id");
         source.setName("name");
         source.setDescription("description");
         source.setVersion("version");
 
-        Component target;
-        try (InputStream is = new ByteArrayInputStream(objectMapper.writeValueAsBytes(source))) {
-            target = new Json2ComponentConverter().from(is, source.getId());
+        Application target;
+        try (InputStream is = toInputStream(source)) {
+            target = new JsonBasedApplicationConverter().from(is, source.getId());
         }
 
         assertThat(target).isNotNull().isEqualTo(source);
@@ -113,47 +115,47 @@ public class Json2ComponentConverterTest {
     @Test
     public void to_should_throw_exception_if_input_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Json2ComponentConverter().to(null, null);
+            new JsonBasedApplicationConverter().to(null, null);
         });
     }
 
     @Test
     public void to_should_throw_exception_if_application_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Json2ComponentConverter().to(null, new NullOutputStream());
+            new JsonBasedApplicationConverter().to(null, new NullOutputStream());
         });
     }
 
     @Test
     public void to_should_throw_exception_if_target_is_null() throws Exception {
         assertThrows(NullPointerException.class, () -> {
-            new Json2ComponentConverter().to(new Component(), null);
+            new JsonBasedApplicationConverter().to(new Application(), null);
         });
     }
 
     @Test
     public void to_should_convert_empty_application_to_matching_output() throws Exception {
-        Component source = new Component();
+        Application source = new Application();
 
         String raw;
         try (StringWriter writer = new StringWriter()) {
             try (OutputStream os = new WriterOutputStream(writer, forName("UTF-8"))) {
-                new Json2ComponentConverter().to(source, os);
+                new JsonBasedApplicationConverter().to(source, os);
             }
             raw = writer.toString();
         }
         assertThat(raw).isNotNull();
 
-        Component target;
+        Application target;
         try (InputStream is = new ReaderInputStream(new StringReader(raw), forName("UTF-8"))) {
-            target = new Json2ComponentConverter().from(is, "regardless");
+            target = new JsonBasedApplicationConverter().from(is, "regardless");
         }
         assertThat(target).isEqualTo(source);
     }
 
     @Test
     public void to_should_convert_filled_application_to_matching_output() throws Exception {
-        Component source = new Component();
+        Application source = new Application();
         source.setId("id");
         source.setName("name");
         source.setDescription("description");
@@ -162,17 +164,24 @@ public class Json2ComponentConverterTest {
         String raw;
         try (StringWriter writer = new StringWriter()) {
             try (OutputStream os = new WriterOutputStream(writer, forName("UTF-8"))) {
-                new Json2ComponentConverter().to(source, os);
+                new JsonBasedApplicationConverter().to(source, os);
             }
             raw = writer.toString();
         }
         assertThat(raw).isNotNull();
 
-        Component target;
+        Application target;
         try (InputStream is = new ReaderInputStream(new StringReader(raw), forName("UTF-8"))) {
-            target = new Json2ComponentConverter().from(is, "regardless");
+            target = new JsonBasedApplicationConverter().from(is, "regardless");
         }
         assertThat(target).isEqualTo(source);
     }
 
+    private static InputStream toInputStream(Application application) throws JsonProcessingException {
+        return toInputStream(objectMapper.writeValueAsString(application));
+    }
+
+    private static InputStream toInputStream(String content) throws JsonProcessingException {
+        return IOUtils.toInputStream(content, forName("UTF-8"));
+    }
 }

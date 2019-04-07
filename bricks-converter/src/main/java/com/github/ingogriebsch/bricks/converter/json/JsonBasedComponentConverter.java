@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package com.github.ingogriebsch.bricks.assemble.converter.yaml;
+package com.github.ingogriebsch.bricks.converter.json;
 
 import static com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_COMMENTS;
 import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
@@ -26,18 +26,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.github.ingogriebsch.bricks.assemble.converter.ComponentConverter;
+import com.github.ingogriebsch.bricks.converter.ComponentConverter;
 import com.github.ingogriebsch.bricks.model.Component;
 
 import lombok.NonNull;
 
-public class Yaml2ComponentConverter implements ComponentConverter {
+public class JsonBasedComponentConverter implements ComponentConverter {
 
     private final ObjectMapper objectMapper;
 
-    public Yaml2ComponentConverter() {
+    public JsonBasedComponentConverter() {
         objectMapper = createAndPrepareObjectMapper();
     }
 
@@ -52,11 +52,11 @@ public class Yaml2ComponentConverter implements ComponentConverter {
     }
 
     private static ObjectMapper createAndPrepareObjectMapper() {
-        YAMLFactory yamlFactory = new YAMLFactory();
-        yamlFactory.enable(ALLOW_COMMENTS);
-
-        ObjectMapper objectMapper = new ObjectMapper(yamlFactory);
+        ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        JsonFactory jsonFactory = objectMapper.getFactory();
+        jsonFactory.enable(ALLOW_COMMENTS);
         return objectMapper;
     }
 }

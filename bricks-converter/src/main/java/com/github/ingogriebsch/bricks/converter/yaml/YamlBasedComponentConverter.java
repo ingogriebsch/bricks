@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package com.github.ingogriebsch.bricks.assemble.converter.json;
+package com.github.ingogriebsch.bricks.converter.yaml;
 
 import static com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_COMMENTS;
 import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
@@ -26,37 +26,37 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.ingogriebsch.bricks.assemble.converter.ApplicationConverter;
-import com.github.ingogriebsch.bricks.model.Application;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.github.ingogriebsch.bricks.converter.ComponentConverter;
+import com.github.ingogriebsch.bricks.model.Component;
 
 import lombok.NonNull;
 
-public class Json2ApplicationConverter implements ApplicationConverter {
+public class YamlBasedComponentConverter implements ComponentConverter {
 
     private final ObjectMapper objectMapper;
 
-    public Json2ApplicationConverter() {
+    public YamlBasedComponentConverter() {
         objectMapper = createAndPrepareObjectMapper();
     }
 
     @Override
-    public Application from(@NonNull InputStream source, @NonNull String id) throws IOException {
-        return objectMapper.readValue(source, Application.class);
+    public Component from(@NonNull InputStream source, @NonNull String id) throws IOException {
+        return objectMapper.readValue(source, Component.class);
     }
 
     @Override
-    public void to(@NonNull Application application, @NonNull OutputStream target) throws IOException {
-        objectMapper.writeValue(target, application);
+    public void to(@NonNull Component component, @NonNull OutputStream target) throws IOException {
+        objectMapper.writeValue(target, component);
     }
 
     private static ObjectMapper createAndPrepareObjectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
+        YAMLFactory yamlFactory = new YAMLFactory();
+        yamlFactory.enable(ALLOW_COMMENTS);
 
-        JsonFactory jsonFactory = objectMapper.getFactory();
-        jsonFactory.enable(ALLOW_COMMENTS);
+        ObjectMapper objectMapper = new ObjectMapper(yamlFactory);
+        objectMapper.configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
         return objectMapper;
     }
 }

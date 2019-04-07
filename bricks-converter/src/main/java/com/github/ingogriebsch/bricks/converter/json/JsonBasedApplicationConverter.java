@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package com.github.ingogriebsch.bricks.assemble.converter.json;
+package com.github.ingogriebsch.bricks.converter.json;
 
 import static com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_COMMENTS;
 import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
@@ -28,27 +28,27 @@ import java.io.OutputStream;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.ingogriebsch.bricks.assemble.converter.ComponentConverter;
-import com.github.ingogriebsch.bricks.model.Component;
+import com.github.ingogriebsch.bricks.converter.ApplicationConverter;
+import com.github.ingogriebsch.bricks.model.Application;
 
 import lombok.NonNull;
 
-public class Json2ComponentConverter implements ComponentConverter {
+public class JsonBasedApplicationConverter implements ApplicationConverter {
 
     private final ObjectMapper objectMapper;
 
-    public Json2ComponentConverter() {
+    public JsonBasedApplicationConverter() {
         objectMapper = createAndPrepareObjectMapper();
     }
 
     @Override
-    public Component from(@NonNull InputStream source, @NonNull String id) throws IOException {
-        return objectMapper.readValue(source, Component.class);
+    public Application from(@NonNull InputStream source, @NonNull String id) throws IOException {
+        return objectMapper.readValue(source, Application.class);
     }
 
     @Override
-    public void to(@NonNull Component component, @NonNull OutputStream target) throws IOException {
-        objectMapper.writeValue(target, component);
+    public void to(@NonNull Application application, @NonNull OutputStream target) throws IOException {
+        objectMapper.writeValue(target, application);
     }
 
     private static ObjectMapper createAndPrepareObjectMapper() {

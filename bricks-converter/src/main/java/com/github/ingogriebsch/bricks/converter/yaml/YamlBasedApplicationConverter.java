@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package com.github.ingogriebsch.bricks.assemble.converter.yaml;
+package com.github.ingogriebsch.bricks.converter.yaml;
 
 import static com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_COMMENTS;
 import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
@@ -28,16 +28,16 @@ import java.io.OutputStream;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.github.ingogriebsch.bricks.assemble.converter.ApplicationConverter;
+import com.github.ingogriebsch.bricks.converter.ApplicationConverter;
 import com.github.ingogriebsch.bricks.model.Application;
 
 import lombok.NonNull;
 
-public class Yaml2ApplicationConverter implements ApplicationConverter {
+public class YamlBasedApplicationConverter implements ApplicationConverter {
 
     private final ObjectMapper objectMapper;
 
-    public Yaml2ApplicationConverter() {
+    public YamlBasedApplicationConverter() {
         objectMapper = createAndPrepareObjectMapper();
     }
 
