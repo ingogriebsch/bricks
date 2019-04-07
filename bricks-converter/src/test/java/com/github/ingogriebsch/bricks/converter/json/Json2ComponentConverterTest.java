@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package com.github.ingogriebsch.bricks.assemble.converter.json;
+package com.github.ingogriebsch.bricks.converter.json;
 
 import static java.nio.charset.Charset.forName;
 
@@ -33,6 +33,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.ingogriebsch.bricks.converter.json.Json2ComponentConverter;
 import com.github.ingogriebsch.bricks.model.Component;
 
 import org.apache.commons.io.input.NullInputStream;
