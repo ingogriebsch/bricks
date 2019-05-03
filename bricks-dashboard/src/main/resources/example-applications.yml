@@ -14,76 +14,76 @@ applications:
         description: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
         version: 1.2.3
         layer: 
-          id: core,
+          id: core
         responsibles:
           - name: The Avengers
             email: avengers@gmail.com
         ecosystems:
-          - platform: jvm,
-            flavor: java,
+          - platform: jvm
+            flavor: java
             version: 1.8
       - id: component2
         name: Edge Component 2
         description: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
         version: 4.0.1
         layer: 
-          id: edge,
+          id: edge
         responsibles:
           - name: Justice League
             email: justice-league@gmail.com
         ecosystems:
-          - platform: node,
+          - platform: node
             flavor: javascript
       - id: component3
         name: Core Component 3
         description: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
         version: 4.7.1
         layer: 
-          id: core,
+          id: core
         responsibles:
           - name: The Avengers
             email: avengers@gmail.com
         ecosystems:
-          - platform: jvm,
-            flavor: java,
+          - platform: jvm
+            flavor: java
             version: 1.8
       - id: component4
         name: Infrastructure Component 4
         description: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
         version: 1.10.0
         layer: 
-          id: infrastructure,
+          id: infrastructure
         responsibles:
           - name: The Avengers
             email: avengers@gmail.com
         ecosystems:
-          - platform: jvm,
-            flavor: java,
+          - platform: jvm
+            flavor: java
             version: 1.8
       - id: component5
         name: Core Component 5
         description: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
         version: 7.0.0
         layer: 
-          id: core,
+          id: core
         responsibles:
           - name: The Avengers
             email: avengers@gmail.com
         ecosystems:
-          - platform: jvm,
-            flavor: java,
+          - platform: jvm
+            flavor: java
             version: 1.8
       - id: component6
         name: Edge Component 6
         description: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
         version: 1.0.1-1
         layer: 
-          id: edge,
+          id: edge
         responsibles:
           - name: Justice League
             email: justice-league@gmail.com
         ecosystems:
-          - platform: node,
+          - platform: node
             flavor: javascript
   - id: another-app
     name: Another Application
@@ -100,24 +100,23 @@ applications:
         description: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
         version: 1.2.3
         layer: 
-          id: infrastructure,
+          id: infrastructure
         responsibles:
           - name: The Avengers
             email: avengers@gmail.com
         ecosystems:
-          - platform: jvm,
-            flavor: java,
+          - platform: jvm
+            flavor: java
             version: 1.8
       - id: component2
         name: UI Component 2
         description: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
         version: 4.0.1
         layer: 
-          id: ui,
+          id: ui
         responsibles:
           - name: Justice League
             email: justice-league@gmail.com
         ecosystems:
-          - platform: node,
+          - platform: node
             flavor: javascript
-            
