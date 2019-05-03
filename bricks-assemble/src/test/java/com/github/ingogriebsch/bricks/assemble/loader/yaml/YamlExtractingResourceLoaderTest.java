@@ -27,7 +27,6 @@ import java.util.Map;
 
 import com.github.ingogriebsch.bricks.assemble.loader.common.InputStreamResourceLoader;
 import com.github.ingogriebsch.bricks.assemble.loader.common.NullResourceLoader;
-import com.github.ingogriebsch.bricks.assemble.loader.yaml.YamlExtractingResourceLoader;
 
 import org.junit.jupiter.api.Test;
 import org.yaml.snakeyaml.Yaml;

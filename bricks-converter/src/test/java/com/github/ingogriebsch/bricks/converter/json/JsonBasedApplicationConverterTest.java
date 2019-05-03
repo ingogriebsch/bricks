@@ -33,7 +33,6 @@ import java.io.StringWriter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.ingogriebsch.bricks.converter.json.JsonBasedApplicationConverter;
 import com.github.ingogriebsch.bricks.model.Application;
 
 import org.apache.commons.io.IOUtils;

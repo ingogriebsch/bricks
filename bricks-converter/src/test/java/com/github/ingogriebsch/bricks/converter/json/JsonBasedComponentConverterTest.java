@@ -33,7 +33,6 @@ import java.io.StringReader;
 import java.io.StringWriter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.ingogriebsch.bricks.converter.json.JsonBasedComponentConverter;
 import com.github.ingogriebsch.bricks.model.Component;
 
 import org.apache.commons.io.input.NullInputStream;

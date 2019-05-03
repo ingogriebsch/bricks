@@ -34,7 +34,6 @@ import java.io.StringWriter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.github.ingogriebsch.bricks.converter.yaml.YamlBasedComponentConverter;
 import com.github.ingogriebsch.bricks.model.Component;
 
 import org.apache.commons.io.input.NullInputStream;
