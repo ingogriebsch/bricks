@@ -1,4 +1,4 @@
 bricks:
   dashboard:
-    redirect-to-application-view-if-only-one-available: true
+    redirect-to-application-view-if-only-one-available: false
           
